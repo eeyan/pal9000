@@ -34,4 +34,8 @@ MVP (July 2026): app, scheduler, pipeline, and tests are built; question content
 
 Testing tip: to exercise the review queue without waiting a day, temporarily shrink `INTERVALS_DAYS` in `src/assets/js/scheduler.js`.
 
+## License
+
+Code is [MIT](LICENSE). The question content under `content/` is **not** MIT — see [content/LICENSE](content/LICENSE) (all rights reserved; instructors interested in reuse, get in touch).
+
 Full spec: [docs/SPEC.md](docs/SPEC.md).

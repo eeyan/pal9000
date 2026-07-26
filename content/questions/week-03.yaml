@@ -263,10 +263,10 @@ questions:
     promptVersion: sample-v0
     stem: >
       While evaluating two competing analytics SaaS providers, a strategist
-      insists on asking each: "If we leave in three years, in what format do we
-      get our data, how fast, and at what cost?" A colleague calls the question
-      premature. Why is the exit question strategically essential at selection
-      time?
+      insists on asking each vendor how the firm would get its data out — in
+      what format, how fast, and at what cost — if it left in three years. A
+      colleague calls the question premature. Why is the exit question
+      strategically essential at selection time?
     options:
       - key: A
         text: >

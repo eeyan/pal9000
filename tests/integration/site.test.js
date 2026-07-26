@@ -1,9 +1,10 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { execSync } from 'node:child_process';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import * as cheerio from 'cheerio';
-import { loadBank } from '../../src/lib/bank.js';
+import yaml from 'js-yaml';
+import { loadBank, WEEK_FILE_RE } from '../../src/lib/bank.js';
 
 const ROOT = join(import.meta.dirname, '../..');
 const SITE = join(ROOT, '_site');
@@ -42,12 +43,44 @@ describe('built site', () => {
     expect(total).toBe(bank.totalQuestions);
   });
 
-  it('no rejected or candidate question text leaks anywhere in the output', () => {
-    for (const page of ['index.html', 'review/index.html']) {
-      const html = readFileSync(join(SITE, page), 'utf8');
-      expect(html).not.toMatch(/rejected:/);
-      expect(html).not.toMatch(/"status":"candidate"/);
+  it('no non-live question reaches ANY built page', () => {
+    const questionsDir = join(ROOT, 'content/questions');
+    const nonLiveIds = [];
+    for (const file of readdirSync(questionsDir).filter((f) => WEEK_FILE_RE.test(f))) {
+      const doc = yaml.load(readFileSync(join(questionsDir, file), 'utf8'));
+      for (const q of doc.questions ?? []) {
+        if (!['accepted', 'edited'].includes(q.status)) nonLiveIds.push(q.id);
+      }
     }
+    expect(nonLiveIds.length).toBeGreaterThan(0); // the guard must be guarding something
+
+    const htmlFiles = [];
+    const walk = (dir) => {
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        const p = join(dir, entry.name);
+        if (entry.isDirectory()) walk(p);
+        else if (entry.name.endsWith('.html')) htmlFiles.push(p);
+      }
+    };
+    walk(SITE);
+    expect(htmlFiles.length).toBeGreaterThanOrEqual(5);
+
+    for (const file of htmlFiles) {
+      const html = readFileSync(file, 'utf8');
+      expect(html, file).not.toMatch(/rejected:/);
+      expect(html, file).not.toMatch(/"status":"candidate"/);
+      for (const id of nonLiveIds) {
+        expect(html.includes(`"${id}"`), `${id} leaked into ${file}`).toBe(false);
+      }
+    }
+  });
+
+  it('no copyright-sensitive file is tracked by git (public-repo guard)', () => {
+    const tracked = execSync('git ls-files', { cwd: ROOT, encoding: 'utf8' }).trim().split('\n');
+    const sources = tracked.filter((f) => f.startsWith('content/sources/') && f !== 'content/sources/README.md');
+    const candidates = tracked.filter((f) => f.endsWith('.candidates.yaml'));
+    expect(sources, 'course/publisher material tracked by git').toEqual([]);
+    expect(candidates, 'pre-curation LLM output tracked by git').toEqual([]);
   });
 
   it('assets are copied through', () => {

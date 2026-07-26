@@ -10,15 +10,23 @@
     "build": "eleventy",
     "dev": "eleventy --serve",
     "test": "vitest run",
-    "generate": "node scripts/generate.js"
+    "generate": "node scripts/generate.js",
+    "eval-log": "node scripts/eval-log.js"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
     "cheerio": "^1.0.0",
-    "js-yaml": "^4.1.0",
-    "vitest": "^3.0.0"
+    "vitest": "^3.0.0",
+    "@anthropic-ai/sdk": "^0.115.0"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.115.0"
-  }
+    "js-yaml": "^4.1.0"
+  },
+  "license": "MIT",
+  "author": "Ian Anderson",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eeyan/pal9000.git"
+  },
+  "homepage": "https://pal9000.netlify.app"
 }
