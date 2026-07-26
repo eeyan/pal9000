@@ -14,7 +14,12 @@ eleventyComputed:
   <h1>{{ w.title }}</h1>
 </section>
 
-<div id="quiz" data-mode="week" data-week="{{ w.week }}"></div>
+<div id="quiz" data-mode="week" data-week="{{ w.week }}">
+  <div class="quiz-panel">
+    <p class="readout mono">CONNECTING…</p>
+    <p class="done-note">If this message doesn't clear in a few seconds, PAL couldn't load — check your connection and reload.</p>
+  </div>
+</div>
 
-<script type="application/json" id="question-data">{{ w.questions | dump | safe }}</script>
+<script type="application/json" id="question-data">{{ w.questions | embedJson | safe }}</script>
 <script type="module" src="/assets/js/week-page.js"></script>

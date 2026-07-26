@@ -9,7 +9,12 @@ permalink: /review/
   <h1>Review queue</h1>
 </section>
 
-<div id="quiz" data-mode="review"></div>
+<div id="quiz" data-mode="review">
+  <div class="quiz-panel">
+    <p class="readout mono">CONNECTING…</p>
+    <p class="done-note">If this message doesn't clear in a few seconds, PAL couldn't load — check your connection and reload.</p>
+  </div>
+</div>
 
-<script type="application/json" id="bank-data">{{ bank.weeks | dump | safe }}</script>
+<script type="application/json" id="bank-data">{{ bank.weeks | embedJson | safe }}</script>
 <script type="module" src="/assets/js/review-page.js"></script>

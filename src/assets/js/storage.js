@@ -12,6 +12,13 @@ export function load(key, fallback) {
   }
 }
 
+// Review state with shape validation — corrupt-but-parseable values (null,
+// "{}", wrong types) fall back to an empty state instead of crashing pages.
+export function loadReviewState() {
+  const s = load(KEYS.review, null);
+  return s && typeof s.items === 'object' && s.items !== null ? s : { items: {} };
+}
+
 export function save(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));

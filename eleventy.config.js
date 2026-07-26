@@ -1,6 +1,9 @@
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ 'src/assets': 'assets' });
   eleventyConfig.addFilter('pad2', (n) => String(n).padStart(2, '0'));
+  // Safe JSON for <script type="application/json"> embeds: escaping `<` keeps
+  // question text containing "</script>" from terminating the script element.
+  eleventyConfig.addFilter('embedJson', (v) => JSON.stringify(v).replaceAll('<', '\\u003c'));
 
   return {
     dir: {

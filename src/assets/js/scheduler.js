@@ -10,6 +10,18 @@ export function emptyState() {
   return { items: {} };
 }
 
+// Spacing covers every item, not just errors (successive relearning): a
+// first-try-correct answer enters the queue at the top rung — one successful
+// spaced retrieval a week later graduates it. Items already on the ladder
+// (from an earlier miss) are left where they are.
+export function recordSuccess(state, id, now) {
+  if (state.items[id]) return state;
+  const idx = INTERVALS_DAYS.length - 1;
+  return {
+    items: { ...state.items, [id]: { idx, due: now + INTERVALS_DAYS[idx] * DAY_MS } },
+  };
+}
+
 export function recordMiss(state, id, now) {
   return {
     items: { ...state.items, [id]: { idx: 0, due: now + INTERVALS_DAYS[0] * DAY_MS } },

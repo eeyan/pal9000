@@ -1,5 +1,5 @@
-import { load, KEYS } from './storage.js';
-import { emptyState, dueIds, queueSize } from './scheduler.js';
+import { load, loadReviewState, KEYS } from './storage.js';
+import { dueIds, queueSize } from './scheduler.js';
 
 const progress = load(KEYS.progress, {});
 document.querySelectorAll('[data-week-status]').forEach((el) => {
@@ -10,7 +10,7 @@ document.querySelectorAll('[data-week-status]').forEach((el) => {
   }
 });
 
-const review = load(KEYS.review, emptyState());
+const review = loadReviewState();
 const due = dueIds(review, Date.now()).length;
 const total = queueSize(review);
 const el = document.getElementById('review-count');
