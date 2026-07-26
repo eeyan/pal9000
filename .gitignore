@@ -1,10 +1,15 @@
 node_modules/
 _site/
 .env
+.DS_Store
 
 # Course/publisher source material must never enter git (see docs/SPEC.md)
 content/sources/*
 !content/sources/README.md
+
+# Pre-curation LLM output — raw candidates are working files (and ~2/3 junk by
+# design); only curated week-NN.yaml files are committed. Stats go to EVAL-LOG.
+content/questions/*.candidates.yaml
 
 # Personal planning docs
 TODO.md

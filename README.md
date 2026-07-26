@@ -28,4 +28,10 @@ Generation runs locally only (Claude API; needs `ANTHROPIC_API_KEY` or an `ant a
 
 Netlify, gated: production builds run only when the commit subject contains `[deploy]` (see `netlify.toml`).
 
+## Status
+
+MVP (July 2026): app, scheduler, pipeline, and tests are built; question content is hand-authored **sample material** (`promptVersion: sample-v0`) pending the first real generation run against fall course materials. Local only — no remote or Netlify site yet.
+
+Testing tip: to exercise the review queue without waiting a day, temporarily shrink `INTERVALS_DAYS` in `src/assets/js/scheduler.js`.
+
 Full spec: [docs/SPEC.md](docs/SPEC.md).

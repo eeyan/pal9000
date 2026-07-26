@@ -1,6 +1,6 @@
 ---
 type: plan
-status: Reviewed — all decisions locked 2026-07-25; ready to build
+status: MVP built 2026-07-26 (sample content) — this repo copy is canonical; vault plan.md is an archive
 date_created: 2026-07-24
 related: "[[CIS 9000 Study Tool]]"
 ---
@@ -154,6 +154,17 @@ Optional tools get ~15% usage. Levers, in Ian's control as instructor, strongest
 
 **In:** 2 question types · weekly sets · missed-question review queue · localStorage · eval log · weeks 1–3 content at launch.
 **Out (backlog):** FSRS, Anki export, per-item difficulty stats from anonymized telemetry, question flagging by students, second course reuse, chat anything.
+
+## As built (2026-07-26) — deltas from the plan
+
+MVP implemented and smoke-tested with sample-v0 content (30 hand-authored questions, weeks 1–3). Deviations and decisions made during the build:
+
+- **Candidates workflow:** `npm run generate <week>` writes `content/questions/week-NN.candidates.yaml` (every question `status: candidate`); curation moves accepted/edited questions into `week-NN.yaml`. Candidates files are gitignored — only curated files are committed.
+- **Ingestion:** `.md`/`.txt` read as text; **PDFs are sent natively to the Claude API** (no extraction step needed); PPTX is not parsed — export decks to PDF first. A real PPTX extraction step moved to backlog.
+- **Generation model:** Claude Opus 4.8, adaptive thinking, structured outputs (JSON schema) — over-generates 3× target with mandatory per-question source citations.
+- **Build detail:** Eleventy data files need a sole default export (named exports break pagination), so the bank loader lives in `src/lib/bank.js`; custom `pad2` Nunjucks filter replaces the nonexistent `format` filter.
+- **Curation lint is executable:** `tests/unit/bank.test.js` enforces the schema (citations, per-distractor feedback, self-explain on scenario MCQs, valid statuses) across every committed question; integration tests verify rejected/candidate content never reaches the built site.
+- **Design:** "friendly HAL" cockpit console — dark, amber PAL-eye accent, Michroma display + IBM Plex body/mono (the IBM/HAL letter-shift joke), HAL-red reserved for wrong answers. Microcopy: "AFFIRMATIVE." / "I'M SORRY — THAT'S NOT IT."
 
 ## Effort estimate
 
