@@ -1,0 +1,8 @@
+[build]
+  publish = "_site"
+  command = "npm run build"
+  # Production deploys are opt-in: only build when the commit subject contains [deploy].
+  ignore = "git log -1 --pretty=%s | grep -qv '\\[deploy\\]'"
+
+[build.environment]
+  NODE_VERSION = "22"

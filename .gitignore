@@ -1,0 +1,11 @@
+node_modules/
+_site/
+.env
+
+# Course/publisher source material must never enter git (see docs/SPEC.md)
+content/sources/*
+!content/sources/README.md
+
+# Personal planning docs
+TODO.md
+PLAN.md

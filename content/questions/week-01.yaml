@@ -1,0 +1,477 @@
+week: 1
+title: IT Strategy & Alignment
+questions:
+  - id: w01-q01
+    week: 1
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A mid-size insurer's IT group delivers a technically impressive claims
+      platform on time and under budget. Adoption stalls: underwriters say it
+      automates the wrong steps and ignores the fast-track workflow the business
+      is betting its growth on. The CIO sits outside strategy meetings and learns
+      of priorities only after budgets are set. What is the core problem this
+      situation illustrates?
+    options:
+      - key: A
+        text: >
+          A project-management failure — the platform should have shipped later
+          with more features.
+      - key: B
+        text: >
+          A business–IT alignment gap — IT executed well technically but was
+          disconnected from business strategy and priorities.
+      - key: C
+        text: >
+          A change-management failure that better user training would have fixed.
+      - key: D
+        text: >
+          A technology-selection error — the wrong platform vendor was chosen.
+    answer: B
+    feedback:
+      correct: >
+        Alignment is about IT's direction matching business intent, not delivery
+        mechanics. Here IT hit cost, schedule, and quality yet built the wrong
+        thing because it was excluded from strategy formation. Alignment is a
+        governance and communication problem, not a coding one.
+      A: >
+        On-time and under-budget delivery is the definition of project success —
+        more features would not fix building the wrong capability.
+      C: >
+        Training cannot rescue a system that automates steps the business does
+        not prioritize; the gap exists before rollout ever begins.
+      D: >
+        The platform works as built. The fault is what it was pointed at, not
+        which vendor supplied it.
+    selfExplainPrompt: >
+      The CIO learns priorities only after budgets are set. Which governance
+      mechanism (for example, giving IT a seat in strategy formation) would move
+      this from reactive to strategic alignment — and why does timing matter more
+      here than how hard the team worked?
+    source: { doc: week-01-strategy-alignment.pptx, loc: slides 8-11 }
+
+  - id: w01-q02
+    week: 1
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A regional bank runs core deposit-processing that must never fail but has
+      not changed the bank's competitive position in a decade — customers simply
+      assume it works. Separately, it is piloting an AI cash-flow advisor it hopes
+      will differentiate it from rivals within two years. On McFarlan's strategic
+      grid, how should the bank classify these two systems?
+    options:
+      - key: A
+        text: >
+          Core deposit-processing is "Factory" (high current dependence, low
+          future differentiation); the AI advisor is "Strategic"/"Turnaround"
+          (high future strategic impact).
+      - key: B
+        text: >
+          Both are "Strategic," because both are mission-critical to daily
+          operations.
+      - key: C
+        text: >
+          Both are "Support," because neither directly generates revenue.
+      - key: D
+        text: >
+          Core deposit-processing is "Strategic," because an outage would be
+          catastrophic.
+    answer: A
+    feedback:
+      correct: >
+        The grid classifies by current operational dependence AND future
+        strategic impact — not by how damaging an outage would be. A reliable,
+        undifferentiating utility is "Factory"; a bet on future advantage is
+        "Strategic/Turnaround." The two axes justify different governance and
+        investment for each system.
+      B: >
+        Mission-critical is not the same as strategic. Criticality is about
+        current dependence; strategic is about future competitive impact — the
+        grid separates them on purpose.
+      C: >
+        Revenue proximity is not one of the grid's axes, and core processing has
+        very high current dependence, placing it far from "Support."
+      D: >
+        This conflates outage severity with strategic potential. A stable
+        commodity that does not differentiate is "Factory," however catastrophic
+        its failure would be.
+    selfExplainPrompt: >
+      The grid says the "Factory" and "Strategic" systems warrant different
+      management. What kind of oversight does a Factory system need (reliability,
+      cost control) versus a Strategic one (experimentation, executive
+      sponsorship) — and why would applying identical governance harm both?
+    source: { doc: week-01-strategy-alignment.pptx, loc: slides 22-26 }
+
+  - id: w01-q03
+    week: 1
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A retail chain's CFO argues that because commodity cloud infrastructure and
+      standard email are now cheap and available to every competitor, the company
+      should stop over-investing in them and manage them for cost and reliability,
+      like any utility. The CIO counters that "all IT is strategic." Which position
+      better reflects the distinction between IT as a utility and IT as a
+      differentiator?
+    options:
+      - key: A
+        text: >
+          The CIO — any technology a company depends on is by definition a source
+          of competitive advantage.
+      - key: B
+        text: >
+          The CFO — because IT never provides competitive advantage, all of it
+          should simply be minimized.
+      - key: C
+        text: >
+          The CFO — capabilities equally available to all rivals tend to become
+          commodities that rarely differentiate and are best managed for cost and
+          reliability, while scarce, hard-to-copy capabilities can differentiate.
+      - key: D
+        text: >
+          The CIO — managing anything for cost signals a lack of ambition and
+          erodes advantage.
+    answer: C
+    feedback:
+      correct: >
+        Advantage comes from scarcity and inimitability, not from mere
+        dependence. Ubiquitous, standardized IT (the "utility" layer) is a cost
+        to run well; differentiation comes from how a firm uniquely combines or
+        applies technology. Sorting IT into these two buckets is what lets you
+        spend differently on each.
+      A: >
+        Dependence is not advantage. If every rival has the same capability, it
+        is table stakes, not a differentiator.
+      B: >
+        This overshoots — the argument is that commodity IT rarely differentiates,
+        not that IT never can; misapplying it kills genuine strategic bets.
+      D: >
+        Managing a commodity for cost is prudent, not unambitious. The error is
+        spending as if a utility were a differentiator.
+    selfExplainPrompt: >
+      The CFO wants to manage commodity IT "like a utility." How does this
+      classification connect to run-the-business (KTLO) spending, and why does
+      mislabeling a utility as strategic inflate cost without buying any advantage?
+    source: { doc: week-01-strategy-alignment.pptx, loc: slides 14-18 }
+
+  - id: w01-q04
+    week: 1
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A logistics firm's executive team drafts a three-year strategy to win
+      same-day delivery. The COO frames IT's job as "keep our current systems
+      running so the plan can proceed." The CIO instead argues that real-time
+      routing and dynamic-inventory capabilities are not merely support for the
+      strategy — they are what makes same-day delivery possible at all. What does
+      the CIO's framing illustrate about business–IT alignment?
+    options:
+      - key: A
+        text: >
+          IT should always simply execute whatever the business decides, so the
+          COO is correct.
+      - key: B
+        text: >
+          IT and business strategy are separate domains that should be planned
+          independently of each other.
+      - key: C
+        text: >
+          The CIO is overstepping; questions of capability are operational, not
+          strategic.
+      - key: D
+        text: >
+          Alignment can be bidirectional — IT can enable and shape strategy, not
+          only follow it; here the technical capability is a precondition of the
+          business strategy, so IT belongs in strategy formation.
+    answer: D
+    feedback:
+      correct: >
+        Mature alignment runs both ways: business strategy directs IT, but IT
+        capabilities can also open or constrain which strategies are even
+        feasible. When a capability is a precondition of the strategy, keeping IT
+        downstream of planning guarantees misalignment.
+      A: >
+        Pure order-taking treats IT as a cost center and misses that some
+        strategies are impossible without specific capabilities.
+      B: >
+        Independent planning is the classic recipe for misalignment — the two
+        must be co-developed.
+      C: >
+        A capability that determines whether the strategy is achievable is
+        strategic by definition, not merely operational.
+    selfExplainPrompt: >
+      The CIO claims a technical capability is a precondition of the strategy.
+      Which McFarlan grid quadrant would same-day-delivery routing fall into for
+      this firm, and how does that classification argue for IT's seat at the
+      strategy table?
+    source: { doc: week-01-strategy-alignment.pptx, loc: slides 12-13 }
+
+  - id: w01-q05
+    week: 1
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      Two competing hospitals adopt the same off-the-shelf electronic health
+      record from the same vendor, in its default configuration. A year later,
+      Hospital A shows better patient throughput. An analyst concludes the EHR
+      gave Hospital A a competitive advantage. Why is this conclusion most likely
+      wrong?
+    options:
+      - key: A
+        text: >
+          EHRs cannot affect throughput, so the difference must be measurement
+          error.
+      - key: B
+        text: >
+          An identical, widely available system cannot by itself be the source of
+          advantage; any durable edge comes from complementary things — process
+          redesign, workflows, staff capability — that competitors cannot easily
+          copy.
+      - key: C
+        text: >
+          Hospital A must have paid the vendor for a secret premium version.
+      - key: D
+        text: >
+          Advantage from IT is impossible, so the throughput gap is unrelated to
+          the EHR.
+    answer: B
+    feedback:
+      correct: >
+        A technology available to all rivals is a commodity input; sustainable
+        advantage comes from inimitable complements — how the firm redesigns work
+        around the tool. This is why buying "the same system as everyone else"
+        rarely differentiates unless paired with something hard to copy.
+      A: >
+        EHRs plainly affect throughput; the flaw is attributing the gap to the
+        shared tool rather than to its complements.
+      C: >
+        This invents a fact. Both bought the same configuration — the
+        differentiator is organizational, not a hidden premium edition.
+      D: >
+        This overcorrects. IT can support advantage, but through inimitable
+        complements, not the commodity system alone.
+    selfExplainPrompt: >
+      The advantage traces to hard-to-copy complements, not the shared software.
+      If both hospitals buy identical IT, does the build-versus-buy decision even
+      matter for differentiation here — and where should each hospital actually
+      invest to pull ahead?
+    source: { doc: week-01-strategy-alignment.pptx, loc: slides 19-21 }
+
+  - id: w01-q06
+    week: 1
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A manufacturer's IT steering committee is dividing next year's discretionary
+      budget. A senior VP pushes to pour innovation funding and top engineers into
+      the internal facilities-booking and cafeteria-menu apps "so every system is
+      best-in-class." These apps have low operational dependence and no competitive
+      impact — on McFarlan's grid, clearly "Support" systems. What does the grid
+      imply about this proposal?
+    options:
+      - key: A
+        text: >
+          Misallocation — "Support" systems should be managed for adequacy at low
+          cost; spending scarce innovation capacity on them starves "Strategic"
+          and "Turnaround" work that could actually differentiate.
+      - key: B
+        text: >
+          Correct — every system deserves equal innovation investment.
+      - key: C
+        text: >
+          The apps should be reclassified as "Strategic," because employees use
+          them daily.
+      - key: D
+        text: >
+          Support systems should simply be eliminated to cut cost.
+    answer: A
+    feedback:
+      correct: >
+        The grid is a resource-allocation tool: match management intensity to a
+        system's strategic role. Support systems need "good enough and cheap";
+        funneling premium resources there carries a real opportunity cost — the
+        differentiating work you did not fund.
+      B: >
+        Equal investment ignores opportunity cost. Innovation capacity is scarce
+        and belongs where future strategic impact is high.
+      C: >
+        Daily use is current dependence at most, and here it is low; usage
+        frequency is not the strategic-impact axis.
+      D: >
+        This overshoots. Support systems are needed; the point is to run them
+        cheaply, not delete them.
+    selfExplainPrompt: >
+      The grid ties management intensity to strategic role. How does
+      over-investing in Support systems relate to the run-versus-change budget
+      split, and what happens to change-the-business capacity when Support work
+      absorbs premium resources?
+    source: { doc: week-01-strategy-alignment.pptx, loc: slides 27-29 }
+
+  - id: w01-q07
+    week: 1
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      At a professional-services firm, three departments have quietly signed up
+      for their own SaaS project-management tools on corporate cards, because the
+      central IT roadmap will not deliver an approved tool for another year. IT
+      only discovers this during a security review. Beyond the security exposure,
+      what strategic problem does this "shadow IT" most directly signal?
+    options:
+      - key: A
+        text: >
+          Employees are simply undisciplined and should be penalized.
+      - key: B
+        text: >
+          The firm should immediately standardize on whichever tool the most
+          departments happened to pick.
+      - key: C
+        text: >
+          A business–IT alignment gap — IT's priorities and delivery pace are out
+          of step with real business needs, so units route around it; the shadow
+          tools are a symptom, not the root cause.
+      - key: D
+        text: >
+          Shadow IT proves central IT is unnecessary and should be dissolved.
+    answer: C
+    feedback:
+      correct: >
+        Shadow IT is usually a demand signal: when sanctioned IT is too slow or
+        misaligned, the business self-serves. Treating it purely as a compliance
+        violation misses the underlying alignment failure that produced it.
+        Fixing the process gap is more durable than punishing users.
+      A: >
+        Punishment addresses the symptom while leaving the alignment gap — the
+        unmet need — fully intact.
+      B: >
+        Ratifying an accidental choice by headcount ignores fit, security, and
+        integration; popularity is not a selection strategy.
+      D: >
+        The lesson is that IT must align to demand, not that governance should
+        vanish — ungoverned sprawl is exactly what created the risk.
+    selfExplainPrompt: >
+      Shadow IT is framed here as a demand signal. How does unmanaged SaaS sprawl
+      connect to vendor lock-in and data-egress risk down the line, and why is an
+      alignment fix more durable than an outright ban?
+    source: { doc: week-01-strategy-alignment.pptx, loc: slides 30-32 }
+
+  - id: w01-q08
+    week: 1
+    type: definitional
+    status: accepted
+    promptVersion: sample-v0
+    stem: In this course, "IT strategy" is best defined as…
+    options:
+      - { key: A, text: The IT department's internal staffing plan and org chart }
+      - key: B
+        text: >
+          A long-term plan for how an organization uses information technology to
+          support and shape its business goals, including how IT resources are
+          prioritized and governed
+      - { key: C, text: The annual procurement plan for hardware and software purchases }
+      - { key: D, text: The cybersecurity incident-response playbook }
+    answer: B
+    feedback:
+      correct: >
+        IT strategy is the durable plan linking technology decisions to business
+        objectives — what to invest in, what role IT plays, and how choices are
+        governed. It is about direction and prioritization, not a shopping list
+        or an org chart.
+      A: >
+        Staffing structure supports strategy but is not it; strategy is about
+        where technology takes the business.
+      C: >
+        Procurement is one downstream execution activity, not the strategy that
+        sets direction.
+      D: >
+        Incident response is an operational security function — a narrow slice
+        well below the level of strategy.
+    source: { doc: week-01-strategy-alignment.pptx, loc: slides 3-5 }
+
+  - id: w01-q09
+    week: 1
+    type: definitional
+    status: accepted
+    promptVersion: sample-v0
+    stem: "\"Business–IT alignment\" refers to…"
+    options:
+      - { key: A, text: Ensuring all employees use the same brand of laptop and software }
+      - { key: B, text: Physically co-locating the IT department with the business units }
+      - key: C
+        text: >
+          The degree to which IT strategy, investments, and capabilities are
+          coordinated with and support the organization's business strategy and
+          goals
+      - { key: D, text: Matching the IT budget exactly to the previous year's spend }
+    answer: C
+    feedback:
+      correct: >
+        Alignment is the coordination between what the business is trying to
+        achieve and what IT builds, funds, and prioritizes — ideally
+        bidirectional. It is measured by fit of direction, not by standardized
+        hardware or seating charts.
+      A: >
+        Standardizing devices is an operational choice, unrelated to strategic
+        fit.
+      B: >
+        Co-location may aid communication but is not alignment; a co-located IT
+        group can still build the wrong things.
+      D: >
+        Freezing the budget is a financial decision, not evidence that IT and
+        business direction actually agree.
+    source: { doc: week-01-strategy-alignment.pptx, loc: slides 6-7 }
+
+  - id: w01-q10
+    week: 1
+    type: definitional
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      McFarlan's strategic grid classifies information systems along two
+      dimensions. Those two dimensions are…
+    options:
+      - key: A
+        text: >
+          The current operational dependence on the system and its future
+          strategic (competitive) impact
+      - { key: B, text: The system's purchase cost and its annual maintenance cost }
+      - { key: C, text: The number of users and the age of the system }
+      - { key: D, text: The programming language used and the hosting location }
+    answer: A
+    feedback:
+      correct: >
+        The grid maps systems by present dependence (how much operations rely on
+        them now) and future strategic impact (potential to differentiate),
+        yielding Support, Factory, Turnaround, and Strategic quadrants. Each
+        quadrant implies a different management posture.
+      B: >
+        Cost dimensions describe spend, not strategic role; two systems with
+        identical costs can sit in opposite quadrants.
+      C: >
+        User count and age are descriptive facts, not the strategic axes the grid
+        uses.
+      D: >
+        Implementation details like language or hosting are irrelevant to the
+        grid's strategic classification.
+    source: { doc: week-01-strategy-alignment.pptx, loc: slides 22-24 }
+
+  - id: w01-q11
+    week: 1
+    type: definitional
+    status: "rejected: leakage"
+    promptVersion: sample-v0
+    stem: >
+      What two dimensions does McFarlan's strategic grid classify systems by —
+      current operational dependence and future strategic impact?
+    # Reject note: the stem states the two dimensions it is asking for, so the
+    # answer is embedded in the question (leakage). It is also trivia-level: it
+    # tests recall of the axis names, not the ability to place a real system in a
+    # quadrant. Counted against sample-v0 accept rate in docs/EVAL-LOG.md.

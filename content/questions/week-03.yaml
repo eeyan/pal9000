@@ -1,0 +1,470 @@
+week: 3
+title: "Build vs. Buy vs. SaaS"
+questions:
+  - id: w03-q01
+    week: 3
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A company needs two new systems: a standard payroll system, and a
+      proprietary pricing engine that is central to how it beats competitors. A
+      consultant recommends building both in-house for "full control." What
+      sourcing principle argues against building the payroll system?
+    options:
+      - key: A
+        text: >
+          Always buy everything to minimize headcount.
+      - key: B
+        text: >
+          Build what differentiates you; buy what does not. Payroll is a commodity
+          capability available off-the-shelf — building it spends scarce
+          engineering on undifferentiated work and incurs a lifelong maintenance
+          obligation.
+      - key: C
+        text: >
+          Always build everything to maximize control.
+      - key: D
+        text: >
+          Build the payroll system, because control matters more than cost for
+          every system.
+    answer: B
+    feedback:
+      correct: >
+        Sourcing should follow strategic value: invest build effort where you can
+        differentiate (the pricing engine) and buy the commodity capabilities
+        (payroll) that rivals also just buy. Building a commodity burns scarce
+        talent and creates a permanent maintenance obligation for zero competitive
+        gain.
+      A: >
+        "Buy everything" would outsource the differentiating pricing engine —
+        surrendering the very thing that creates advantage.
+      C: >
+        "Build everything" wastes engineering on commodities and multiplies the
+        maintenance burden.
+      D: >
+        Control has a cost; for a commodity that cost is not repaid in advantage —
+        TCO and focus both argue for buy.
+    selfExplainPrompt: >
+      The principle sorts systems by whether they differentiate. Tie this to the
+      McFarlan grid: which quadrant is payroll, which is the pricing engine, and
+      why does the quadrant predict the sourcing choice?
+    source: { doc: week-03-build-buy-saas.pptx, loc: slides 5-8 }
+
+  - id: w03-q02
+    week: 3
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      Three years into a CRM SaaS contract, a company wants to switch providers
+      for better pricing. It discovers that its customizations, workflows, and
+      years of data all live in the vendor's proprietary formats, that staff are
+      trained only on this tool, and that integrations are hard-wired to it.
+      Migration would be enormously costly. What does this situation illustrate?
+    options:
+      - key: A
+        text: >
+          The company simply negotiated a bad contract; there is no general lesson
+          here.
+      - key: B
+        text: >
+          SaaS never allows switching, so this outcome is normal and unavoidable.
+      - key: C
+        text: >
+          Vendor lock-in via accumulated switching costs — proprietary formats,
+          custom integrations, retrained staff, and data gravity make leaving
+          expensive, which weakens the buyer's future bargaining power.
+      - key: D
+        text: >
+          The company should never have adopted a CRM in the first place.
+    answer: C
+    feedback:
+      correct: >
+        Lock-in is the buildup of switching costs — proprietary data formats, deep
+        integrations, retraining, and data gravity — that make leaving painful and
+        hand pricing power to the incumbent. It is a foreseeable strategic cost to
+        weigh at selection, via data-portability and exit terms, not a surprise at
+        renewal.
+      A: >
+        It is a general, predictable pattern, not a one-off contracting slip —
+        which is exactly why exit terms belong in the selection criteria.
+      B: >
+        Switching is possible but costly; the lesson is to manage switching costs,
+        not to assume they are fixed and immovable.
+      D: >
+        CRMs are valuable; the lesson is to negotiate portability up front, not to
+        abstain from the category.
+    selfExplainPrompt: >
+      Lock-in grows from accumulated switching costs. How does data egress
+      (getting your data back out) relate to lock-in, and why should exit and
+      portability terms be negotiated before signing rather than at renewal?
+    source: { doc: week-03-build-buy-saas.pptx, loc: slides 18-21 }
+
+  - id: w03-q03
+    week: 3
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A CFO is comparing buying and hosting an application on owned servers (a
+      large upfront purchase, depreciated over years) against a SaaS subscription
+      (a predictable monthly per-user fee, no hardware). She likes that SaaS "has
+      no capital cost." Beyond cash-flow timing, what trade-off should she weigh?
+    options:
+      - key: A
+        text: >
+          SaaS shifts spend from capex to opex — predictable, scalable, no
+          hardware to run — but over a long horizon subscription fees can exceed
+          the cost of owning, and you trade control and customization for the
+          vendor's roadmap and terms.
+      - key: B
+        text: >
+          SaaS is strictly cheaper in all cases, because there is no upfront cost.
+      - key: C
+        text: >
+          Owning is always cheaper, because you stop paying once it is purchased.
+      - key: D
+        text: >
+          The capex-versus-opex choice is purely an accounting formality with no
+          strategic consequence.
+    answer: A
+    feedback:
+      correct: >
+        SaaS converts a capital outlay into an operating subscription: lower
+        upfront cost, elasticity, and offloaded operations, but potentially higher
+        long-run cost and less control over customization, data, and upgrade
+        timing. The right choice depends on horizon, scale, and how much control
+        the capability warrants — not on "no capex" alone.
+      B: >
+        "No upfront cost" is not "cheaper overall"; recurring fees can surpass
+        ownership over a long life.
+      C: >
+        Owning still incurs run costs — maintenance, upgrades, staff — so the
+        purchase is not the end of spending.
+      D: >
+        The choice shapes cost structure, control, and flexibility — very much
+        strategic, not a mere accounting detail.
+    selfExplainPrompt: >
+      SaaS trades capex for opex and control for convenience. Connect the "over a
+      long horizon subscription can exceed owning" point to TCO thinking, and
+      explain when a high-control, differentiating capability might justify owning
+      despite the capex hit.
+    source: { doc: week-03-build-buy-saas.pptx, loc: slides 22-25 }
+
+  - id: w03-q04
+    week: 3
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A vendor announces that the on-premises database powering your logistics
+      platform reaches end-of-life in 12 months: no more security patches or
+      support after that date, though the software will keep running. Operations
+      says "it still works — leave it." As IT strategist, why is "leave it" the
+      risky choice?
+    options:
+      - key: A
+        text: >
+          The database will stop functioning at the end-of-life date and halt
+          logistics.
+      - key: B
+        text: >
+          End-of-life ends patches and support, not function — so vulnerabilities
+          go unfixed, defects go unaddressed, expertise dwindles, and compliance
+          and KTLO risk climb the longer you stay.
+      - key: C
+        text: >
+          The vendor is legally required to keep issuing security patches after
+          end-of-life.
+      - key: D
+        text: >
+          Continuing to run the software after end-of-life breaches the license
+          and is illegal.
+    answer: B
+    feedback:
+      correct: >
+        End-of-life ends the vendor's obligations, not the software's operation.
+        Risk transfers to you: unpatched security holes, no defect fixes, a
+        shrinking talent pool, and rising compliance exposure — a growing run
+        burden that quietly crowds out change spending. "It still works" is true
+        and beside the point.
+      A: >
+        This confuses end of support with end of function — it keeps running,
+        which is exactly what makes "leave it" tempting and dangerous.
+      C: >
+        Backwards — ending precisely those obligations is what end-of-life means.
+      D: >
+        Running past end-of-life is legal, just increasingly risky; the license is
+        not voided by the date.
+    selfExplainPrompt: >
+      End-of-life shifts risk onto you while the system still runs. Trace how
+      staying on unsupported software raises the KTLO share over the following
+      years, and why that constrains the firm's change-the-business capacity.
+    source: { doc: week-03-build-buy-saas.pptx, loc: slides 26-29 }
+
+  - id: w03-q05
+    week: 3
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A company adopts a leading SaaS ERP to replace a heavily customized
+      on-premises system. Business units demand that the vendor replicate dozens
+      of their unique, hard-coded workflows. The vendor allows only configuration
+      within set limits, not deep custom code, and leadership is frustrated. What
+      is the more strategically sound response?
+    options:
+      - key: A
+        text: >
+          Force the vendor to build every custom workflow, or the SaaS model is
+          worthless.
+      - key: B
+        text: >
+          Abandon SaaS entirely and rebuild the fully custom on-premises system.
+      - key: C
+        text: >
+          Keep both systems running in parallel indefinitely.
+      - key: D
+        text: >
+          Reconsider whether each bespoke workflow truly differentiates; SaaS
+          trades deep customization for standardization, lower maintenance, and
+          continuous updates — often the better move is to adopt standard
+          best-practice processes and reserve customization for genuinely
+          differentiating needs.
+    answer: D
+    feedback:
+      correct: >
+        SaaS deliberately limits customization to keep every tenant on a
+        maintainable standard version; that constraint is the source of its lower
+        run cost and steady updates. The strategic question is which "unique"
+        workflows actually differentiate — most do not and should conform to the
+        standard, saving customization for the few that do.
+      A: >
+        Demanding unlimited custom code defeats the SaaS model and rebuilds the
+        maintenance burden you just left behind.
+      B: >
+        Reverting to full custom reclaims flexibility but restores the high TCO
+        and upgrade pain that motivated the move.
+      C: >
+        Running both indefinitely doubles cost and complexity — a non-decision,
+        not a strategy.
+    selfExplainPrompt: >
+      SaaS constrains customization by design. Link this to the
+      utility-versus-differentiator idea: why should undifferentiating workflows
+      conform to the vendor standard, and how does over-customizing a SaaS product
+      recreate technical debt and lock-in?
+    source: { doc: week-03-build-buy-saas.pptx, loc: slides 30-33 }
+
+  - id: w03-q06
+    week: 3
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      While evaluating two competing analytics SaaS providers, a strategist
+      insists on asking each: "If we leave in three years, in what format do we
+      get our data, how fast, and at what cost?" A colleague calls the question
+      premature. Why is the exit question strategically essential at selection
+      time?
+    options:
+      - key: A
+        text: >
+          It is not — exit terms only matter once you have actually decided to
+          leave.
+      - key: B
+        text: >
+          Because the cheapest provider is always the one with the easiest exit.
+      - key: C
+        text: >
+          Data egress and portability terms determine future switching costs and
+          lock-in; negotiating them at selection, when you still have leverage,
+          protects bargaining power and avoids being trapped by data gravity
+          later.
+      - key: D
+        text: >
+          Exit terms are a legal formality with no bearing on strategy.
+    answer: C
+    feedback:
+      correct: >
+        Your leverage is highest before you sign; that is when to lock in
+        data-egress rights, formats, timelines, and costs. Skip it and switching
+        costs and data gravity accumulate silently, so by renewal the vendor holds
+        the pricing power. Exit planning is lock-in prevention.
+      A: >
+        Waiting until you want to leave is exactly when you have no leverage and
+        the lock-in is already set.
+      B: >
+        Price and exit ease are independent; a cheap tool can carry brutal egress
+        terms.
+      D: >
+        Egress terms directly shape switching cost and future negotiating power —
+        core strategy, not formality.
+    selfExplainPrompt: >
+      The strategist treats exit terms as leverage. Connect data egress to vendor
+      lock-in and switching costs: why does negotiating portability up front
+      change the balance of power across the whole contract life?
+    source: { doc: week-03-build-buy-saas.pptx, loc: slides 20-21 }
+
+  - id: w03-q07
+    week: 3
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A fast-growing startup needs a customer-support system now. It has a tiny
+      engineering team, unpredictable growth, and no differentiating requirements
+      for support tooling. Leadership debates building it, buying and self-hosting
+      it, or subscribing to a SaaS product. Which choice best fits the situation,
+      and why?
+    options:
+      - key: A
+        text: >
+          Build it in-house, for maximum control.
+      - key: B
+        text: >
+          Subscribe to a SaaS product: with no differentiation, a tiny team, and
+          volatile scale, SaaS offloads operations, scales elastically, and
+          preserves scarce engineering for the product — accepting standard
+          features and some lock-in as a reasonable trade.
+      - key: C
+        text: >
+          Buy and self-host, to avoid subscription fees.
+      - key: D
+        text: >
+          Delay the decision until the startup is large enough to build its own.
+    answer: B
+    feedback:
+      correct: >
+        Match sourcing to context: no differentiation, scarce engineering, and
+        uncertain scale all point to SaaS, which trades some control and lock-in
+        for speed, elasticity, and offloaded run cost — freeing the small team for
+        differentiating product work. Build or self-host would divert exactly the
+        talent the startup cannot spare.
+      A: >
+        Building a commodity support tool squanders a tiny team's scarce capacity
+        for zero competitive gain.
+      C: >
+        Self-hosting still demands ops, patching, and scaling work the startup
+        cannot staff, and locks in capacity it may outgrow or underuse.
+      D: >
+        Deferring leaves a real current need unmet; the situation already points
+        clearly to SaaS.
+    selfExplainPrompt: >
+      The recommendation weighs differentiation, team size, and scale. How do the
+      run-versus-change and utility-versus-differentiator ideas jointly justify
+      SaaS here, and what would have to change to make building worthwhile?
+    source: { doc: week-03-build-buy-saas.pptx, loc: slides 9-12 }
+
+  - id: w03-q08
+    week: 3
+    type: definitional
+    status: accepted
+    promptVersion: sample-v0
+    stem: "\"Vendor lock-in\" refers to…"
+    options:
+      - key: A
+        text: >
+          A situation where switching to an alternative provider is difficult or
+          costly — due to proprietary formats, deep integrations, retraining, or
+          data gravity — which reduces the customer's future bargaining power
+      - { key: B, text: A contractual clause that legally forbids ever changing vendors }
+      - { key: C, text: The vendor physically hosting the customer's servers }
+      - { key: D, text: A discount offered for signing a multi-year agreement }
+    answer: A
+    feedback:
+      correct: >
+        Lock-in is the accumulation of switching costs that make leaving a vendor
+        expensive and thus weaken your leverage — even when no clause forbids
+        leaving. It arises from proprietary formats, custom integrations,
+        retraining, and data gravity, which is why exit terms matter at selection.
+      B: >
+        Lock-in is usually economic, not a legal prohibition — you can leave, it
+        just costs a great deal.
+      C: >
+        Where servers physically sit is a hosting detail, not the switching-cost
+        concept.
+      D: >
+        A multi-year discount is pricing; it may contribute to lock-in but is not
+        its definition.
+    source: { doc: week-03-build-buy-saas.pptx, loc: slides 16-17 }
+
+  - id: w03-q09
+    week: 3
+    type: definitional
+    status: accepted
+    promptVersion: sample-v0
+    stem: "\"Software as a Service (SaaS)\" is best defined as…"
+    options:
+      - { key: A, text: Software you purchase once and install on your own servers, maintaining it yourself }
+      - { key: B, text: Any software that happens to be free of charge }
+      - key: C
+        text: >
+          Software licensed on a subscription basis and centrally hosted by the
+          vendor, accessed over the internet, with the provider handling
+          infrastructure, maintenance, and updates
+      - { key: D, text: Custom software built in-house for a single organization }
+    answer: C
+    feedback:
+      correct: >
+        SaaS delivers centrally hosted software by subscription over the internet,
+        with the vendor operating and updating it. This shifts spend from capex to
+        opex and offloads operations, in exchange for less control over
+        customization and upgrade timing.
+      A: >
+        That describes traditional on-premises licensing — the model SaaS is
+        contrasted with.
+      B: >
+        Price is not the defining trait; SaaS is a hosting-and-delivery model, and
+        most SaaS is paid.
+      D: >
+        Bespoke in-house software is the "build" option, not a hosted subscription
+        service.
+    source: { doc: week-03-build-buy-saas.pptx, loc: slides 13-15 }
+
+  - id: w03-q10
+    week: 3
+    type: definitional
+    status: accepted
+    promptVersion: sample-v0
+    stem: In a sourcing context, "switching costs" are…
+    options:
+      - key: A
+        text: >
+          The one-time and ongoing costs a customer incurs to move from one
+          provider or system to another — data migration, re-integration,
+          retraining, and lost productivity during the transition
+      - { key: B, text: The monthly subscription fee charged by a SaaS vendor }
+      - { key: C, text: The purchase price of a new system only }
+      - { key: D, text: Penalties defined solely in the contract's early-termination clause }
+    answer: A
+    feedback:
+      correct: >
+        Switching costs are the total burden of changing providers — migrating
+        data, rebuilding integrations, retraining staff, and absorbing transition
+        disruption. High switching costs are the engine of vendor lock-in, so
+        anticipating them is part of a sound sourcing decision.
+      B: >
+        The subscription fee is the cost of staying, not the cost of leaving.
+      C: >
+        A new system's price is one element; switching costs also include
+        migration, integration, and retraining.
+      D: >
+        Early-termination penalties are one contractual piece; most switching cost
+        is operational, not a clause.
+    source: { doc: week-03-build-buy-saas.pptx, loc: slides 17-18 }
+
+  - id: w03-q11
+    week: 3
+    type: scenario-mcq
+    status: "rejected: ambiguous"
+    promptVersion: sample-v0
+    stem: >
+      A company's SaaS vendor raises prices 30% at renewal. Should the company
+      switch providers?
+    # Reject note: the correct answer is underspecified. "It depends on switching
+    # costs versus the increase" is defensible, but the stem gives no data on
+    # switching costs, contract terms, or alternatives, so a case-reasoning
+    # student can justify multiple options. Rewrite with concrete numbers (egress
+    # cost, retraining, alternative pricing) so exactly one option is best.
+    # Counted against sample-v0 accept rate in docs/EVAL-LOG.md.

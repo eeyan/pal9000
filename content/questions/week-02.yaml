@@ -1,0 +1,458 @@
+week: 2
+title: "IT Spend: Run vs. Change"
+questions:
+  - id: w02-q01
+    week: 2
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A CIO presents the board a budget in which 78% of IT spend goes to keeping
+      current systems running and 22% to new initiatives. A board member reacts:
+      "So 78% is wasted — cut it." How should the CIO reframe the 78%?
+    options:
+      - key: A
+        text: >
+          The board member is right; run spend is pure waste and should be
+          eliminated.
+      - key: B
+        text: >
+          The 78% is the innovation budget and should be protected from any cuts.
+      - key: C
+        text: >
+          Run-the-business ("KTLO") spending keeps existing operations, licenses,
+          and infrastructure functioning — it is largely non-discretionary; the
+          strategic concern is its ratio, because every run dollar is one not
+          available for change-the-business investment.
+      - key: D
+        text: >
+          The split is meaningless, because all IT spending is ultimately
+          equivalent.
+    answer: C
+    feedback:
+      correct: >
+        Run (KTLO) spend is mostly the cost of staying operational, not waste —
+        turning it off breaks the business. The strategic lever is the ratio: a
+        high run share crowds out change spending. You attack it by lowering run
+        cost through simplification and retirement, not by slashing operations.
+      A: >
+        Cutting non-discretionary run spend indiscriminately takes systems down;
+        the goal is to shrink the ratio, not gut operations.
+      B: >
+        This reverses the definitions — run is the opposite of the
+        innovation/change bucket.
+      D: >
+        The split is the central diagnostic of IT financial strategy; treating
+        all spend as equivalent hides the crowd-out problem entirely.
+    selfExplainPrompt: >
+      The CIO wants to lower the run share to free change capacity. Name one
+      driver that pushes KTLO share up over time (for example, accumulating
+      systems or technical debt), and explain why "just cut run spend" fails
+      without addressing that driver.
+    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 4-6 }
+
+  - id: w02-q02
+    week: 2
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      Over eight years a company's KTLO share of the IT budget has crept from 60%
+      to 80%, even though headline IT spending rose every year. Leadership is
+      baffled: "We keep adding budget — why is there less for new projects?" What
+      best explains the rising KTLO share?
+    options:
+      - key: A
+        text: >
+          Vendors arbitrarily raised prices; there is nothing structural to
+          manage here.
+      - key: B
+        text: >
+          Each new system, once launched, becomes something to run, patch, and
+          support indefinitely; without retiring old systems and paying down
+          technical debt, cumulative run obligations grow and consume each budget
+          increase.
+      - key: C
+        text: >
+          The finance team is miscategorizing change spend as run spend.
+      - key: D
+        text: >
+          KTLO always stays flat, so the numbers must be an accounting error.
+    answer: B
+    feedback:
+      correct: >
+        Change work is a one-time build; run work is a perpetual obligation that
+        each project adds to the stack. Absent decommissioning and debt paydown,
+        the run base ratchets upward and eats budget growth. That is why "add more
+        budget" alone never restores change capacity.
+      A: >
+        Price increases are marginal; the structural driver is the accumulating
+        installed base of things that must be maintained.
+      C: >
+        Possible in theory, but the ratchet described here is the normal
+        structural pattern even under correct accounting.
+      D: >
+        KTLO characteristically grows with the installed base — flatness would be
+        the anomaly, not the rule.
+    selfExplainPrompt: >
+      The run base ratchets up as systems accumulate. How does deferring
+      maintenance (technical debt) accelerate this, and why can a decommissioning
+      program do more for change capacity than a budget increase?
+    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 10-13 }
+
+  - id: w02-q03
+    week: 2
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      Two proposals to replace a warehouse system land on your desk. Option X has
+      a license price 40% lower than Option Y. On a five-year view, Option X
+      requires costly custom integration, heavy annual support, specialized staff,
+      and a painful data migration; Option Y bundles integration and support.
+      Finance wants to pick X on sticker price. What concept should drive the
+      decision instead?
+    options:
+      - key: A
+        text: >
+          Total cost of ownership — the full five-year cost including integration,
+          support, staffing, migration, and downtime, not just the license price.
+      - key: B
+        text: >
+          Return on investment only — pick whichever option has the lowest
+          upfront cost.
+      - key: C
+        text: >
+          Capital-expenditure minimization — always choose the lower purchase
+          price.
+      - key: D
+        text: >
+          Payback period of the license fee alone.
+    answer: A
+    feedback:
+      correct: >
+        TCO captures the full lifecycle cost — acquisition plus integration,
+        operations, support, staffing, migration, and eventual retirement.
+        Sticker price is often a small fraction of the total; a "cheaper" system
+        can cost more over its life once run costs are counted. TCO is how
+        run-cost implications enter a purchase decision.
+      B: >
+        ROI needs the full cost side too; anchoring on upfront cost alone
+        reproduces the sticker-price trap.
+      C: >
+        Minimizing purchase price ignores the ongoing run costs that dominate
+        lifecycle spend.
+      D: >
+        License payback ignores integration, support, and staffing — precisely
+        the costs that differ between these two options.
+    selfExplainPrompt: >
+      TCO folds ongoing run costs into a buy decision. How does choosing the
+      lower-TCO option today affect the organization's future KTLO share, and why
+      does sticker-price thinking quietly inflate run-the-business spend?
+    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 18-21 }
+
+  - id: w02-q04
+    week: 2
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      An engineering lead warns that years of shipping fast with quick fixes and
+      skipped upgrades mean routine changes now take three times longer and
+      outages are rising. The CFO asks why maintenance keeps getting more expensive
+      when "nothing new is even being built." What is the CFO missing?
+    options:
+      - key: A
+        text: >
+          Nothing — if no new features ship, maintenance costs should fall.
+      - key: B
+        text: >
+          The engineers are simply underperforming and should work faster.
+      - key: C
+        text: >
+          Maintenance cost is fixed and unrelated to past design choices.
+      - key: D
+        text: >
+          Technical debt: accumulated shortcuts and deferred upgrades impose an
+          ongoing "interest" cost — slower changes, more failures, higher run
+          spend — until it is paid down through refactoring or modernization.
+    answer: D
+    feedback:
+      correct: >
+        Technical debt behaves like debt: past shortcuts accrue interest as
+        rising maintenance effort, fragility, and slower delivery. It is a real
+        budget force that inflates run cost even with zero new features, and it
+        compounds until deliberately paid down. Ignoring it guarantees KTLO keeps
+        climbing.
+      A: >
+        "No new features" does not stop the interest — accrued fragility keeps
+        raising run cost on its own.
+      B: >
+        Blaming speed treats a systemic design-quality problem as an individual
+        one; the drag is structural, not personal.
+      C: >
+        Maintenance cost is very much a function of accumulated design choices —
+        that is the whole point of the debt metaphor.
+    selfExplainPrompt: >
+      Technical debt is framed as interest on past shortcuts. Trace how unpaid
+      technical debt feeds the rising-KTLO ratchet, and why paying it down is
+      itself a change-the-business investment rather than pure maintenance.
+    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 24-27 }
+
+  - id: w02-q05
+    week: 2
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      To hit an aggressive cost target, a new CIO freezes all "change-the-business"
+      projects for a year and protects only run spending, declaring the
+      organization "efficient." Two years later the company has fallen behind
+      competitors on digital capabilities. What strategic error did the freeze
+      represent?
+    options:
+      - key: A
+        text: >
+          None — protecting run spend and cutting change is always the prudent
+          cost move.
+      - key: B
+        text: >
+          Starving change-the-business investment sacrifices future
+          competitiveness for short-term cost optics; run and change are different
+          strategic bets, and cutting all change mortgages the firm's future
+          capability.
+      - key: C
+        text: >
+          The CIO should also have cut run spending to zero to save even more.
+      - key: D
+        text: >
+          Change spending has no strategic value, so the only real mistake was
+          communication.
+    answer: B
+    feedback:
+      correct: >
+        Run keeps you alive today; change keeps you relevant tomorrow. Zeroing
+        change may flatter this year's budget but forfeits the capability pipeline
+        that competitiveness depends on. The strategic task is balancing the two,
+        not maximizing one at the other's expense.
+      A: >
+        Prudence is about balance; a total change freeze trades the future for a
+        one-year optic.
+      C: >
+        Cutting run to zero destroys operations — the opposite failure, not a fix.
+      D: >
+        Change spend is precisely where future capability comes from; dismissing
+        its value is the core misconception here.
+    selfExplainPrompt: >
+      The freeze optimized a short-term ratio at long-term cost. How does the
+      McFarlan grid's "Strategic/Turnaround" category argue against freezing all
+      change spend, and which systems should a freeze never touch?
+    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 7-9 }
+
+  - id: w02-q06
+    week: 2
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A department proudly builds an internal tool "for free" using spare staff
+      time and open-source components, avoiding any license fee. Two years on, the
+      original developer has left, no one can safely modify it, and it needs
+      security patching the team cannot provide. Which run-versus-change lesson
+      does this illustrate?
+    options:
+      - key: A
+        text: >
+          In-house builds are always cheaper, because they avoid license fees.
+      - key: B
+        text: >
+          The team simply chose the wrong open-source components.
+      - key: C
+        text: >
+          "Free" to acquire is not free to own — the build created a perpetual
+          run and maintenance obligation (support, patching, key-person risk) that
+          its zero sticker price hid; TCO covers the whole life, not just
+          acquisition.
+      - key: D
+        text: >
+          Open-source software cannot be used safely in a business.
+    answer: C
+    feedback:
+      correct: >
+        Acquisition cost and ownership cost are different things. A build with no
+        license fee still incurs support, security, and knowledge-continuity costs
+        for its whole life — often the larger share. This is why TCO, not sticker
+        price, governs build decisions, and why every build adds to KTLO.
+      A: >
+        Avoiding a license fee says nothing about ownership cost, which here
+        dominates and was ignored.
+      B: >
+        Component choice is not the issue; any unmaintained build accrues the same
+        ownership burden.
+      D: >
+        Open source is fine; the lesson is about unowned maintenance, not the
+        license model.
+    selfExplainPrompt: >
+      The "free" tool became a permanent run obligation. How does this decision
+      preview the build-versus-buy trade-off, and why does key-person risk belong
+      inside a TCO calculation rather than outside it?
+    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 22-23 }
+
+  - id: w02-q07
+    week: 2
+    type: scenario-mcq
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      A CIO wants to shift the run/change mix from 75/25 toward 60/40 within three
+      years without cutting the change budget. An advisor suggests simply demanding
+      that the operations team "do more with less." Which approach actually attacks
+      the run share structurally?
+    options:
+      - key: A
+        text: >
+          Order the operations team to cut its spending by 20% across the board.
+      - key: B
+        text: >
+          Reduce the run base itself — retire redundant and legacy systems,
+          consolidate platforms, pay down technical debt, and standardize — so
+          there is structurally less to run, freeing capacity for change.
+      - key: C
+        text: >
+          Reclassify some run spending as change spending in the reports.
+      - key: D
+        text: >
+          Freeze all hiring in operations indefinitely.
+    answer: B
+    feedback:
+      correct: >
+        The run share falls durably only when there is structurally less to run:
+        fewer systems, less duplication, less debt, more standardization.
+        Across-the-board squeezes and relabeling move the numbers without changing
+        the underlying obligation, so the ratio drifts back.
+      A: >
+        A blunt cut risks reliability and does not remove the underlying systems
+        that generate the run cost.
+      C: >
+        Relabeling is accounting theater — the real obligation and its crowd-out
+        effect are unchanged.
+      D: >
+        A hiring freeze starves operations without retiring the workload that
+        drives the cost.
+    selfExplainPrompt: >
+      The durable lever is shrinking the run base. Connect system retirement to
+      both technical-debt paydown and end-of-support risk, and explain why
+      consolidation is a change-the-business investment that lowers future run
+      cost.
+    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 28-30 }
+
+  - id: w02-q08
+    week: 2
+    type: definitional
+    status: accepted
+    promptVersion: sample-v0
+    stem: >
+      The distinction between "run-the-business" and "change-the-business" IT
+      spending is best described as…
+    options:
+      - key: A
+        text: >
+          Run-the-business funds maintaining and operating existing systems and
+          services; change-the-business funds new capabilities, improvements, and
+          innovation
+      - { key: B, text: Run-the-business is hardware spending; change-the-business is software spending }
+      - { key: C, text: Run-the-business is the IT budget; change-the-business is the marketing budget }
+      - { key: D, text: They are two names for the same thing }
+    answer: A
+    feedback:
+      correct: >
+        The split separates keeping current operations alive (run) from building
+        new capability (change). It is a strategic lens because the ratio between
+        them reveals how much capacity is left for innovation after the lights are
+        kept on.
+      B: >
+        The line is operate-versus-build, not hardware-versus-software; both
+        buckets contain both.
+      C: >
+        Both are IT spend; change-the-business is not the marketing budget.
+      D: >
+        They are deliberately opposed categories; collapsing them hides the
+        crowd-out dynamic.
+    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 3-4 }
+
+  - id: w02-q09
+    week: 2
+    type: definitional
+    status: accepted
+    promptVersion: sample-v0
+    stem: "\"Total cost of ownership (TCO)\" for an IT system refers to…"
+    options:
+      - { key: A, text: The purchase price plus sales tax }
+      - { key: B, text: The annual software license fee only }
+      - key: C
+        text: >
+          The full lifecycle cost of acquiring, operating, maintaining, and
+          eventually retiring a system — not just its purchase or license price
+      - { key: D, text: The cost of the hardware the system runs on }
+    answer: C
+    feedback:
+      correct: >
+        TCO sums every cost across a system's life: acquisition, integration,
+        operations, support, staffing, upgrades, and decommissioning. Because run
+        costs usually dwarf the sticker price, TCO is the honest basis for
+        comparing options.
+      A: >
+        Sticker-plus-tax captures only acquisition, missing the larger ongoing
+        costs.
+      B: >
+        The license fee is one recurring line; TCO also includes integration,
+        support, and staff.
+      D: >
+        Hardware is one component; TCO spans software, people, and process across
+        the full life.
+    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 16-17 }
+
+  - id: w02-q10
+    week: 2
+    type: definitional
+    status: accepted
+    promptVersion: sample-v0
+    stem: In IT budgeting, "technical debt" refers to…
+    options:
+      - { key: A, text: Money the IT department borrows to fund new projects }
+      - key: B
+        text: >
+          The accumulated future cost of expedient short-term technical choices —
+          quick fixes, skipped upgrades — that must eventually be "repaid" through
+          rework, showing up as higher maintenance effort and risk
+      - { key: C, text: The depreciation schedule of IT hardware assets }
+      - { key: D, text: Unpaid invoices owed to technology vendors }
+    answer: B
+    feedback:
+      correct: >
+        Technical debt is a metaphor: shortcuts taken for speed accrue "interest"
+        as slower changes, more defects, and rising run cost until deliberately
+        paid down. It is a genuine budget force because it inflates KTLO even
+        without any new features.
+      A: >
+        It is not literal borrowing; it is the deferred cost of design shortcuts.
+      C: >
+        Depreciation is an accounting schedule for assets, unrelated to the
+        shortcut-cost metaphor.
+      D: >
+        Vendor invoices are ordinary payables, not the accumulated cost of
+        expedient engineering.
+    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 25-26 }
+
+  - id: w02-q11
+    week: 2
+    type: definitional
+    status: "rejected: trivia"
+    promptVersion: sample-v0
+    stem: >
+      KTLO stands for "Keep The Lights On." In which decade did the phrase "keep
+      the lights on" first enter use as IT-budgeting jargon?
+    # Reject note: pure trivia — it tests the historical origin date of a phrase,
+    # not the run-versus-change budget concept the phrase names. The week
+    # materials give no source for such a date, so it also flirts with
+    # hallucination. Counted against sample-v0 accept rate in docs/EVAL-LOG.md.

@@ -1,0 +1,20 @@
+---
+layout: layout.njk
+pagination:
+  data: bank.weeks
+  size: 1
+  alias: w
+permalink: "/week-{{ w.week }}/"
+eleventyComputed:
+  title: "Week {{ w.week }} — {{ w.title }}"
+---
+<nav class="crumb mono"><a href="/">← MISSION SELECT</a></nav>
+<section class="hero hero-quiz">
+  <p class="kicker mono">WEEK {{ w.week | pad2 }} · {{ w.questions.length }} QUESTIONS</p>
+  <h1>{{ w.title }}</h1>
+</section>
+
+<div id="quiz" data-mode="week" data-week="{{ w.week }}"></div>
+
+<script type="application/json" id="question-data">{{ w.questions | dump | safe }}</script>
+<script type="module" src="/assets/js/week-page.js"></script>
