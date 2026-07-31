@@ -14,3 +14,6 @@ content/questions/*.candidates.yaml
 # Personal planning docs
 TODO.md
 PLAN.md
+
+# Local Netlify folder
+.netlify

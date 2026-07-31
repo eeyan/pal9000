@@ -49,9 +49,38 @@
   --amber-soft: #ffdd88;
   --red: #f2555a;
   --green: #3dd68c;
+  --accent: #ffb000;
+  --line-strong: #636c85;
+  --glow: #1a1408;
+  --tint-correct: rgba(61, 214, 140, 0.08);
+  --tint-wrong: rgba(242, 85, 90, 0.08);
+  --btn-text: #131007;
+  --dim-2: #8a867e;
+  color-scheme: dark;
   --font-body: 'IBM Plex Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
   --font-display: 'Michroma', sans-serif;
+}
+
+/* Daylight console — same cockpit, sun through the canopy. All text tokens
+   hold WCAG AA (see tests/unit/contrast.test.js); amber stays graphical-only
+   because #ffb000 text can't pass on light backgrounds (--accent darkens it). */
+:root[data-theme="light"] {
+  --bg: #f4f1ea;
+  --panel: #fbf9f4;
+  --panel-raised: #eeeae0;
+  --line: #cdc7b8;
+  --line-strong: #837c69;
+  --text: #26231c;
+  --dim: #5b564a;
+  --dim-2: #6b6659;
+  --accent: #7d5300;
+  --red: #b42328;
+  --green: #157a46;
+  --glow: #eadfc6;
+  --tint-correct: rgba(21, 122, 70, 0.10);
+  --tint-wrong: rgba(180, 35, 40, 0.08);
+  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
@@ -59,7 +88,7 @@
 body {
   margin: 0;
   background:
-    radial-gradient(1200px 500px at 50% -200px, #1a1408 0%, transparent 60%),
+    radial-gradient(1200px 500px at 50% -200px, var(--glow) 0%, transparent 60%),
     var(--bg);
   color: var(--text);
   font-family: var(--font-body);
@@ -96,7 +125,7 @@ body {
   letter-spacing: 0.14em;
 }
 
-.wordmark-num { color: var(--amber); margin-left: 0.35em; }
+.wordmark-num { color: var(--accent); margin-left: 0.35em; }
 
 .pal-eye {
   width: 26px;
@@ -121,12 +150,29 @@ body {
 
 @media (max-width: 480px) { .head-status { display: none; } }
 
+.theme-toggle {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  background: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  padding: 0.45rem 0.7rem;
+  min-height: 32px;
+  cursor: pointer;
+}
+.theme-toggle:hover, .theme-toggle:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 /* ---------- hero / headings ---------- */
 
 .kicker {
   font-size: 0.7rem;
   letter-spacing: 0.22em;
-  color: var(--amber);
+  color: var(--accent);
   margin: 0 0 0.6rem;
 }
 
@@ -144,7 +190,7 @@ h1 {
 
 .crumb { font-size: 0.75rem; letter-spacing: 0.12em; margin: 0 0 1.75rem; }
 .crumb a { color: var(--dim); text-decoration: none; }
-.crumb a:hover, .crumb a:focus-visible { color: var(--amber); }
+.crumb a:hover, .crumb a:focus-visible { color: var(--accent); }
 
 .panel-label {
   font-size: 0.7rem;
@@ -175,16 +221,16 @@ h1 {
 }
 
 .mission:hover, .mission:focus-visible {
-  border-color: var(--amber);
+  border-color: var(--accent);
   transform: translateX(3px);
 }
 
-.mission-num { color: var(--amber); font-size: 0.8rem; letter-spacing: 0.1em; }
+.mission-num { color: var(--accent); font-size: 0.8rem; letter-spacing: 0.1em; }
 .mission-title { font-weight: 600; }
 .mission-meta { display: flex; gap: 0.9rem; font-size: 0.72rem; letter-spacing: 0.08em; color: var(--dim); }
 .mission-meta .ok { color: var(--green); }
-.mission-meta .alert { color: var(--amber); }
-#review-count.alert { color: var(--amber); }
+.mission-meta .alert { color: var(--accent); }
+#review-count.alert { color: var(--accent); }
 
 .review-panel { margin-bottom: 3rem; }
 .hint { color: var(--dim); font-size: 0.85rem; margin-top: 0.9rem; }
@@ -202,7 +248,7 @@ h1 {
 .readout {
   font-size: 0.7rem;
   letter-spacing: 0.22em;
-  color: var(--amber);
+  color: var(--accent);
   margin: 0 0 1.1rem;
 }
 
@@ -227,7 +273,7 @@ h1 {
   padding: 0.85rem 1rem;
   background: var(--panel-raised);
   color: var(--text);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: 6px;
   font: inherit;
   line-height: 1.5;
@@ -235,20 +281,20 @@ h1 {
   transition: border-color 120ms ease, background 120ms ease;
 }
 
-.option:hover:not(:disabled), .option:focus-visible:not(:disabled) { border-color: var(--amber); }
+.option:hover:not(:disabled), .option:focus-visible:not(:disabled) { border-color: var(--accent); }
 .option:disabled { cursor: default; }
 
 .option-key {
-  color: var(--amber);
+  color: var(--accent);
   font-size: 0.8rem;
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 0.05rem 0.45rem;
 }
 
-.option.is-correct { border-color: var(--green); background: rgba(61, 214, 140, 0.08); }
+.option.is-correct { border-color: var(--green); background: var(--tint-correct); }
 .option.is-correct .option-key { color: var(--green); border-color: var(--green); }
-.option.is-wrong { border-color: var(--red); background: rgba(229, 72, 77, 0.08); }
+.option.is-wrong { border-color: var(--red); background: var(--tint-wrong); }
 .option.is-wrong .option-key { color: var(--red); border-color: var(--red); }
 .option.is-dim { opacity: 0.45; }
 
@@ -268,7 +314,7 @@ h1 {
   display: inline-block;
   font-size: 0.62rem;
   letter-spacing: 0.18em;
-  color: var(--amber);
+  color: var(--accent);
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 0.1rem 0.45rem;
@@ -277,7 +323,7 @@ h1 {
 }
 
 .self-explain {
-  border: 1px dashed var(--amber);
+  border: 1px dashed var(--accent);
   border-radius: 6px;
   padding: 0.9rem 1rem;
   margin: 1.1rem 0 1.3rem;
@@ -290,7 +336,7 @@ h1 {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   letter-spacing: 0.14em;
-  color: var(--bg);
+  color: var(--btn-text);
   background: var(--amber);
   border: none;
   border-radius: 6px;
@@ -307,7 +353,7 @@ h1 {
 .done-score {
   font-family: var(--font-display);
   font-size: 2.4rem;
-  color: var(--amber);
+  color: var(--accent);
   margin: 0.5rem 0 1rem;
 }
 .done-note { color: var(--dim); max-width: 44ch; margin: 0 auto 1.5rem; }
@@ -333,7 +379,7 @@ h1 {
   color: var(--dim);
 }
 .site-foot p { margin: 0.3rem 0; }
-.foot-dim { color: #8a867e; font-size: 0.75rem; }
+.foot-dim { color: var(--dim-2); font-size: 0.75rem; }
 
 /* ---------- disclosure, stamps, helpers ---------- */
 
@@ -349,7 +395,7 @@ h1 {
   letter-spacing: 0.18em;
   color: var(--dim);
 }
-.others summary:hover, .others summary:focus-visible { color: var(--amber); }
+.others summary:hover, .others summary:focus-visible { color: var(--accent); }
 .others p { color: var(--dim); margin: 0.7rem 0 0; }
 
 .btn-next:disabled {
@@ -384,7 +430,7 @@ h1 {
 
 /* ---------- a11y / motion ---------- */
 
-:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
   .pal-eye { animation: none; }

@@ -84,8 +84,16 @@ describe('built site', () => {
   });
 
   it('assets are copied through', () => {
-    for (const f of ['assets/css/style.css', 'assets/js/engine.js', 'assets/js/scheduler.js']) {
+    for (const f of ['assets/css/style.css', 'assets/js/engine.js', 'assets/js/scheduler.js', 'assets/js/theme.js']) {
       expect(existsSync(join(SITE, f)), f).toBe(true);
+    }
+  });
+
+  it('every page has the theme toggle and bootstrap script', () => {
+    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', '404.html']) {
+      const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
+      expect($('#theme-toggle').length, page).toBe(1);
+      expect($('script[src="/assets/js/theme.js"]').length, page).toBe(1);
     }
   });
 });
