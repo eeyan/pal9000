@@ -1,8 +1,20 @@
 [build]
   publish = "_site"
   command = "npm run build"
-  # Production deploys are opt-in: only build when the commit subject contains [deploy].
-  ignore = "git log -1 --pretty=%s | grep -qv '\\[deploy\\]'"
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Production deploys are opt-in: only build when the commit subject contains
+# [deploy]. Scoped to production so PR deploy previews still build freely, and
+# fail-closed: any git error skips the deploy instead of triggering one.
+[context.production]
+  ignore = "git log -1 --pretty=%s | grep -q '\\[deploy\\]' && exit 1 || exit 0"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'"
