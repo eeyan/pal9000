@@ -141,7 +141,7 @@ stem: What does the acronym KTLO ("Keep The Lights On") stand for in IT budgetin
 - **Generation script:** Node CLI calling the Claude API; input = week's source files; output = candidates YAML for curation. Runs locally, never in CI.
 - **Tests:** Vitest — unit for the scheduler + schema validation, integration (cheerio) for rendered quiz pages.
 - **Hosting:** Netlify free tier, `[deploy]` commit-gate per house convention. Domain TBD (a `*.netlify.app` URL is fine for semester 1; students don't care).
-- **Analytics:** Plausible, page-level only. **No per-student tracking** — sidesteps FERPA questions entirely at MVP.
+- **Analytics:** self-hosted Umami, page-level only. **No per-student tracking** — sidesteps FERPA questions entirely at MVP.
 
 ## Adoption plan (the part evidence says matters most)
 
