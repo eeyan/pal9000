@@ -84,13 +84,31 @@ describe('built site', () => {
   });
 
   it('assets are copied through', () => {
-    for (const f of ['assets/css/style.css', 'assets/js/engine.js', 'assets/js/scheduler.js', 'assets/js/theme.js']) {
+    for (const f of ['assets/css/style.css', 'assets/js/engine.js', 'assets/js/scheduler.js', 'assets/js/theme.js', 'assets/js/backup.js', 'assets/js/systems-page.js']) {
       expect(existsSync(join(SITE, f)), f).toBe(true);
     }
   });
 
+  it('systems page ships the storage controls and week list', () => {
+    const $ = cheerio.load(readFileSync(join(SITE, 'systems', 'index.html'), 'utf8'));
+    for (const id of ['log-body', 'copy-log', 'export-btn', 'import-btn', 'import-file',
+      'clear-queue-btn', 'full-reset-btn', 'reset-confirm', 'clear-confirm', 'import-confirm']) {
+      expect($(`#${id}`).length, `#${id}`).toBe(1);
+    }
+    const weekNums = JSON.parse($('#weeks-data').text());
+    expect(weekNums).toEqual(bank.weeks.map((w) => w.week));
+    expect($('script[src="/assets/js/systems-page.js"]').length).toBe(1);
+  });
+
+  it('every page footer links to the systems page', () => {
+    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html']) {
+      const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
+      expect($('.site-foot a[href="/systems/"]').length, page).toBe(1);
+    }
+  });
+
   it('every page has the theme toggle and bootstrap script', () => {
-    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', '404.html']) {
+    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
       const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
       expect($('#theme-toggle').length, page).toBe(1);
       expect($('script[src="/assets/js/theme.js"]').length, page).toBe(1);

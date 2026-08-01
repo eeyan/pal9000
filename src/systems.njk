@@ -1,0 +1,68 @@
+---
+layout: layout.njk
+title: Systems
+permalink: /systems/
+---
+<nav class="crumb mono"><a href="/">← MISSION SELECT</a></nav>
+<section class="hero hero-quiz">
+  <p class="kicker mono">PAL 9000 · SYSTEMS</p>
+  <h1>Your data, your device.</h1>
+  <p class="lede">Your progress is stored only in this browser — nothing is sent anywhere. Back it up, move it, or clear it here.</p>
+</section>
+
+<p class="status-strip mono" id="status-strip" hidden></p>
+
+<section class="sys-block" aria-labelledby="log-h">
+  <h2 id="log-h" class="panel-label mono">COMPLETION LOG</h2>
+  <p class="sys-note">One screenshot of this box covers every completed week when you report your practice points.</p>
+  <div class="term">
+    <div class="term-head"><span>COMPLETION RECORDS · THIS DEVICE</span><button class="term-copy mono" type="button" id="copy-log">COPY AS TEXT</button></div>
+    <div class="term-body" id="log-body">CONNECTING…</div>
+  </div>
+</section>
+
+<section class="sys-block" aria-labelledby="backup-h">
+  <h2 id="backup-h" class="panel-label mono">BACKUP &amp; RESTORE</h2>
+  <p class="sys-note">Backup saves your completion records and review schedule to a small file. Restore loads one and replaces what’s on this device — that’s how you move between phone and laptop.</p>
+  <div class="act">
+    <button class="btn-next" type="button" id="export-btn">DOWNLOAD BACKUP</button>
+    <button class="btn-ghost" type="button" id="import-btn">RESTORE FROM FILE…</button>
+    <input type="file" id="import-file" accept="application/json,.json" hidden>
+  </div>
+  <div class="confirm warn" id="import-confirm" hidden>
+    <p id="import-confirm-text"></p>
+    <div class="act">
+      <button class="btn-next" type="button" id="import-replace">REPLACE DATA</button>
+      <button class="btn-ghost" type="button" id="import-cancel">CANCEL</button>
+    </div>
+  </div>
+  <p class="status-msg" id="backup-msg" aria-live="polite"></p>
+</section>
+
+<section class="sys-block" aria-labelledby="reset-h">
+  <h2 id="reset-h" class="panel-label mono">RESET</h2>
+  <p class="sys-note">Clearing the queue keeps your completion records. A full reset deletes them too — you’ll be asked to confirm.</p>
+  <div class="act">
+    <button class="btn-ghost" type="button" id="clear-queue-btn">CLEAR REVIEW QUEUE</button>
+    <button class="btn-danger" type="button" id="full-reset-btn">FULL RESET</button>
+  </div>
+  <div class="confirm warn" id="clear-confirm" hidden>
+    <p id="clear-confirm-text"></p>
+    <div class="act">
+      <button class="btn-next" type="button" id="clear-yes">CLEAR QUEUE</button>
+      <button class="btn-ghost" type="button" id="clear-cancel">CANCEL</button>
+    </div>
+  </div>
+  <div class="confirm" id="reset-confirm" hidden>
+    <p id="reset-confirm-text"></p>
+    <div class="act">
+      <button class="btn-next" type="button" id="reset-backup">DOWNLOAD BACKUP FIRST</button>
+      <button class="btn-danger" type="button" id="reset-yes">ERASE EVERYTHING</button>
+      <button class="btn-ghost" type="button" id="reset-cancel">CANCEL</button>
+    </div>
+  </div>
+  <p class="status-msg" id="reset-msg" aria-live="polite"></p>
+</section>
+
+<script type="application/json" id="weeks-data">[{% for w in bank.weeks %}{{ w.week }}{% if not loop.last %},{% endif %}{% endfor %}]</script>
+<script type="module" src="/assets/js/systems-page.js"></script>
