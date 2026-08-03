@@ -23,11 +23,21 @@ permalink: /systems/
 
 <section class="sys-block" aria-labelledby="backup-h">
   <h2 id="backup-h" class="panel-label mono">BACKUP &amp; RESTORE</h2>
-  <p class="sys-note">Backup saves your completion records and review schedule to a small file. Restore loads one and replaces what’s on this device — that’s how you move between phone and laptop.</p>
+  <p class="sys-note">Backup holds your completion records and review schedule — download it as a small file, or copy it as text if downloads don’t work on your phone. Restoring replaces what’s on this device, which is how you move between phone, laptop, and the installed app.</p>
   <div class="act">
     <button class="btn-next" type="button" id="export-btn">DOWNLOAD BACKUP</button>
+    <button class="btn-ghost" type="button" id="copy-backup-btn">COPY BACKUP</button>
     <button class="btn-ghost" type="button" id="import-btn">RESTORE FROM FILE…</button>
+    <button class="btn-ghost" type="button" id="paste-btn">PASTE BACKUP…</button>
     <input type="file" id="import-file" accept="application/json,.json" hidden>
+  </div>
+  <div class="paste-form" id="paste-form" hidden>
+    <label class="paste-label" for="paste-text">Paste the backup text you copied, then choose IMPORT.</label>
+    <textarea class="paste-text mono" id="paste-text" rows="4" spellcheck="false" autocapitalize="off" autocorrect="off"></textarea>
+    <div class="act">
+      <button class="btn-next" type="button" id="paste-import">IMPORT</button>
+      <button class="btn-ghost" type="button" id="paste-cancel">CANCEL</button>
+    </div>
   </div>
   <div class="confirm warn" id="import-confirm" hidden>
     <p id="import-confirm-text"></p>

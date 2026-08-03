@@ -30,7 +30,7 @@ function makeQ(id, extra = {}) {
 let container;
 beforeEach(() => {
   vi.useFakeTimers();
-  sessionStorage.clear(); // in-session resume state is keyed per pathname — keep tests independent
+  localStorage.clear(); // in-session resume state is keyed per pathname — keep tests independent
   container = document.createElement('div');
   document.body.appendChild(container);
 });
@@ -176,10 +176,11 @@ describe('self-explanation NEXT gate', () => {
   });
 });
 
-describe('session persistence (sessionStorage resume)', () => {
+describe('session persistence (localStorage resume)', () => {
   const SESSION_KEY = 'pal9000.session:' + location.pathname;
-  // Simulate the iOS Safari eviction-reload: the old DOM (and engine closure)
-  // is gone, sessionStorage survives, and the page re-runs runQuiz from scratch.
+  // Simulate the iOS eviction-reload (background tab, or a killed standalone
+  // home-screen app): the old DOM (and engine closure) is gone, localStorage
+  // survives, and the page re-runs runQuiz from scratch.
   const reload = () => {
     container.remove();
     container = document.createElement('div');
@@ -255,7 +256,7 @@ describe('session persistence (sessionStorage resume)', () => {
     expect(onComplete).toHaveBeenCalledWith({ score: 2, total: 2, at: expect.any(Number) });
     expect(container.querySelector('.done-score').textContent).toBe('2/2');
     expect(container.querySelector('.done-stamp').textContent).toContain('WEEK 03');
-    expect(sessionStorage.getItem(SESSION_KEY)).toBeNull(); // finish clears the session
+    expect(localStorage.getItem(SESSION_KEY)).toBeNull(); // finish clears the session
   });
 
   it('discards a stored session whose question ids do not match the current set', () => {
@@ -277,7 +278,7 @@ describe('session persistence (sessionStorage resume)', () => {
     settle();
     click(option('B'));
     click(nextBtn()); // finish
-    expect(sessionStorage.getItem(SESSION_KEY)).toBeNull();
+    expect(localStorage.getItem(SESSION_KEY)).toBeNull();
 
     reload();
     runQuiz(container, questions, {});
@@ -286,14 +287,36 @@ describe('session persistence (sessionStorage resume)', () => {
   });
 
   it('starts fresh without throwing on corrupt or malformed stored state', () => {
-    sessionStorage.setItem(SESSION_KEY, '{not json');
+    localStorage.setItem(SESSION_KEY, '{not json');
     expect(() => runQuiz(container, [makeQ('q1')], {})).not.toThrow();
     expect(readout()).toBe('Q 01/01');
 
     reload();
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify({ v: 1, ids: ['q1'], i: 'nope', score: null, requeued: {} }));
+    localStorage.setItem(SESSION_KEY, JSON.stringify({ v: 2, at: Date.now(), ids: ['q1'], i: 'nope', score: null, requeued: {} }));
     expect(() => runQuiz(container, [makeQ('q1')], {})).not.toThrow();
     expect(readout()).toBe('Q 01/01');
+
+    reload();
+    // Missing / invalid saved-at timestamp is rejected outright.
+    localStorage.setItem(SESSION_KEY, JSON.stringify({ v: 2, ids: ['q1'], i: 0, score: 0, requeued: [] }));
+    expect(() => runQuiz(container, [makeQ('q1')], {})).not.toThrow();
+    expect(readout()).toBe('Q 01/01');
+  });
+
+  it('discards a stored session older than 24 hours and starts fresh at Q1', () => {
+    const questions = [makeQ('q1'), makeQ('q2')];
+    runQuiz(container, questions, {});
+    settle();
+    click(option('B'));
+    click(nextBtn()); // session stored at q2
+
+    reload();
+    // Fake timers mock Date.now — jump the clock just past the 24h expiry.
+    vi.setSystemTime(Date.now() + 24 * 60 * 60 * 1000 + 1);
+    runQuiz(container, questions, {});
+
+    expect(readout()).toBe('Q 01/02');
+    expect(container.querySelector('.stem').textContent).toBe('Stem for q1');
   });
 });
 

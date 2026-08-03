@@ -3,9 +3,12 @@ permalink: /manifest.webmanifest
 eleventyExcludeFromCollections: true
 ---
 {
+  "id": "/",
   "name": "PAL 9000 — Practice And Learn",
   "short_name": "PAL 9000",
-  "description": "Weekly practice questions for CIS 9000: IT Strategy.",
+  "description": "PAL 9000 — Practice And Learn. Weekly practice questions for CIS 9000: IT Strategy.",
+  "lang": "en",
+  "dir": "ltr",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -16,5 +19,13 @@ eleventyExcludeFromCollections: true
     { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
     { "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
     { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Review queue",
+      "short_name": "Review",
+      "url": "/review/",
+      "icons": [{ "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
   ]
 }

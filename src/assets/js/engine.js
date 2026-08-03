@@ -30,11 +30,19 @@ export function completionStamp(week, at) {
   return `PAL 9000 · WEEK ${String(week).padStart(2, '0')} · COMPLETE · ${localStamp(at)}`;
 }
 
-// In-session persistence: sessionStorage survives the eviction-reload iOS
-// Safari does to background tabs (subway use case), so a half-done set
-// resumes silently instead of restarting at Q1. Keyed per page; cleared on
+// In-session persistence: localStorage, not sessionStorage. sessionStorage
+// does survive the eviction-reload iOS Safari does to a background *tab*,
+// but iOS destroys it when it kills a backgrounded home-screen (standalone)
+// web app — exactly the subway case (phone locks in a tunnel, student comes
+// back 20 minutes later), and standalone mode is what students are steered
+// toward. localStorage survives both tab eviction and app termination, so a
+// half-done set resumes silently instead of restarting at Q1. Because
+// localStorage also outlives full browser restarts, sessions carry a
+// saved-at timestamp and expire after 24h — a set abandoned days ago starts
+// fresh rather than silently resuming mid-set. Keyed per page; cleared on
 // finish. All access is try/catch'd (private mode), same posture as storage.js.
 const SESSION_PREFIX = 'pal9000.session:';
+const SESSION_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 
 function sessionKey() {
   return SESSION_PREFIX + location.pathname;
@@ -42,8 +50,9 @@ function sessionKey() {
 
 function saveSession(questions, state) {
   try {
-    sessionStorage.setItem(sessionKey(), JSON.stringify({
-      v: 1,
+    localStorage.setItem(sessionKey(), JSON.stringify({
+      v: 2,
+      at: Date.now(),
       ids: questions.map((q) => q.id),
       i: state.i,
       score: state.score,
@@ -57,7 +66,7 @@ function saveSession(questions, state) {
 
 function clearSession() {
   try {
-    sessionStorage.removeItem(sessionKey());
+    localStorage.removeItem(sessionKey());
   } catch {
     // ignore
   }
@@ -65,18 +74,19 @@ function clearSession() {
 
 // Returns { i, score, requeued } or null. Defensive: any shape problem, id
 // mismatch with the current question set (bank changed between deploys, or
-// the review due-list moved on), or corrupt JSON silently discards the
-// stored session and starts fresh.
+// the review due-list moved on), a stale or missing saved-at timestamp, or
+// corrupt JSON silently discards the stored session and starts fresh.
 function loadSession(questions) {
   let s;
   try {
-    const raw = sessionStorage.getItem(sessionKey());
+    const raw = localStorage.getItem(sessionKey());
     if (!raw) return null;
     s = JSON.parse(raw);
   } catch {
     return null;
   }
-  if (!s || typeof s !== 'object' || s.v !== 1) return null;
+  if (!s || typeof s !== 'object' || s.v !== 2) return null;
+  if (!Number.isFinite(s.at) || Date.now() - s.at > SESSION_MAX_AGE_MS) return null;
   if (!Number.isInteger(s.i) || !Number.isInteger(s.score)) return null;
   if (!Array.isArray(s.ids) || !Array.isArray(s.requeued)) return null;
 

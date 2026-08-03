@@ -101,7 +101,8 @@ body {
   font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.6;
-  min-height: 100vh;
+  min-height: 100svh; /* svh, not vh: vh is the LARGE viewport on iOS, so the
+                         footer would sit under the Safari toolbar */
   display: flex;
   flex-direction: column;
   /* Notch / rounded-corner clearance in landscape and standalone mode. The
@@ -179,17 +180,32 @@ label {
    it takes the accent so it reads as a readout rather than a caption. */
 .head-status.offline { color: var(--accent); }
 
-@media (max-width: 480px) { .head-status { display: none; } }
+/* Phone headers have no room for the online readout, but it is a live region
+   (role="status"): display:none would drop it out of the accessibility tree
+   and the offline announcement would never fire. Clip it instead — invisible,
+   still announced. Offline keeps its normal box (see below). */
+@media (max-width: 480px) {
+  .head-status:not(.offline) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
 
-/* Offline is exactly when the phone-sized reader needs the readout, so it
-   overrides the hide above. The longer string would squeeze the header at
-   these widths, so it drops to its own line under the wordmark and toggle.
-   Wrapping is opt-in on .site-head.offline (also set by sw-register.js) so the
-   normal header keeps its single-line no-wrap layout. */
+/* Offline is exactly when the phone-sized reader needs the readout on screen.
+   The longer string would squeeze the header at these widths, so it drops to
+   its own line under the wordmark and toggle. Wrapping is opt-in on
+   .site-head.offline (also set by sw-register.js) so the normal header keeps
+   its single-line no-wrap layout. */
 @media (max-width: 560px) {
   .site-head.offline { flex-wrap: wrap; }
   .site-head.offline .head-status {
-    display: block;
     order: 1;
     flex-basis: 100%;
     margin-top: 0.6rem;
@@ -205,7 +221,7 @@ label {
   border: 1px solid var(--line-strong);
   border-radius: 4px;
   padding: 0.45rem 0.7rem;
-  min-height: 44px; /* 44px touch target (WCAG 2.5.8 / iOS HIG) */
+  min-height: 44px; /* Apple HIG / WCAG 2.5.5 (AAA); 2.5.8 (AA) only asks 24px */
   cursor: pointer;
 }
 .theme-toggle:hover, .theme-toggle:focus-visible {
@@ -466,6 +482,27 @@ h1 {
 .stamp-note { display: inline-block; color: var(--dim); font-size: 0.85rem; margin-top: 0.4rem; }
 .stamp-banner .stamp-note { margin: 0.4rem 0 0; }
 
+/* Install prompt on the home page — shown by home.js once there's progress
+   worth protecting, dismissed for good with GOT IT. */
+.install-hint {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  background: var(--panel);
+  padding: 1.1rem 1.2rem 1.2rem;
+  margin-bottom: 3rem;
+}
+.install-hint p { font-size: 0.9rem; margin: 0 0 0.8rem; max-width: 58ch; }
+.install-steps { color: var(--dim); }
+.install-steps .mono {
+  color: var(--accent);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  margin-right: 0.6em;
+}
+.install-warn { color: var(--dim); }
+.install-warn a { color: var(--accent); }
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -581,6 +618,32 @@ h1 {
   cursor: pointer;
 }
 .btn-danger:hover, .btn-danger:focus-visible { background: var(--tint-wrong); }
+
+/* Clipboard import: the fallback transport for installed iOS apps, where blob
+   downloads silently fail and storage is walled off from Safari's. */
+.paste-form {
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--panel);
+  padding: 1rem 1.1rem;
+  margin-top: 0.7rem;
+}
+.paste-label { display: block; color: var(--dim); font-size: 0.85rem; margin-bottom: 0.5rem; }
+.paste-text {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  padding: 0.6rem 0.7rem;
+  margin-bottom: 0.9rem;
+}
+.paste-text:focus-visible { border-color: var(--accent); }
 
 .confirm {
   border: 1px solid var(--red);

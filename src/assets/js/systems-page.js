@@ -5,6 +5,8 @@ import { makeBackup, parseBackup } from './backup.js';
 
 // theme.js is a classic (non-module) script, so its key is duplicated here.
 const THEME_KEY = 'pal9000.theme';
+// engine.js namespaces per-week quiz resume state under this prefix.
+const SESSION_PREFIX = 'pal9000.session:';
 
 const weeks = JSON.parse(document.getElementById('weeks-data').textContent);
 const pad2 = (n) => String(n).padStart(2, '0');
@@ -74,9 +76,12 @@ el('copy-log').addEventListener('click', async () => {
 
 // ---------- backup & restore ----------
 
+function backupText() {
+  return JSON.stringify(makeBackup(loadReviewState(), load(KEYS.progress, {}), Date.now()), null, 2);
+}
+
 function downloadBackup() {
-  const backup = makeBackup(loadReviewState(), load(KEYS.progress, {}), Date.now());
-  const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+  const blob = new Blob([backupText()], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const d = new Date();
   const a = document.createElement('a');
@@ -93,22 +98,38 @@ el('export-btn').addEventListener('click', () => {
   say(backupMsg, 'Backup saved to your downloads.');
 });
 
-let pendingImport = null;
-
-el('import-btn').addEventListener('click', () => el('import-file').click());
-
-el('import-file').addEventListener('change', async () => {
-  const input = el('import-file');
-  const file = input.files[0];
-  input.value = ''; // allow re-choosing the same file
-  if (!file) return;
-  say(backupMsg, '');
+// Second export transport: installed iOS apps can't be trusted to complete a
+// blob download, and their storage is separate from Safari's — the clipboard
+// is the reliable bridge between the two.
+el('copy-backup-btn').addEventListener('click', async () => {
+  const btn = el('copy-backup-btn');
   try {
-    pendingImport = parseBackup(await file.text());
+    await navigator.clipboard.writeText(backupText());
+    btn.textContent = 'COPIED ✓';
+    say(backupMsg, 'Backup copied. On the other device, choose PASTE BACKUP and paste it in.');
+  } catch {
+    btn.textContent = 'COPY FAILED';
+    say(backupMsg, 'Could not reach the clipboard — use DOWNLOAD BACKUP instead.', true);
+  }
+  setTimeout(() => { btn.textContent = 'COPY BACKUP'; }, 2000);
+});
+
+let pendingImport = null;
+let importReturnFocus = 'import-btn';
+
+// Both import transports (file picker, pasted text) funnel through here, so
+// they share one validation pass and one replace-confirm panel.
+// Returns true when the backup parsed and the confirm panel is showing.
+function offerImport(text, returnFocusId) {
+  importReturnFocus = returnFocusId;
+  say(backupMsg, '');
+  el('import-confirm').hidden = true;
+  try {
+    pendingImport = parseBackup(text);
   } catch (err) {
     pendingImport = null;
     say(backupMsg, err.message, true);
-    return;
+    return false;
   }
   const nDone = Object.keys(pendingImport.progress).length;
   const nQueue = Object.keys(pendingImport.review.items).length;
@@ -120,6 +141,47 @@ el('import-file').addEventListener('change', async () => {
     + 'What’s currently on this device will be overwritten.';
   el('import-confirm').hidden = false;
   el('import-replace').focus();
+  return true;
+}
+
+function closePasteForm() {
+  el('paste-form').hidden = true;
+  el('paste-text').value = '';
+}
+
+el('import-btn').addEventListener('click', () => el('import-file').click());
+
+el('import-file').addEventListener('change', async () => {
+  const input = el('import-file');
+  const file = input.files[0];
+  input.value = ''; // allow re-choosing the same file
+  if (!file) return;
+  closePasteForm();
+  offerImport(await file.text(), 'import-btn');
+});
+
+el('paste-btn').addEventListener('click', () => {
+  say(backupMsg, '');
+  el('import-confirm').hidden = true;
+  pendingImport = null;
+  el('paste-form').hidden = false;
+  el('paste-text').focus();
+});
+
+el('paste-import').addEventListener('click', () => {
+  const text = el('paste-text').value.trim();
+  if (!text) {
+    say(backupMsg, 'Paste your backup text into the box first.', true);
+    el('paste-text').focus();
+    return;
+  }
+  // Leave the box open on failure so a partial paste can be fixed in place.
+  if (offerImport(text, 'paste-btn')) closePasteForm();
+});
+
+el('paste-cancel').addEventListener('click', () => {
+  closePasteForm();
+  el('paste-btn').focus();
 });
 
 el('import-replace').addEventListener('click', () => {
@@ -137,7 +199,7 @@ el('import-replace').addEventListener('click', () => {
 el('import-cancel').addEventListener('click', () => {
   pendingImport = null;
   el('import-confirm').hidden = true;
-  el('import-btn').focus();
+  el(importReturnFocus).focus();
 });
 
 // ---------- reset ----------
@@ -187,9 +249,14 @@ el('reset-yes').addEventListener('click', () => {
     localStorage.removeItem(KEYS.review);
     localStorage.removeItem(KEYS.progress);
     localStorage.removeItem(THEME_KEY);
-    // In-progress quiz sessions (engine.js resume state) count as "everything" too.
+    // In-progress quiz sessions (engine.js resume state) count as "everything"
+    // too. That state lives in localStorage now; the sessionStorage sweep stays
+    // so a tab still holding the old location gets cleared as well.
+    for (const key of Object.keys(localStorage)) {
+      if (key.startsWith(SESSION_PREFIX)) localStorage.removeItem(key);
+    }
     for (const key of Object.keys(sessionStorage)) {
-      if (key.startsWith('pal9000.session:')) sessionStorage.removeItem(key);
+      if (key.startsWith(SESSION_PREFIX)) sessionStorage.removeItem(key);
     }
   } catch { /* private mode — nothing stored anyway */ }
   el('reset-confirm').hidden = true;

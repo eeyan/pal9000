@@ -23,6 +23,15 @@ describe('built site', () => {
     expect($('title').text()).toContain('PAL 9000');
   });
 
+  it('home page ships the install hint hidden, for home.js to reveal', () => {
+    const $ = cheerio.load(readFileSync(join(SITE, 'index.html'), 'utf8'));
+    const card = $('#install-hint');
+    expect(card.length).toBe(1);
+    expect(card.attr('hidden')).toBeDefined();
+    expect(card.find('#install-hint-dismiss').length).toBe(1);
+    expect(card.find('a[href="/systems/"]').length).toBe(1);
+  });
+
   for (const w of bank.weeks) {
     it(`week ${w.week} page embeds exactly its live questions`, () => {
       const html = readFileSync(join(SITE, `week-${w.week}`, 'index.html'), 'utf8');
@@ -92,6 +101,7 @@ describe('built site', () => {
   it('systems page ships the storage controls and week list', () => {
     const $ = cheerio.load(readFileSync(join(SITE, 'systems', 'index.html'), 'utf8'));
     for (const id of ['log-body', 'copy-log', 'export-btn', 'import-btn', 'import-file',
+      'copy-backup-btn', 'paste-btn', 'paste-form', 'paste-text', 'paste-import', 'paste-cancel',
       'clear-queue-btn', 'full-reset-btn', 'reset-confirm', 'clear-confirm', 'import-confirm']) {
       expect($(`#${id}`).length, `#${id}`).toBe(1);
     }
@@ -133,6 +143,12 @@ describe('built site', () => {
     for (const icon of manifest.icons) {
       expect(existsSync(join(SITE, icon.src)), icon.src).toBe(true);
     }
+    // id pins install identity across start_url changes; description and
+    // shortcuts are what install sheets and long-press menus surface.
+    expect(manifest.id).toBe('/');
+    expect(manifest.description).toBeTruthy();
+    expect(manifest.shortcuts.length).toBeGreaterThanOrEqual(1);
+    expect(manifest.shortcuts.map((s) => s.url)).toContain('/review/');
   });
 
   it('every page links the manifest and registers the service worker', () => {
@@ -152,14 +168,15 @@ describe('built site', () => {
     }
   });
 
-  it('every page ships the connectivity readout as a polite live region', () => {
+  it('every page ships the connectivity readout as a live region', () => {
     for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
       const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
       const status = $('.head-status');
       expect(status.length, page).toBe(1);
-      expect(status.attr('aria-live'), page).toBe('polite');
-      // Decorative until sw-register.js flips it on going offline.
-      expect(status.attr('aria-hidden'), page).toBe('true');
+      expect(status.attr('role'), page).toBe('status');
+      // aria-hidden anywhere on it unregisters the live region — the offline
+      // announcement would never fire. CSS hides it visually instead.
+      expect(status.attr('aria-hidden'), page).toBeUndefined();
     }
   });
 

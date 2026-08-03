@@ -10,12 +10,16 @@ eleventyExcludeFromCollections: true
 // replaces the precache on the student's next online visit.
 const CACHE = 'pal9000-{{ buildStamp }}';
 const NETWORK_TIMEOUT_MS = 3500;
+const OFFLINE_URL = '/offline/';
 
+// Precache list. Every entry is a plain URL string (the build test reads them
+// straight out of this file); they become Requests at add time.
 const SHELL = [
   '/',
 {% for w in bank.weeks %}  '/week-{{ w.week }}/',
 {% endfor %}  '/review/',
   '/systems/',
+  '/offline/',
   '/manifest.webmanifest',
   '/assets/css/style.css',
   '/assets/js/theme.js',
@@ -33,34 +37,66 @@ const SHELL = [
   '/assets/fonts/ibm-plex-sans-italic-var.woff2',
   '/assets/fonts/ibm-plex-mono-400.woff2',
   '/assets/fonts/ibm-plex-mono-600.woff2',
-  '/assets/icons/icon-192.png',
-  '/assets/icons/icon-512.png',
-  '/assets/icons/apple-touch-icon.png',
 ];
 
+// Nice to have, but never worth failing an install over. Everything else in
+// SHELL — every page, the stylesheet, every script, every font — is core:
+// if one of those can't be stored, offline mode would be broken in a way the
+// student only discovers in a tunnel, so the install fails loudly instead.
+const OPTIONAL = new Set([
+  '/manifest.webmanifest',
+]);
+
+// Add each entry on its own so one bad URL can't reject the whole install the
+// way cache.addAll does. `cache: 'reload'` keeps the HTTP cache out of it, so
+// a deploy always precaches fresh bytes.
+async function precache() {
+  const cache = await caches.open(CACHE);
+  const failed = await Promise.all(SHELL.map(async (url) => {
+    try {
+      await cache.add(new Request(url, { cache: 'reload' }));
+      return null;
+    } catch (err) {
+      return url;
+    }
+  }));
+  const missing = failed.filter((url) => url && !OPTIONAL.has(url));
+  if (missing.length) {
+    throw new Error('PAL 9000: core shell failed to precache — ' + missing.join(', '));
+  }
+}
+
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE)
-      .then((cache) => cache.addAll(SHELL))
-      .then(() => self.skipWaiting()),
-  );
+  event.waitUntil(precache().then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim()),
-  );
+  event.waitUntil((async () => {
+    // Let the browser start the navigation request while this worker boots.
+    if (self.registration.navigationPreload) {
+      await self.registration.navigationPreload.enable();
+    }
+    const keys = await caches.keys();
+    await Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)));
+    await self.clients.claim();
+  })());
 });
 
 // Fresh content when the network answers quickly; cache the instant it can't.
-async function networkFirst(request, cacheKey) {
+// The timeout covers the whole network wait: if navigation preload is in
+// flight it races the same clock, and any leftover time carries into fetch().
+async function networkFirst(request, cacheKey, preloadResponse) {
   const cache = await caches.open(CACHE);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), NETWORK_TIMEOUT_MS);
+  const expired = new Promise((resolve, reject) => {
+    controller.signal.addEventListener('abort', () => reject(new Error('network timeout')));
+  });
+  expired.catch(() => {}); // the losing side of the race is never awaited
   try {
-    const fresh = await fetch(request, { signal: controller.signal });
+    let fresh = null;
+    if (preloadResponse) fresh = await Promise.race([preloadResponse, expired]);
+    if (!fresh) fresh = await fetch(request, { signal: controller.signal });
     clearTimeout(timer);
     if (fresh.ok) cache.put(cacheKey, fresh.clone());
     return fresh;
@@ -68,8 +104,8 @@ async function networkFirst(request, cacheKey) {
     clearTimeout(timer);
     const cached = await cache.match(cacheKey);
     if (cached) return cached;
-    const home = await cache.match('/');
-    if (home) return home;
+    const offline = await cache.match(OFFLINE_URL);
+    if (offline) return offline;
     throw err;
   }
 }
@@ -83,7 +119,9 @@ async function staleWhileRevalidate(request) {
       if (res.ok) cache.put(request, res.clone());
       return res;
     })
-    .catch(() => cached);
+    // Nothing stored and nothing on the wire: answer with a real Response,
+    // because respondWith(undefined) throws an opaque network error instead.
+    .catch(() => cached || new Response('', { status: 504, statusText: 'offline' }));
   return cached || refresh;
 }
 
@@ -97,7 +135,7 @@ self.addEventListener('fetch', (event) => {
     // Normalize to the precached trailing-slash form and ignore query strings.
     let key = url.pathname;
     if (!key.endsWith('/') && !key.includes('.')) key += '/';
-    event.respondWith(networkFirst(request, key));
+    event.respondWith(networkFirst(request, key, event.preloadResponse));
   } else {
     event.respondWith(staleWhileRevalidate(request));
   }
