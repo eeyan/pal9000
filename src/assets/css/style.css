@@ -85,6 +85,9 @@
 
 * { box-sizing: border-box; }
 
+/* iOS inflates text in landscape without this; 100% keeps the author size. */
+html { -webkit-text-size-adjust: 100%; }
+
 body {
   margin: 0;
   background:
@@ -97,6 +100,26 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  /* Notch / rounded-corner clearance in landscape and standalone mode. The
+     background paints full-bleed underneath; only the content columns inset.
+     env() is 0 everywhere else, so desktop is untouched. */
+  padding-left: max(0px, env(safe-area-inset-left));
+  padding-right: max(0px, env(safe-area-inset-right));
+}
+
+/* Touch ergonomics: no double-tap zoom while tapping answers fast, and no iOS
+   gray flash competing with the amber/green/red answer states. Focus rings
+   (:focus-visible, below) are untouched. */
+button,
+a,
+summary,
+[role="button"],
+input,
+select,
+textarea,
+label {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mono { font-family: var(--font-mono); }
@@ -148,7 +171,26 @@ body {
   color: var(--dim);
 }
 
+/* Connectivity state, set by sw-register.js. Offline is a state, not chrome —
+   it takes the accent so it reads as a readout rather than a caption. */
+.head-status.offline { color: var(--accent); }
+
 @media (max-width: 480px) { .head-status { display: none; } }
+
+/* Offline is exactly when the phone-sized reader needs the readout, so it
+   overrides the hide above. The longer string would squeeze the header at
+   these widths, so it drops to its own line under the wordmark and toggle.
+   Wrapping is opt-in on .site-head.offline (also set by sw-register.js) so the
+   normal header keeps its single-line no-wrap layout. */
+@media (max-width: 560px) {
+  .site-head.offline { flex-wrap: wrap; }
+  .site-head.offline .head-status {
+    display: block;
+    order: 1;
+    flex-basis: 100%;
+    margin-top: 0.6rem;
+  }
+}
 
 .theme-toggle {
   font-family: var(--font-mono);
@@ -159,7 +201,7 @@ body {
   border: 1px solid var(--line-strong);
   border-radius: 4px;
   padding: 0.45rem 0.7rem;
-  min-height: 32px;
+  min-height: 44px; /* 44px touch target (WCAG 2.5.8 / iOS HIG) */
   cursor: pointer;
 }
 .theme-toggle:hover, .theme-toggle:focus-visible {
@@ -372,7 +414,9 @@ h1 {
 
 .site-foot {
   width: min(680px, 100% - 2.5rem);
-  margin: 3rem auto 1.5rem;
+  /* Clears the home indicator when installed to the home screen; env() is 0
+     on desktop, where max() keeps the original 1.5rem. */
+  margin: 3rem auto max(1.5rem, calc(env(safe-area-inset-bottom) + 0.75rem));
   padding-top: 1rem;
   border-top: 1px solid var(--line);
   font-size: 0.8rem;
@@ -482,6 +526,15 @@ h1 {
   border-radius: 4px;
   padding: 0.3rem 0.55rem;
   cursor: pointer;
+  position: relative;
+}
+/* The terminal header bar is deliberately slim, so the button stays 38px tall
+   and grows an invisible hit area instead: 38 + 2×4 = 46px of tappable height,
+   which stays inside the .term-head padding and overlaps nothing clickable. */
+.term-copy::after {
+  content: '';
+  position: absolute;
+  inset: -4px -6px;
 }
 .term-copy:hover, .term-copy:focus-visible { color: var(--accent); border-color: var(--accent); }
 .term-body {

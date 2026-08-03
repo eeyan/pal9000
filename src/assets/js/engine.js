@@ -30,10 +30,88 @@ export function completionStamp(week, at) {
   return `PAL 9000 · WEEK ${String(week).padStart(2, '0')} · COMPLETE · ${localStamp(at)}`;
 }
 
+// In-session persistence: sessionStorage survives the eviction-reload iOS
+// Safari does to background tabs (subway use case), so a half-done set
+// resumes silently instead of restarting at Q1. Keyed per page; cleared on
+// finish. All access is try/catch'd (private mode), same posture as storage.js.
+const SESSION_PREFIX = 'pal9000.session:';
+
+function sessionKey() {
+  return SESSION_PREFIX + location.pathname;
+}
+
+function saveSession(questions, state) {
+  try {
+    sessionStorage.setItem(sessionKey(), JSON.stringify({
+      v: 1,
+      ids: questions.map((q) => q.id),
+      i: state.i,
+      score: state.score,
+      answered: state.answered,
+      requeued: [...state.requeued],
+    }));
+  } catch {
+    // Private mode / quota — the quiz still works, it just won't resume.
+  }
+}
+
+function clearSession() {
+  try {
+    sessionStorage.removeItem(sessionKey());
+  } catch {
+    // ignore
+  }
+}
+
+// Returns { i, score, requeued } or null. Defensive: any shape problem, id
+// mismatch with the current question set (bank changed between deploys, or
+// the review due-list moved on), or corrupt JSON silently discards the
+// stored session and starts fresh.
+function loadSession(questions) {
+  let s;
+  try {
+    const raw = sessionStorage.getItem(sessionKey());
+    if (!raw) return null;
+    s = JSON.parse(raw);
+  } catch {
+    return null;
+  }
+  if (!s || typeof s !== 'object' || s.v !== 1) return null;
+  if (!Number.isInteger(s.i) || !Number.isInteger(s.score)) return null;
+  if (!Array.isArray(s.ids) || !Array.isArray(s.requeued)) return null;
+
+  const ids = questions.map((q) => q.id);
+  if (s.ids.length !== ids.length || s.ids.some((id, k) => id !== ids[k])) return null;
+
+  const idSet = new Set(ids);
+  if (s.requeued.some((id) => !idSet.has(id))) return null;
+  if (new Set(s.requeued).size !== s.requeued.length) return null;
+
+  // If the reload hit after answering but before NEXT, resume at the next
+  // question (or the finish screen): onAnswer already fired for question i
+  // and had side effects — re-showing it unanswered would double-fire.
+  const i = s.answered ? s.i + 1 : s.i;
+  if (i < 0 || i > ids.length + s.requeued.length) return null;
+  if (s.score < 0 || s.score > ids.length) return null;
+
+  return { i, score: s.score, requeued: s.requeued };
+}
+
 export function runQuiz(container, questions, opts = {}) {
   const total = questions.length;
   const queue = [...questions];
   const state = { i: 0, score: 0, answered: false, requeued: new Set(), renderedAt: 0 };
+
+  const resumed = loadSession(questions);
+  if (resumed) {
+    state.i = resumed.i;
+    state.score = resumed.score;
+    // Rebuild the end-of-session retry queue in original miss order.
+    for (const id of resumed.requeued) {
+      state.requeued.add(id);
+      queue.push(questions.find((q) => q.id === id));
+    }
+  }
 
   container.innerHTML = `
     <div class="quiz-panel">
@@ -102,6 +180,8 @@ export function runQuiz(container, questions, opts = {}) {
       queue.push(q);
     }
 
+    saveSession(questions, state);
+
     const chosen = view.find((o) => o.key === key);
     const right = view.find((o) => o.key === q.answer);
 
@@ -163,11 +243,13 @@ export function runQuiz(container, questions, opts = {}) {
   function next() {
     state.i += 1;
     state.answered = false;
+    saveSession(questions, state);
     if (state.i < queue.length) render();
     else finish();
   }
 
   function finish() {
+    clearSession();
     const { score } = state;
     const missed = total - score;
     const now = Date.now();
@@ -213,5 +295,9 @@ export function runQuiz(container, questions, opts = {}) {
   }
   document.addEventListener('keydown', onKey);
 
-  render();
+  // A resume can land past the end of the queue (last question answered,
+  // reload before NEXT) — go straight to the finish screen so onComplete
+  // still fires and the completion stamp still gets written.
+  if (state.i < queue.length) render();
+  else finish();
 }

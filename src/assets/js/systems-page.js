@@ -187,6 +187,10 @@ el('reset-yes').addEventListener('click', () => {
     localStorage.removeItem(KEYS.review);
     localStorage.removeItem(KEYS.progress);
     localStorage.removeItem(THEME_KEY);
+    // In-progress quiz sessions (engine.js resume state) count as "everything" too.
+    for (const key of Object.keys(sessionStorage)) {
+      if (key.startsWith('pal9000.session:')) sessionStorage.removeItem(key);
+    }
   } catch { /* private mode — nothing stored anyway */ }
   el('reset-confirm').hidden = true;
   render();

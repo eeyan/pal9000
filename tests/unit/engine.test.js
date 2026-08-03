@@ -30,6 +30,7 @@ function makeQ(id, extra = {}) {
 let container;
 beforeEach(() => {
   vi.useFakeTimers();
+  sessionStorage.clear(); // in-session resume state is keyed per pathname — keep tests independent
   container = document.createElement('div');
   document.body.appendChild(container);
 });
@@ -172,6 +173,127 @@ describe('self-explanation NEXT gate', () => {
     click(option('B'));
     press('Enter');
     expect(readout()).toBe('Q 02/02');
+  });
+});
+
+describe('session persistence (sessionStorage resume)', () => {
+  const SESSION_KEY = 'pal9000.session:' + location.pathname;
+  // Simulate the iOS Safari eviction-reload: the old DOM (and engine closure)
+  // is gone, sessionStorage survives, and the page re-runs runQuiz from scratch.
+  const reload = () => {
+    container.remove();
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  };
+
+  it('resumes mid-set with position, score, and the retry queue intact; no onAnswer re-fire', () => {
+    const questions = [makeQ('q1'), makeQ('q2'), makeQ('q3')];
+    runQuiz(container, questions, { mode: 'week', week: 1, onAnswer: vi.fn() });
+
+    settle();
+    click(option('A')); // q1 wrong → re-queued
+    click(nextBtn());
+    settle();
+    click(option('B')); // q2 correct
+    click(nextBtn()); // advanced to q3, then "reload"
+
+    reload();
+    const onAnswer = vi.fn();
+    const onComplete = vi.fn();
+    runQuiz(container, questions, { mode: 'week', week: 1, onAnswer, onComplete });
+
+    // Resumed at q3 with the requeued q1 still at the end of the queue.
+    expect(readout()).toBe('Q 03/04');
+    expect(container.querySelector('.stem').textContent).toBe('Stem for q3');
+    expect(onAnswer).not.toHaveBeenCalled(); // q1/q2 answers are not re-fired
+
+    settle();
+    click(option('B')); // q3 correct
+    click(nextBtn());
+
+    // The pre-reload miss still gets its end-of-session retry.
+    expect(readout()).toBe('Q 04/04 · RETRY');
+    expect(container.querySelector('.stem').textContent).toBe('Stem for q1');
+    settle();
+    click(option('B'));
+    expect(onAnswer).toHaveBeenLastCalledWith('q1', true, { firstAttempt: false });
+    expect(nextBtn().textContent).toBe('FINISH →');
+    click(nextBtn());
+
+    expect(onComplete).toHaveBeenCalledWith({ score: 2, total: 3, at: expect.any(Number) });
+    expect(container.querySelector('.done-score').textContent).toBe('2/3');
+  });
+
+  it('answered-but-not-advanced at reload resumes at the next question', () => {
+    const questions = [makeQ('q1'), makeQ('q2')];
+    runQuiz(container, questions, {});
+    settle();
+    click(option('B')); // q1 answered, feedback showing, NEXT never pressed
+
+    reload();
+    const onAnswer = vi.fn();
+    runQuiz(container, questions, { onAnswer });
+
+    expect(readout()).toBe('Q 02/02');
+    expect(container.querySelector('.stem').textContent).toBe('Stem for q2');
+    expect(onAnswer).not.toHaveBeenCalled();
+  });
+
+  it('answered last question before reload resumes straight to the finish screen with the right score', () => {
+    const questions = [makeQ('q1'), makeQ('q2')];
+    runQuiz(container, questions, { mode: 'week', week: 3 });
+    settle();
+    click(option('B'));
+    click(nextBtn());
+    settle();
+    click(option('B')); // last question answered, FINISH never pressed
+
+    reload();
+    const onComplete = vi.fn();
+    runQuiz(container, questions, { mode: 'week', week: 3, onComplete });
+
+    expect(onComplete).toHaveBeenCalledWith({ score: 2, total: 2, at: expect.any(Number) });
+    expect(container.querySelector('.done-score').textContent).toBe('2/2');
+    expect(container.querySelector('.done-stamp').textContent).toContain('WEEK 03');
+    expect(sessionStorage.getItem(SESSION_KEY)).toBeNull(); // finish clears the session
+  });
+
+  it('discards a stored session whose question ids do not match the current set', () => {
+    runQuiz(container, [makeQ('q1'), makeQ('q2')], {});
+    settle();
+    click(option('B'));
+    click(nextBtn()); // session stored at q2
+
+    reload();
+    runQuiz(container, [makeQ('q1'), makeQ('qX')], {}); // bank changed between deploys
+
+    expect(readout()).toBe('Q 01/02');
+    expect(container.querySelector('.stem').textContent).toBe('Stem for q1');
+  });
+
+  it('clears the stored session on finish so the next visit starts fresh', () => {
+    const questions = [makeQ('q1')];
+    runQuiz(container, questions, {});
+    settle();
+    click(option('B'));
+    click(nextBtn()); // finish
+    expect(sessionStorage.getItem(SESSION_KEY)).toBeNull();
+
+    reload();
+    runQuiz(container, questions, {});
+    expect(readout()).toBe('Q 01/01');
+    expect(container.querySelector('.done-panel')).toBeNull();
+  });
+
+  it('starts fresh without throwing on corrupt or malformed stored state', () => {
+    sessionStorage.setItem(SESSION_KEY, '{not json');
+    expect(() => runQuiz(container, [makeQ('q1')], {})).not.toThrow();
+    expect(readout()).toBe('Q 01/01');
+
+    reload();
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify({ v: 1, ids: ['q1'], i: 'nope', score: null, requeued: {} }));
+    expect(() => runQuiz(container, [makeQ('q1')], {})).not.toThrow();
+    expect(readout()).toBe('Q 01/01');
   });
 });
 

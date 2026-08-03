@@ -143,6 +143,26 @@ describe('built site', () => {
     }
   });
 
+  it('every page opts into the display cutout so safe-area insets resolve', () => {
+    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
+      const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
+      const viewport = $('meta[name="viewport"]').attr('content');
+      expect(viewport, page).toBeTruthy();
+      expect(viewport, page).toContain('viewport-fit=cover');
+    }
+  });
+
+  it('every page ships the connectivity readout as a polite live region', () => {
+    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
+      const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
+      const status = $('.head-status');
+      expect(status.length, page).toBe(1);
+      expect(status.attr('aria-live'), page).toBe('polite');
+      // Decorative until sw-register.js flips it on going offline.
+      expect(status.attr('aria-hidden'), page).toBe('true');
+    }
+  });
+
   it('every page has the theme toggle and bootstrap script', () => {
     for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
       const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));

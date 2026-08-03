@@ -41,6 +41,7 @@ const CHECKS = [
   ['dim', 'bg', 4.5],
   ['dim-2', 'bg', 4.5],
   ['dim-2', 'panel', 4.5], // systems page: not-yet-complete log lines
+  ['accent', 'bg', 4.5], // header offline readout sits straight on the page bg
   ['accent', 'panel', 4.5],
   ['accent', 'panel-raised', 4.5],
   ['red', 'panel', 4.5],
