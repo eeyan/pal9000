@@ -107,6 +107,42 @@ describe('built site', () => {
     }
   });
 
+  it('service worker precaches every page and every shipped asset', () => {
+    const sw = readFileSync(join(SITE, 'sw.js'), 'utf8');
+    for (const w of bank.weeks) {
+      expect(sw, `week ${w.week} page`).toContain(`'/week-${w.week}/'`);
+    }
+    for (const url of ['\'/\'', '\'/review/\'', '\'/systems/\'', '\'/manifest.webmanifest\'']) {
+      expect(sw).toContain(url);
+    }
+    // Every precache entry must actually exist in the build (a typo here
+    // makes cache.addAll reject and kills offline support entirely).
+    const shell = [...sw.matchAll(/'(\/[^']*)'/g)].map((m) => m[1]);
+    expect(shell.length).toBeGreaterThanOrEqual(20);
+    for (const url of shell) {
+      const file = url.endsWith('/') ? join(SITE, url, 'index.html') : join(SITE, url);
+      expect(existsSync(file), `precached ${url} missing from build`).toBe(true);
+    }
+    expect(sw).toMatch(/pal9000-\d+/); // build-stamped cache name
+  });
+
+  it('manifest parses and its icons exist', () => {
+    const manifest = JSON.parse(readFileSync(join(SITE, 'manifest.webmanifest'), 'utf8'));
+    expect(manifest.name).toContain('PAL 9000');
+    expect(manifest.icons.length).toBeGreaterThanOrEqual(2);
+    for (const icon of manifest.icons) {
+      expect(existsSync(join(SITE, icon.src)), icon.src).toBe(true);
+    }
+  });
+
+  it('every page links the manifest and registers the service worker', () => {
+    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
+      const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
+      expect($('link[rel="manifest"]').length, page).toBe(1);
+      expect($('script[src="/assets/js/sw-register.js"]').length, page).toBe(1);
+    }
+  });
+
   it('every page has the theme toggle and bootstrap script', () => {
     for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
       const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));

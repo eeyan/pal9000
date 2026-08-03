@@ -1,0 +1,47 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "PAL9000" [ref=e3] [cursor=pointer]:
+      - /url: /
+    - generic [ref=e6]: ALL CIRCUITS FUNCTIONING
+    - button "Switch to dark mode" [ref=e7] [cursor=pointer]: ☾ DARK
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - paragraph [ref=e10]: CIS 9000 · IT STRATEGY · PRACTICE CONSOLE
+      - heading "Good evening. Ready to practice?" [level=1] [ref=e11]
+      - paragraph [ref=e12]: Short weekly question sets that mirror the exam’s case-based reasoning. Miss a question and PAL brings it back on a spaced schedule — that’s the part that makes it stick.
+    - region [ref=e13]:
+      - heading "MISSION SELECT" [level=2] [ref=e14]
+      - list [ref=e15]:
+        - listitem [ref=e16]:
+          - link "W01 IT Strategy & Alignment 10 Q" [ref=e17] [cursor=pointer]:
+            - /url: /week-1/
+            - generic [ref=e18]: W01
+            - generic [ref=e19]: IT Strategy & Alignment
+            - generic [ref=e20]: 10 Q
+        - listitem [ref=e22]:
+          - 'link "W02 IT Spend: Run vs. Change 10 Q" [ref=e23] [cursor=pointer]':
+            - /url: /week-2/
+            - generic [ref=e24]: W02
+            - generic [ref=e25]: "IT Spend: Run vs. Change"
+            - generic [ref=e26]: 10 Q
+        - listitem [ref=e28]:
+          - link "W03 Build vs. Buy vs. SaaS 10 Q" [ref=e29] [cursor=pointer]:
+            - /url: /week-3/
+            - generic [ref=e30]: W03
+            - generic [ref=e31]: Build vs. Buy vs. SaaS
+            - generic [ref=e32]: 10 Q
+    - region [ref=e34]:
+      - heading "REVIEW QUEUE" [level=2] [ref=e35]
+      - link "Review missed questions EMPTY" [ref=e36] [cursor=pointer]:
+        - /url: /review/
+        - generic [ref=e37]: RQ
+        - generic [ref=e38]: Review missed questions
+        - generic [ref=e39]: EMPTY
+      - paragraph [ref=e40]: Every question you practice comes back on a spaced schedule — about 1, 3, then 7 days. A quick correct answer at each step locks it in for good.
+  - contentinfo [ref=e41]:
+    - paragraph [ref=e42]: "PAL 9000 · Practice And Learn — practice questions for CIS 9000: IT Strategy"
+    - paragraph [ref=e43]:
+      - text: Your progress is stored only on this device — back it up or clear it in
+      - link "SYSTEMS" [ref=e44] [cursor=pointer]:
+        - /url: /systems/
+      - text: . Built on the Groundwork pipeline.

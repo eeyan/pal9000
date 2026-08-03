@@ -178,7 +178,7 @@ describe('self-explanation NEXT gate', () => {
 describe('embed / XSS safety', () => {
   it('embedJson output cannot terminate a <script> element and round-trips', () => {
     const filters = {};
-    eleventyConfig({ addPassthroughCopy() {}, addFilter(name, fn) { filters[name] = fn; } });
+    eleventyConfig({ addPassthroughCopy() {}, addGlobalData() {}, addFilter(name, fn) { filters[name] = fn; } });
     const questions = [{ stem: 'Beware </script><script>alert(1)</script> injection' }];
     const out = filters.embedJson(questions);
     expect(out).not.toContain('</script>');

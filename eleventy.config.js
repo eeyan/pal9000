@@ -1,5 +1,7 @@
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ 'src/assets': 'assets' });
+  // Stamps the service-worker cache name so every deploy replaces the precache.
+  eleventyConfig.addGlobalData('buildStamp', String(Date.now()));
   eleventyConfig.addFilter('pad2', (n) => String(n).padStart(2, '0'));
   // Safe JSON for <script type="application/json"> embeds: escaping `<` keeps
   // question text containing "</script>" from terminating the script element.

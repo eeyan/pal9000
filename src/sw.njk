@@ -1,0 +1,104 @@
+---
+permalink: /sw.js
+eleventyExcludeFromCollections: true
+---
+// PAL 9000 service worker — offline support for subway commutes.
+// The full app shell is precached on first visit. Navigations are
+// network-first with a short timeout, so fresh weeks always win when online
+// and the cache answers the moment a request hangs in a tunnel. Assets are
+// stale-while-revalidate. The cache name changes every build: a deploy fully
+// replaces the precache on the student's next online visit.
+const CACHE = 'pal9000-{{ buildStamp }}';
+const NETWORK_TIMEOUT_MS = 3500;
+
+const SHELL = [
+  '/',
+{% for w in bank.weeks %}  '/week-{{ w.week }}/',
+{% endfor %}  '/review/',
+  '/systems/',
+  '/manifest.webmanifest',
+  '/assets/css/style.css',
+  '/assets/js/theme.js',
+  '/assets/js/engine.js',
+  '/assets/js/scheduler.js',
+  '/assets/js/storage.js',
+  '/assets/js/backup.js',
+  '/assets/js/home.js',
+  '/assets/js/week-page.js',
+  '/assets/js/review-page.js',
+  '/assets/js/systems-page.js',
+  '/assets/js/sw-register.js',
+  '/assets/fonts/michroma-400.woff2',
+  '/assets/fonts/ibm-plex-sans-var.woff2',
+  '/assets/fonts/ibm-plex-sans-italic-var.woff2',
+  '/assets/fonts/ibm-plex-mono-400.woff2',
+  '/assets/fonts/ibm-plex-mono-600.woff2',
+  '/assets/icons/icon-192.png',
+  '/assets/icons/icon-512.png',
+  '/assets/icons/apple-touch-icon.png',
+];
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE)
+      .then((cache) => cache.addAll(SHELL))
+      .then(() => self.skipWaiting()),
+  );
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim()),
+  );
+});
+
+// Fresh content when the network answers quickly; cache the instant it can't.
+async function networkFirst(request, cacheKey) {
+  const cache = await caches.open(CACHE);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), NETWORK_TIMEOUT_MS);
+  try {
+    const fresh = await fetch(request, { signal: controller.signal });
+    clearTimeout(timer);
+    if (fresh.ok) cache.put(cacheKey, fresh.clone());
+    return fresh;
+  } catch (err) {
+    clearTimeout(timer);
+    const cached = await cache.match(cacheKey);
+    if (cached) return cached;
+    const home = await cache.match('/');
+    if (home) return home;
+    throw err;
+  }
+}
+
+// Serve from cache immediately, refresh the cache in the background.
+async function staleWhileRevalidate(request) {
+  const cache = await caches.open(CACHE);
+  const cached = await cache.match(request);
+  const refresh = fetch(request)
+    .then((res) => {
+      if (res.ok) cache.put(request, res.clone());
+      return res;
+    })
+    .catch(() => cached);
+  return cached || refresh;
+}
+
+self.addEventListener('fetch', (event) => {
+  const request = event.request;
+  if (request.method !== 'GET') return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
+  if (request.mode === 'navigate') {
+    // Normalize to the precached trailing-slash form and ignore query strings.
+    let key = url.pathname;
+    if (!key.endsWith('/') && !key.includes('.')) key += '/';
+    event.respondWith(networkFirst(request, key));
+  } else {
+    event.respondWith(staleWhileRevalidate(request));
+  }
+});
