@@ -2,6 +2,12 @@
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
     navigator.serviceWorker.register('/sw.js').catch(function () { /* no-op */ });
+    // Ask the browser not to evict our storage under pressure. Chromium
+    // (Android) grants this for engaged/installed sites and it protects the
+    // review ladder + completion records; elsewhere it's a harmless no-op.
+    if (navigator.storage && navigator.storage.persist) {
+      navigator.storage.persist().catch(function () { /* no-op */ });
+    }
   });
 }
 

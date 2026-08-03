@@ -88,6 +88,10 @@
 /* iOS inflates text in landscape without this; 100% keeps the author size. */
 html { -webkit-text-size-adjust: 100%; }
 
+/* Android pull-to-refresh reloads the page — mid-quiz that's disruptive even
+   with session resume. contain keeps normal scrolling, drops the gesture. */
+html, body { overscroll-behavior-y: contain; }
+
 body {
   margin: 0;
   background:
