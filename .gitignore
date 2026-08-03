@@ -17,3 +17,7 @@ PLAN.md
 
 # Local Netlify folder
 .netlify
+
+# local tool state
+.claude/
+.playwright-cli/
