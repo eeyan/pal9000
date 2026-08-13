@@ -180,6 +180,17 @@ describe('built site', () => {
     }
   });
 
+  it('every page ships the analytics snippet scoped to the production domain', () => {
+    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
+      const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
+      const script = $('script[src="https://stats.ianjoshua.com/script.js"]');
+      expect(script.length, page).toBe(1);
+      expect(script.attr('data-website-id'), page).toBeTruthy();
+      // data-domains keeps localhost/dev/preview builds out of the stats
+      expect(script.attr('data-domains'), page).toBe('pal9000.netlify.app');
+    }
+  });
+
   it('every page has the theme toggle and bootstrap script', () => {
     for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
       const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
