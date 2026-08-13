@@ -25,8 +25,10 @@ Practice-quiz site for CIS 9000 (IT Strategy, Baruch) with a spaced review queue
 
 - Question bank: YAML per week in `content/questions/`; only `status: accepted|edited` questions build into the site (`src/lib/bank.js` filters)
 - Week pages embed their questions as inline JSON; review page embeds the whole bank — no fetch, no backend
-- All student progress is localStorage only (`pal9000.review.v1`, `pal9000.progress.v1`) — no accounts, no per-student tracking (FERPA stance in SPEC)
+- All student state is client-side only — no accounts, no per-student tracking (FERPA stance in SPEC). localStorage keys: `pal9000.review.v1` (spaced-review ladder), `pal9000.progress.v1` (completion records), `pal9000.session:<pathname>` (mid-quiz resume, 24h expiry — localStorage not sessionStorage because iOS destroys sessionStorage when killing a standalone app), `pal9000.theme`, `pal9000.installHint.v1`. `/systems/` is the student-facing storage panel (backup/restore via file AND clipboard — iOS isolates storage between Safari and the installed app; the clipboard bridges it)
 - Scheduler is SM-2-lite (1/3/7-day ladder, `src/assets/js/scheduler.js`), pure functions with injectable `now`; ts-fsrs is the documented upgrade path
+- Offline/PWA: `src/sw.njk` templates the service worker (precache list generated from the bank, build-stamped cache name via `buildStamp` global data); navigations are network-first with a 3.5s timeout, assets stale-while-revalidate, uncached-offline navigations get `/offline/`. Manifest in `src/manifest.njk`
+- Analytics: self-hosted, cookieless, page-level only; the snippet in `layout.njk` is scoped with `data-domains` so localhost/dev/previews never record. The stats origin is allow-listed in `netlify.toml`'s CSP — touch both together or neither
 - Two-tier naming: **Groundwork** = reusable pipeline (may productize separately); **PAL 9000** = this course instance
 
 # Gotchas
@@ -36,6 +38,8 @@ Practice-quiz site for CIS 9000 (IT Strategy, Baruch) with a spaced review queue
 - `content/sources/` is gitignored on purpose (publisher/case copyright) — never force-add anything from it
 - `*.candidates.yaml` files are gitignored pre-curation working output — don't commit them
 - Generation script accepts `.md`/`.txt`/`.pdf` only; PPTX must be exported to PDF first
+- The service worker registers on any origin, including localhost — if a stale build seems to be serving during local testing, it's the SW cache; unregister it in devtools (Application → Service Workers) or use a different port. `npm run dev` and one-off `python3 -m http.server` ports cross-contaminate this way
+- Public-copy privacy claims are load-bearing: the SYSTEMS lede promises answers/scores never leave the browser — anything that sends data must not falsify it (and never name analytics/hosting vendors in shipped copy)
 
 # Repository Conventions
 

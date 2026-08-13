@@ -6,7 +6,7 @@ Built on **Groundwork**: a grounded generate → curate → measure pipeline for
 
 ## How it works
 
-- **Students** open a link — no install, no account. Weekly sets of ~10 questions with immediate per-distractor feedback and self-explanation prompts. Missed questions come due again after 1, 3, then 7 days (SM-2-lite; ts-fsrs is the upgrade path). Progress lives in localStorage only.
+- **Students** open a link — no account needed. Weekly sets of ~10 questions with immediate per-distractor feedback and self-explanation prompts. Missed questions come due again after 1, 3, then 7 days (SM-2-lite; ts-fsrs is the upgrade path). Progress lives in localStorage only, with self-serve backup/restore and a screenshot-friendly completion log on the `/systems/` page. The site is an installable PWA built for subway commutes: the full app shell precaches on first visit, sets keep working offline, and an interrupted quiz resumes where it left off.
 - **The instructor** drops each week's materials into `content/sources/week-NN/` (gitignored — course/publisher content never enters git), runs `npm run generate <week>`, and curates the over-generated candidates into `content/questions/week-NN.yaml`. Accept/reject stats per prompt version are logged in `docs/EVAL-LOG.md` — the eval loop is the point.
 
 ## Commands
@@ -30,7 +30,7 @@ Netlify, gated: production builds run only when the commit subject contains `[de
 
 ## Status
 
-MVP (July 2026): app, scheduler, pipeline, and tests are built; question content is hand-authored **sample material** (`promptVersion: sample-v0`) pending the first real generation run against fall course materials. Local only — no remote or Netlify site yet.
+Live at [pal9000.netlify.app](https://pal9000.netlify.app) (August 2026): app, scheduler, pipeline, offline/PWA support, storage management, and tests are built and deployed. Question content is still hand-authored **sample material** (`promptVersion: sample-v0`) pending the first real generation run against fall course materials.
 
 Testing tip: to exercise the review queue without waiting a day, temporarily shrink `INTERVALS_DAYS` in `src/assets/js/scheduler.js`.
 
