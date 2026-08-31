@@ -8,7 +8,7 @@ Practice-quiz site for CIS 9000 (IT Strategy, Baruch) with a spaced review queue
 - `npm run build` — build to `_site/`
 - `npm test` — Vitest (run single files: `npx vitest run tests/unit/scheduler.test.js`)
 - `npm run generate <week> [target]` — Groundwork candidate generation (local only, needs Claude API auth; writes `content/questions/week-NN.candidates.yaml`)
-- `npm run verify <file>` — bulk-check pasted completion logs (`--set N`, `--csv`; stdin if no file)
+- `npm run verify <file>` — bulk-check pasted completion logs (`--set N`, `--csv`, `--min-score 0.7` default; stdin if no file)
 
 # Code Style
 

@@ -37,6 +37,9 @@ function start(name) {
   runQuiz(container, questions, {
     mode: 'week',
     week,
+    // Retakes count (best score is kept), so option order must not be
+    // memorizable between attempts. Same shuffle + re-lettering as review.
+    shuffle: true,
     onAnswer(id, correct, { firstAttempt }) {
       const state = loadReviewState();
       if (!correct) save(KEYS.review, recordMiss(state, id, Date.now()));

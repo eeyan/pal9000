@@ -4,6 +4,7 @@
 //   node scripts/verify.js submissions.txt            # one or many logs, concatenated
 //   node scripts/verify.js --set 1 submissions.txt    # only count weeks in set 1
 //   node scripts/verify.js --csv submissions.txt      # CSV instead of a table
+//   node scripts/verify.js --min-score 0.5 subs.txt   # score floor (default 0.7)
 //   cat log.txt | node scripts/verify.js
 //
 // Input is plain text: every "PAL 9000 · COMPLETION LOG" header starts a new
@@ -23,14 +24,20 @@ import { SETS } from '../src/assets/js/sets.js';
 const args = process.argv.slice(2);
 let onlySet = null;
 let csv = false;
+let minScore = 0.7; // a week counts only if the on-file best score clears this
 const files = [];
 for (let i = 0; i < args.length; i += 1) {
   if (args[i] === '--set') onlySet = Number(args[++i]);
   else if (args[i] === '--csv') csv = true;
+  else if (args[i] === '--min-score') minScore = Number(args[++i]);
   else if (args[i] === '--help' || args[i] === '-h') {
     console.log('usage: node scripts/verify.js [--set N] [--csv] [file ...]  (stdin if no file)');
     process.exit(0);
   } else files.push(args[i]);
+}
+if (!(minScore >= 0 && minScore <= 1)) {
+  console.error('--min-score must be between 0 and 1 (fraction of questions right)');
+  process.exit(2);
 }
 if (onlySet !== null && !SETS.some((s) => s.set === onlySet)) {
   console.error(`No such set: ${onlySet}. Sets: ${SETS.map((s) => s.set).join(', ')}`);
@@ -77,6 +84,10 @@ for (const log of logs) {
     const under = rec.name ?? log.name;
     const { ok, at } = await verifyCompletion({ week: rec.week, code: rec.code, score: rec.score, total: rec.total, name: under });
     if (!ok) { log.flags.push(`${w} code invalid`); continue; }
+    if (rec.total <= 0 || rec.score / rec.total < minScore) {
+      log.flags.push(`${w} below ${Math.round(minScore * 100)}% (${rec.score}/${rec.total})`);
+      continue;
+    }
 
     const cp = checkpointFor(rec.week);
     if (at > Date.now()) log.flags.push(`${w} dated in the future`);

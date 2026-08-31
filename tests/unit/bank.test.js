@@ -116,6 +116,20 @@ describe('loadBank', () => {
   });
 });
 
+describe('options survive shuffling (both quiz modes re-order and re-letter options)', () => {
+  const POSITIONAL = /\b(all|none|both|either|neither) of the above\b|\bboth [A-D]\b|\b[A-D] (and|or) [A-D]\b|\boptions? [A-D]\b|\bthe (first|second|third|fourth|last) (option|choice|answer)\b/i;
+  for (const file of weekFiles) {
+    const doc = yaml.load(readFileSync(join(QUESTIONS_DIR, file), 'utf8'));
+    for (const q of doc.questions ?? []) {
+      it(`${q.id}: no option or feedback refers to a position`, () => {
+        for (const o of q.options ?? []) expect(o.text, `${q.id} option ${o.key}`).not.toMatch(POSITIONAL);
+        for (const [k, v] of Object.entries(q.feedback ?? {})) expect(v, `${q.id} feedback ${k}`).not.toMatch(POSITIONAL);
+        expect(q.stem, `${q.id} stem`).not.toMatch(POSITIONAL);
+      });
+    }
+  }
+});
+
 describe('published flag', () => {
   it('holds a week out of the bank when published: false, without touching other weeks', async () => {
     const { mkdtempSync, writeFileSync } = await import('node:fs');

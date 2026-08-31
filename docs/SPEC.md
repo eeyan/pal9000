@@ -196,7 +196,7 @@ MVP implemented and smoke-tested with sample-v0 content (30 hand-authored questi
 ## Decisions (reviewed with Ian, 2026-07-25)
 
 1. **Low-stakes graded.** A few participation points for completing weekly sets, ~~self-reported/screenshot~~ — no backend. Adoption plan lever #2 is the plan of record.
-   *Amended 2026-08-31:* it's **extra credit on the two tests** (up to 5 points each), not participation, and not on the syllabus.
+   *Amended 2026-08-31:* it's **extra credit on the two tests** (up to 5 points each), not participation, and not on the syllabus. A week counts only with a best score ≥ 70% (`scripts/verify.js --min-score`, default 0.7) — unlimited retakes, best kept, and week mode now shuffles options so a retake can't be answered from memory of letter positions.
    *Amended 2026-08-30 (reviewed with Ian):* the cadence is per-set, not weekly, and the log is signed rather than merely screenshotted. Weekly *publishing* is unchanged — each week's set still deploys after that week's class; only the hand-in is batched. Points stay honor-system: the codes make tampering visible, they don't prove anything.
 2. **Sources are mixed:** PPTX decks, PDFs, Obsidian/markdown notes, plus publisher/case materials. Ingestion step needs PPTX and PDF text extraction (markdown is pass-through). Publisher/case content is grounding input only and must never enter git.
 3. **~10 curated questions/week** (≈150/semester); over-generate ~30, expect ~2/3 rejects.

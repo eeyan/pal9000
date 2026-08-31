@@ -11,16 +11,16 @@ const SCRIPT = join(ROOT, 'scripts/verify.js');
 // Past dates so nothing trips the "dated in the future" check.
 const AT = Date.parse('2026-08-01T14:00:00Z');
 
-async function progressFor(name, weeks) {
+async function progressFor(name, weeks, score = 9) {
   const progress = {};
   for (const w of weeks) {
     const at = AT + w * 3_600_000;
-    progress[w] = { score: 9, total: 11, at, name, code: await signCompletion({ week: w, at, score: 9, total: 11, name }) };
+    progress[w] = { score, total: 11, at, name, code: await signCompletion({ week: w, at, score, total: 11, name }) };
   }
   return progress;
 }
-async function log(name, weeks) {
-  return logText(buildLog(SETS, await progressFor(name, weeks), name, setHeading));
+async function log(name, weeks, score) {
+  return logText(buildLog(SETS, await progressFor(name, weeks, score), name, setHeading));
 }
 
 let file;
@@ -40,8 +40,9 @@ beforeAll(async () => {
   const glued = `${await log('Glue A', [4])}\n${(await log('Glue B', [5])).replace('PAL 9000 · COMPLETION LOG\n', '')}`;
   // Mangled separators from a bad paste.
   const mangled = (await log('Mangle Mary', [2])).split('\n').map((l) => (l.startsWith('W') ? l.replace(/·/g, '-') : l)).join('\n');
+  const guesser = await log('Guessing Gus', [1, 2], 4); // 4/11 — valid codes, below the floor
   file = join(mkdtempSync(join(tmpdir(), 'pal-verify-')), 'subs.txt');
-  writeFileSync(file, [honest, other, copycat, inflated, unsigned, spoof, jonLaptop, glued, mangled].join('\n\n'));
+  writeFileSync(file, [honest, other, copycat, inflated, unsigned, spoof, jonLaptop, glued, mangled, guesser].join('\n\n'));
   const out = execFileSync('node', [SCRIPT, '--csv', file], { cwd: ROOT, encoding: 'utf8' });
   rows = out.trim().split('\n').slice(1).map(parseCsvLine);
 });
@@ -115,6 +116,15 @@ describe('scripts/verify.js', () => {
     expect(mangled[6]).toContain('unreadable line');
   });
 
+  it('enforces the score floor (default 70%) and --min-score overrides it', () => {
+    const gus = byName('Guessing Gus');
+    expect(gus.slice(2, 4)).toEqual(['0', '0']);
+    expect(gus[6]).toContain('W01 below 70% (4/11)');
+    const relaxed = run('--min-score', '0.3', '--csv', file);
+    expect(relaxed).toMatch(/"Guessing Gus",2,0,"1 2"/);
+    expect(() => execFileSync('node', [SCRIPT, '--min-score', '7', file], { cwd: ROOT, stdio: 'pipe' })).toThrow();
+  });
+
   it('--set restricts counting to one set', () => {
     const out = run('--set', '2', '--csv', file);
     expect(out.split('\n')[0]).toBe('logs,name,set2,weeks,other,flags');
@@ -124,7 +134,7 @@ describe('scripts/verify.js', () => {
   it('prints a readable table by default and exits non-zero with no logs', () => {
     const table = run(file);
     expect(table).toContain('NAME');
-    expect(table).toMatch(/9 logs checked, \d+ students\./);
+    expect(table).toMatch(/10 logs checked, \d+ students\./);
     expect(() => execFileSync('node', [SCRIPT], { cwd: ROOT, input: 'nothing here', stdio: 'pipe' })).toThrow();
   });
 });
