@@ -24,7 +24,10 @@
       <span class="wordmark-text">PAL<span class="wordmark-num">9000</span></span>
     </a>
     <span class="head-status" role="status">ALL CIRCUITS FUNCTIONING</span>
-    <button id="theme-toggle" class="theme-toggle mono" type="button">☀ LIGHT</button>
+    <nav class="head-nav" aria-label="Site">
+      <a class="head-link mono" href="/systems/"{% if page.url == '/systems/' %} aria-current="page"{% endif %}>SYSTEMS</a>
+      <button id="theme-toggle" class="theme-toggle mono" type="button">☀ LIGHT</button>
+    </nav>
   </header>
   <main class="wrap">
     {{ content | safe }}

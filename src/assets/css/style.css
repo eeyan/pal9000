@@ -212,6 +212,27 @@ label {
   }
 }
 
+.head-nav { display: flex; align-items: center; gap: 0.5rem; }
+.head-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 0.45rem 0.7rem;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+.head-link:hover, .head-link:focus-visible { color: var(--accent); }
+.head-link[aria-current="page"] { color: var(--accent); border-color: var(--line-strong); }
+/* 360px Androids: wordmark + SYSTEMS + LIGHT only fit with tighter pills. */
+@media (max-width: 400px) {
+  .head-link, .theme-toggle { padding-inline: 0.5rem; letter-spacing: 0.1em; }
+  .head-nav { gap: 0.3rem; }
+}
 .theme-toggle {
   font-family: var(--font-mono);
   font-size: 0.65rem;

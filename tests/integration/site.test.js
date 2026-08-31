@@ -139,11 +139,18 @@ describe('built site', () => {
     expect($('script[src="/assets/js/systems-page.js"]').length).toBe(1);
   });
 
-  it('every page footer links to the systems page', () => {
-    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html']) {
+  it('every page links to the systems page from the header nav and the footer', () => {
+    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
       const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
+      expect($('.site-head .head-nav a[href="/systems/"]').length, page).toBe(1);
       expect($('.site-foot a[href="/systems/"]').length, page).toBe(1);
+      // The header nav keeps the theme toggle beside the link.
+      expect($('.head-nav #theme-toggle').length, page).toBe(1);
     }
+    const sys = cheerio.load(readFileSync(join(SITE, 'systems/index.html'), 'utf8'));
+    expect(sys('.head-link').attr('aria-current')).toBe('page');
+    const home = cheerio.load(readFileSync(join(SITE, 'index.html'), 'utf8'));
+    expect(home('.head-link').attr('aria-current')).toBeUndefined();
   });
 
   it('service worker precaches every page and every shipped asset', () => {
