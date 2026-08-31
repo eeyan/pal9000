@@ -14,18 +14,20 @@ permalink: /systems/
 
 <section class="sys-block" aria-labelledby="name-h">
   <h2 id="name-h" class="panel-label mono">NAME</h2>
-  <p class="sys-note">Your name as it appears in Brightspace. It is stored only on this device and printed on the completion log below — every completion code is tied to it, so a log can’t be handed in by someone else. Weeks you’ve already completed keep the name they were signed with (capitalization and spacing don’t matter, spelling does).</p>
+  <p class="sys-note">As it appears in Brightspace. Saved on this device only and printed on the log below; every completion code is tied to it (capitalization doesn’t matter, spelling does). Changing it later doesn’t change weeks already finished — they stay marked SIGNED AS the old spelling.</p>
   <form class="name-form" id="name-form">
-    <label class="sr-only" for="name-input">Your name</label>
-    <input class="name-input" id="name-input" type="text" autocomplete="name" maxlength="60" placeholder="Not set yet" autocapitalize="words">
-    <button class="btn-next" type="submit">SAVE NAME</button>
+    <label class="paste-label" for="name-input">Your name</label>
+    <div class="name-row">
+      <input class="name-input" id="name-input" type="text" autocomplete="name" maxlength="60" placeholder="Not set yet" autocapitalize="words" autocorrect="off" spellcheck="false">
+      <button class="btn-next" type="submit">SAVE NAME</button>
+    </div>
   </form>
   <p class="status-msg" id="name-msg" aria-live="polite"></p>
 </section>
 
 <section class="sys-block" aria-labelledby="log-h">
   <h2 id="log-h" class="panel-label mono">COMPLETION LOG</h2>
-  <p class="sys-note">Hand this in once per set: before each test, copy it as text (or screenshot it) into that set’s checkpoint assignment on Brightspace. Each completed week carries a code tied to your name.</p>
+  <p class="sys-note">Hand this in twice: before Test 1 (weeks 1–5) and before the final (weeks 6–12). Tap COPY AS TEXT and paste it into the checkpoint assignment on Brightspace; a screenshot also works. Practice on more than one device? Restore your latest backup here first so one log has every week.</p>
   <div class="term">
     <div class="term-head"><span>COMPLETION RECORDS · THIS DEVICE</span><button class="term-copy mono" type="button" id="copy-log">COPY AS TEXT</button></div>
     <div class="term-body" id="log-body">CONNECTING…</div>

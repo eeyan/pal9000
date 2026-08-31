@@ -28,7 +28,8 @@ async function loadPage() {
 
 const settle = () => vi.advanceTimersByTime(301);
 const click = (sel) => document.querySelector(sel).dispatchEvent(new MouseEvent('click', { bubbles: true }));
-const flush = () => new Promise((r) => setTimeout(r, 0));
+// Signing awaits Web Crypto (threadpool) — poll rather than a single macrotask.
+const signed = () => vi.waitFor(() => expect(document.querySelector('.done-stamp .stamp-code').textContent).toMatch(/[0-9A-Z]{6}-[0-9A-Z]{6}|UNSIGNED/));
 
 beforeEach(() => {
   localStorage.clear();
@@ -47,7 +48,10 @@ describe('week page name gate', () => {
     document.querySelector('#name-input').value = '   ';
     document.querySelector('#name-form').dispatchEvent(new Event('submit', { cancelable: true }));
     expect(document.querySelector('.name-gate')).not.toBeNull();
+    expect(document.querySelector('#gate-msg').textContent).toBe('Type your name to begin.');
     expect(localStorage.getItem('pal9000.name.v1')).toBeNull();
+    expect(document.querySelector('#name-input').getAttribute('autocorrect')).toBe('off');
+    expect(document.querySelector('.signing-as')).toBeNull();
   });
 
   it('stores the cleaned name, starts the quiz, and signs the completion under it', async () => {
@@ -66,7 +70,7 @@ describe('week page name gate', () => {
     }
     expect(document.querySelector('.done-panel')).not.toBeNull();
     vi.useRealTimers();
-    await flush(); // signing is async (Web Crypto)
+    await signed();
 
     const rec = JSON.parse(localStorage.getItem('pal9000.progress.v1'))[1];
     expect(rec).toMatchObject({ score: 2, total: 2, name: 'Ian Anderson' });
@@ -84,6 +88,25 @@ describe('week page name gate', () => {
     expect(document.querySelector('.name-gate')).toBeNull();
     expect(document.querySelectorAll('.option').length).toBe(4);
     expect(document.querySelector('.stamp-banner .stamp-code').textContent).toContain('0WDNEA-KZ1F20');
+    const signingAs = document.querySelector('.signing-as');
+    expect(signingAs.textContent).toContain('SIGNING AS Ian Anderson');
+    expect(signingAs.querySelector('a[href="/systems/"]')).not.toBeNull();
+  });
+
+  it('a signed completion replaces a pre-code unsigned record even at a lower score', async () => {
+    vi.useFakeTimers();
+    localStorage.setItem('pal9000.name.v1', 'Ian Anderson');
+    localStorage.setItem('pal9000.progress.v1', JSON.stringify({ 1: { score: 2, total: 2, at: 1_690_000_000_000 } }));
+    await loadPage();
+    expect(document.querySelector('.stamp-banner .stamp-note').textContent).toContain('before completion codes existed');
+    settle(); click('.option[data-key="B"]'); click('.btn-next'); // miss q1 → 1/2
+    settle(); click('.option[data-key="A"]'); click('.btn-next');
+    settle(); click('.option[data-key="A"]'); click('.btn-next'); // retry
+    vi.useRealTimers();
+    await signed();
+    const rec = JSON.parse(localStorage.getItem('pal9000.progress.v1'))[1];
+    expect(rec.score).toBe(1);
+    expect(rec.code).toMatch(/^[0-9A-Z]{6}-[0-9A-Z]{6}$/);
   });
 
   it('a lower retake keeps the earlier record and shows it on the finish screen', async () => {
@@ -97,8 +120,9 @@ describe('week page name gate', () => {
     settle(); click('.option[data-key="A"]'); click('.btn-next'); // retry of q1
     expect(document.querySelector('.done-panel')).not.toBeNull();
     vi.useRealTimers();
-    await flush();
+    await signed();
     expect(JSON.parse(localStorage.getItem('pal9000.progress.v1'))[1]).toEqual(prev);
     expect(document.querySelector('.done-stamp .stamp-code').textContent).toContain('0WDNEA-KZ1F20');
+    expect(document.querySelector('.done-stamp .stamp-note').textContent).toContain('Your earlier 2/2 stays on file');
   });
 });

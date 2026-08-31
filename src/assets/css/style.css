@@ -686,13 +686,13 @@ h1 {
 .set-status { color: var(--dim); font-weight: 400; }
 .set-status.ok { color: var(--green); }
 .set-block .mission-list { margin-bottom: 0; }
-.mission-locked { opacity: 0.6; }
 .mission-locked:hover, .mission-locked:focus-visible { border-color: var(--line); transform: none; }
 .mission-locked .mission-num { color: var(--dim); }
 .mission-locked .mission-title { font-weight: 400; color: var(--dim); }
 
 /* ---------- name (gate on the week page, form on SYSTEMS) ---------- */
-.name-form { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: stretch; }
+.name-form .paste-label { margin-bottom: 0.4rem; }
+.name-row { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: stretch; }
 .name-input {
   font: inherit;
   font-size: 1rem;
@@ -711,7 +711,18 @@ h1 {
 /* ---------- completion stamps ---------- */
 .stamp-code { display: block; color: var(--accent); }
 .stamp-banner .stamp-code { margin: 0.2rem 0 0; font-size: 0.75rem; letter-spacing: 0.06em; }
-.term-body .row { display: block; }
+.term-body .log-list { list-style: none; margin: 0; padding: 0; }
+.term-body .row {
+  display: block;
+  line-height: 1.6;
+  padding: 0.2em 0 0.2em 2.2em;
+  text-indent: -2.2em; /* hanging indent: a wrapped row can't be mistaken for a new one */
+}
+.term-body .row.hdr, .term-body .row.nm, .term-body .row.set { padding-left: 0; text-indent: 0; }
+.term-body .code { white-space: nowrap; }
+.signing-as { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--dim); margin: -0.5rem 0 1rem; }
+.signing-as strong { color: var(--text); font-weight: 600; }
+.signing-as a { color: var(--accent); }
 .term-body .hdr { color: var(--text); font-weight: 600; }
 .term-body .nm { color: var(--text); }
 .term-body .set { color: var(--accent); margin-top: 0.5rem; }

@@ -46,6 +46,7 @@ const CHECKS = [
   ['accent', 'panel-raised', 4.5],
   ['red', 'panel', 4.5],
   ['green', 'panel', 4.5],
+  ['green', 'bg', 4.5], // home page: completed-set tally in the set heading
   ['btn-text', 'amber', 4.5],
   ['line-strong', 'panel', 3.0],
   ['line-strong', 'panel-raised', 3.0],

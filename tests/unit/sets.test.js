@@ -30,6 +30,6 @@ describe('sets', () => {
     expect(shortDate('2026-10-06')).toBe('OCT 6');
     expect(shortDate('2026-12-01')).toBe('DEC 1');
     expect(weekRange(SETS[0])).toBe('WEEKS 1–5');
-    expect(setHeading(SETS[0])).toBe('SET 1 · WEEKS 1–5 · TEST 1 OCT 6');
+    expect(setHeading(SETS[0])).toBe('SET 1 · WEEKS 1–5 · DUE OCT 6 (TEST 1)');
   });
 });

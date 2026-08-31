@@ -27,14 +27,27 @@ const HASH_CHARS = 6; // 30 bits
 
 // Case/whitespace/Unicode-normalized so "ian  anderson" and "Ian Anderson"
 // sign identically — a retyped name on another device still verifies.
+// Control characters are stripped and every kind of double quote becomes an
+// apostrophe: the log wraps a differing name in "…", so a quote inside a name
+// would break the parsing contract (and smart-quote autocorrect must not
+// change how a name signs).
+// eslint-disable-next-line no-control-regex
+const CONTROL_RE = /[\x00-\x1f\x7f]/g;
+function scrubLine(text) {
+  return String(text ?? '').normalize('NFKC').replace(CONTROL_RE, ' ').trim().replace(/\s+/g, ' ');
+}
+function scrub(name) {
+  return scrubLine(name).replace(/["\u201C\u201D\u201E\u00AB\u00BB]/g, "'").trim();
+}
+
 export function normalizeName(name) {
-  return String(name ?? '').normalize('NFKC').trim().replace(/\s+/g, ' ').toLowerCase();
+  return scrub(name).slice(0, NAME_MAX).toLowerCase();
 }
 
 // What the app stores and prints: trimmed, single-spaced, capped, but with
 // the student's own casing.
 export function cleanName(name) {
-  return String(name ?? '').normalize('NFKC').trim().replace(/\s+/g, ' ').slice(0, NAME_MAX);
+  return scrub(name).slice(0, NAME_MAX);
 }
 
 export function encodeMinute(at) {
@@ -48,9 +61,17 @@ export function encodeMinute(at) {
   return out;
 }
 
+// Crockford's point: O reads as 0, I and L as 1 — fold them so a code retyped
+// from a screenshot still verifies.
+export function foldCode(code) {
+  return String(code ?? '').toUpperCase().replace(/O/g, '0').replace(/[IL]/g, '1');
+}
+
 export function decodeMinute(str) {
+  const s = foldCode(str);
+  if (!s) return null;
   let n = 0;
-  for (const ch of String(str).toUpperCase()) {
+  for (const ch of s) {
     const v = ALPHABET.indexOf(ch);
     if (v < 0) return null;
     n = n * 32 + v;
@@ -88,7 +109,7 @@ export const CODE_RE = /^([0-9A-Z]{6})-([0-9A-Z]{6})$/;
 
 // → { ok, at } — `at` is the minute the code claims, for plausibility checks.
 export async function verifyCompletion({ week, code, score, total, name }) {
-  const m = CODE_RE.exec(String(code ?? '').toUpperCase());
+  const m = CODE_RE.exec(foldCode(code));
   if (!m) return { ok: false, at: null };
   const [, minuteCode, hash] = m;
   const expected = await sha256Bits30(material({ week, minuteCode, score, total, name }));
@@ -111,7 +132,7 @@ export function localStamp(ms) {
 export function recordLine(week, rec, currentName) {
   let line = `W${pad2(week)} ✓ ${localStamp(rec.at)} · ${rec.score}/${rec.total} · ${rec.code ?? 'UNSIGNED'}`;
   if (rec.code && normalizeName(rec.name) !== normalizeName(currentName)) {
-    line += ` · AS "${cleanName(rec.name) || '(no name)'}"`;
+    line += ` · SIGNED AS "${cleanName(rec.name) || '(no name)'}"`;
   }
   return line;
 }
@@ -142,33 +163,44 @@ export function logText(rows) {
   return rows.map((r) => r.text).join('\n');
 }
 
-// Parse pasted log text (one student) back into { name, records }.
+// Parse pasted log text (one student) back into
+//   { name, names, records, unparsed }
+// name = the (last) NAME line; names = every NAME line seen, so a caller can
+// flag two students' logs that were pasted together without the header;
+// unparsed = lines that look like completion records but didn't parse (a
+// paste that mangled the separators) so nothing fails silently.
 // Tolerant of the noise a paste picks up: extra whitespace, dropped ✓,
-// locale date formats (the score/code pair is anchored to each other, not
-// to the date).
+// smart quotes, locale date formats (the score/code pair is anchored to each
+// other, not to the date).
 const NAME_RE = /^NAME\s*·\s*(.*)$/u;
-const DONE_RE = /^W(\d{1,2})\b.*?(\d+)\s*\/\s*(\d+)\s*·\s*([0-9A-Z]{6}-[0-9A-Z]{6}|UNSIGNED)\b(?:.*?\bAS\s+"([^"]*)")?/u;
+const DONE_RE = /^W(\d{1,2})\b.*?(\d+)\s*\/\s*(\d+)\s*·\s*([0-9A-Z]{6}-[0-9A-Z]{6}|UNSIGNED)\b(?:.*?\bAS\s+["\u201C\u201D]([^"\u201C\u201D]*)["\u201C\u201D])?/u;
+const AS_RE = /\bAS\s+["\u201C\u201D]([^"\u201C\u201D]*)["\u201C\u201D]/u;
+const LOOKS_LIKE_RECORD_RE = /^W\d{1,2}\b.*(✓|\d\s*\/\s*\d)/u;
 
 export function parseLog(text) {
-  const out = { name: '', records: [] };
+  const out = { name: '', names: [], records: [], unparsed: [] };
   for (const raw of String(text).split(/\r?\n/)) {
-    const line = raw.trim();
+    const line = scrubLine(raw).slice(0, 400); // strips control chars, trims (quotes kept: the SIGNED AS "…" syntax needs them)
     const n = NAME_RE.exec(line);
     if (n) {
-      out.name = n[1].trim() === '(not set)' ? '' : n[1].trim();
+      const name = n[1].trim() === '(not set)' ? '' : cleanName(n[1]);
+      out.name = name;
+      out.names.push(name);
       continue;
     }
-    const d = DONE_RE.exec(line.toUpperCase().replace(/\s+/g, ' '));
+    const d = DONE_RE.exec(line.toUpperCase());
     if (d) {
-      // Re-run on the original-case line for the AS "name" capture.
-      const asName = /\bAS\s+"([^"]*)"/u.exec(line)?.[1];
+      // Re-run on the original-case line for the SIGNED AS "name" capture.
+      const asName = AS_RE.exec(line)?.[1];
       out.records.push({
         week: Number(d[1]),
         score: Number(d[2]),
         total: Number(d[3]),
         code: d[4] === 'UNSIGNED' ? null : d[4],
-        name: asName ?? null, // null → header name applies
+        name: asName !== undefined ? cleanName(asName) : null, // null → header name applies
       });
+    } else if (LOOKS_LIKE_RECORD_RE.test(line)) {
+      out.unparsed.push(line);
     }
   }
   return out;

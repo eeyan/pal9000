@@ -15,7 +15,14 @@ function codeLine(rec) {
 // Recoverable self-report stamp: if this week was completed before, show the
 // reportable line above the quiz so navigating away never loses it.
 const prev = load(KEYS.progress, {})[week];
-if (prev) {
+if (prev && !prev.code) {
+  container.insertAdjacentHTML('beforebegin', `
+    <div class="stamp-banner">
+      <p class="mono stamp-line"></p>
+      <p class="stamp-note">Completed with ${prev.score}/${prev.total} before completion codes existed — retake it and this week gets a code.</p>
+    </div>`);
+  document.querySelector('.stamp-banner .stamp-line').textContent = completionStamp(week, prev.at);
+} else if (prev) {
   container.insertAdjacentHTML('beforebegin', `
     <div class="stamp-banner">
       <p class="mono stamp-line"></p>
@@ -44,7 +51,9 @@ function start(name) {
       }
       const progress = load(KEYS.progress, {});
       const best = progress[week];
-      const keep = !best || score >= best.score;
+      // A signed record always replaces an unsigned one (pre-code completions
+      // have no hand-in value); otherwise a lower score never replaces.
+      const keep = !best || !best.code || score >= best.score;
       if (keep) {
         progress[week] = rec;
         save(KEYS.progress, progress);
@@ -56,6 +65,12 @@ function start(name) {
       const code = container.querySelector('.done-stamp .stamp-code');
       if (line) line.textContent = completionStamp(week, onFile.at);
       if (code) code.textContent = codeLine(onFile);
+      const note = container.querySelector('.done-stamp .stamp-note');
+      if (note && !keep) {
+        note.prepend(`Your earlier ${best.score}/${best.total} stays on file — this is that record. `);
+      } else if (note && !rec.code) {
+        note.textContent = 'This completion could not be signed (no secure connection), so it is recorded without a code. Retake it on a normal connection to get one.';
+      }
     },
   });
 }
@@ -66,13 +81,16 @@ function nameGate() {
   container.innerHTML = `
     <div class="quiz-panel name-gate">
       <p class="readout mono">IDENTIFY YOURSELF</p>
-      <h2 class="stem" tabindex="-1">Before your first set: what’s your name?</h2>
-      <p class="done-note">Enter it as it appears in Brightspace. It stays on this device only and is printed on your completion log — every completion code is tied to it, which is what lets you hand in one log per set instead of weekly screenshots. Spelling matters; capitalization doesn’t.</p>
-      <form class="name-form" id="name-form">
-        <label class="sr-only" for="name-input">Your name</label>
-        <input class="name-input" id="name-input" type="text" autocomplete="name" maxlength="${NAME_MAX}" required autocapitalize="words" enterkeyhint="go">
-        <button class="btn-next" type="submit">BEGIN →</button>
+      <h2 class="stem">What’s your name?</h2>
+      <p class="done-note">As it appears in Brightspace. It’s saved on this device only and goes on your completion log — every completion code is tied to it. Spelling matters; capitalization doesn’t.</p>
+      <form class="name-form" id="name-form" novalidate>
+        <label class="paste-label" for="name-input">Your name</label>
+        <div class="name-row">
+          <input class="name-input" id="name-input" type="text" autocomplete="name" maxlength="${NAME_MAX}" required autocapitalize="words" autocorrect="off" spellcheck="false" enterkeyhint="go">
+          <button class="btn-next" type="submit">BEGIN →</button>
+        </div>
       </form>
+      <p class="status-msg err" id="gate-msg" aria-live="polite"></p>
     </div>`;
   const form = container.querySelector('#name-form');
   const input = container.querySelector('#name-input');
@@ -81,6 +99,7 @@ function nameGate() {
     e.preventDefault();
     const clean = saveName(input.value);
     if (!clean) {
+      container.querySelector('#gate-msg').textContent = 'Type your name to begin.';
       input.focus();
       return;
     }
@@ -88,6 +107,26 @@ function nameGate() {
   });
 }
 
+// Shared phone or lab machine: make it obvious whose name the record will
+// carry before a single question is answered.
+function showSigningAs(name) {
+  const p = document.createElement('p');
+  p.className = 'signing-as mono';
+  p.append('SIGNING AS ');
+  const b = document.createElement('strong');
+  b.textContent = name;
+  p.append(b, ' · ');
+  const a = document.createElement('a');
+  a.href = '/systems/';
+  a.textContent = 'NOT YOU?';
+  p.append(a);
+  container.before(p);
+}
+
 const name = loadName();
-if (name) start(name);
-else nameGate();
+if (name) {
+  showSigningAs(name);
+  start(name);
+} else {
+  nameGate();
+}

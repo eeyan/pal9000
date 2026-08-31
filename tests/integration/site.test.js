@@ -160,6 +160,11 @@ describe('built site', () => {
       expect(existsSync(file), `precached ${url} missing from build`).toBe(true);
     }
     expect(sw).toMatch(/pal9000-\d+/); // build-stamped cache name
+    // …and every module in src/assets/js/ is precached (a forgotten module
+    // breaks the page offline while every other asset loads).
+    for (const f of readdirSync(join(ROOT, 'src/assets/js')).filter((n) => n.endsWith('.js'))) {
+      expect(shell, `${f} missing from SW precache`).toContain(`/assets/js/${f}`);
+    }
   });
 
   it('manifest parses and its icons exist', () => {

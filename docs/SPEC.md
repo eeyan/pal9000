@@ -147,7 +147,8 @@ stem: What does the acronym KTLO ("Keep The Lights On") stand for in IT budgetin
 
 Optional tools get ~15% usage. Levers, in Ian's control as instructor, strongest first:
 1. Reference the weekly set in class + a recurring LMS announcement (reminders are the cheapest proven lever).
-2. If Baruch course policy allows: a few low-stakes points for completing weekly sets (self-reported or screenshot — no backend needed).
+2. If Baruch course policy allows: a few low-stakes points for completing weekly sets ~~(self-reported or screenshot — no backend needed)~~.
+   *Amended 2026-08-30:* still no backend, but hand-in is **two per-set checkpoints**, not weekly. Weeks group into sets (1–5 before Test 1, 6–12 before the final); students paste one signed completion log per set into a Brightspace assignment. 79 students × 2 submissions instead of × 12. See "As built (2026-08-30)".
 3. Seed exam-review sessions with questions drawn from the bank so the tool visibly mirrors the exam.
 
 ## MVP cut line
@@ -176,6 +177,14 @@ MVP implemented and smoke-tested with sample-v0 content (30 hand-authored questi
 
 - **Analytics live (2026-08-13):** page-level, cookieless, self-hosted per the standard stack; snippet scoped via `data-domains` to the production hostname so dev/preview traffic never records; CSP opened for the stats origin only (script-src + connect-src). Site copy adjusted to stay literally true (SYSTEMS: "your answers and scores are never sent anywhere"); no vendor named in shipped copy; no consent banner needed (no cookies, no personal data). FERPA stance unchanged: aggregate page counts only.
 
+- **Sets + per-set checkpoints (2026-08-30):** weeks group into **sets**, each closing at an in-class test — set 1 = weeks 1–5 before Test 1 (Oct 6), set 2 = weeks 6–12 before the final (Dec 1). Students hand in one completion log per set instead of a screenshot per week; 79 students × 2 submissions is a gradebook that fits in an evening. `src/assets/js/sets.js` is the single source of truth (weeks, checkpoint names, dates) — it ships to the browser and is imported by the Eleventy data file `src/_data/sets.js`, the tests, and `scripts/verify.js`; a second course instance edits that one file. Home page renders set headings with a per-set tally and **locked placeholder rows** for weeks not yet released, so the shape of the semester is visible from week 1. Weekly publish cadence unchanged: each week's set still deploys after that week's class. New Nunjucks filters `findWeek` / `setOf` (Nunjucks can't bind a variable inside a nested loop).
+
+- **Name-bound completion codes (2026-08-30):** a batched hand-in needs the log to be worth more than a retyped list, so every completion is now signed. Students enter their name once (gate on the first week page, editable on `/systems/`; `pal9000.name.v1`); each record is `{score, total, at, name, code}` where `code` = Crockford-base32 of the completion minute + `-` + 30 bits of `SHA-256(SALT|week|minute|score|total|normalized-name)` (`src/assets/js/completion.js`). Change the week, minute, score, or name and the code stops verifying; copy a classmate's log and it carries their name. A record signed under a different name than the device's current one prints as `AS "name"` rather than being silently rewritten, and a lower retake keeps the earlier record *and its code*. **Threat model: tamper-evidence, not proof** — the salt ships in public source, so a student who reads it can forge a code; the bar is "more work than doing the 10-question set," which is the right bar for a participation sliver. Points stay honor-system, as decided.
+  `npm run verify <file>` (`scripts/verify.js`) parses many pasted logs at once — Brightspace text submissions concatenated — and prints per-student verified-week counts per set plus flags: invalid code, unsigned, name mismatch, a code appearing in two logs, completion dated after that set's checkpoint. `--set N` and `--csv` supported.
+  **FERPA/no-backend stance intact:** still no accounts, no server, no per-student telemetry. The name is stored in localStorage and mixed into a local hash; it leaves the browser only when the student themself pastes their own log into Brightspace. Nothing about codes or names is transmitted by the site.
+
+- **Backup format v2 (2026-08-30):** `pal9000-backup-v2` carries the top-level name plus per-record `name` + `code`. `pal9000-backup-v1` files still import (their records come through unsigned, and the device's existing name is kept rather than wiped) — the format stamp exists for exactly this.
+
 ## Effort estimate
 
 - App + build pipeline: ~1–2 weekends with Claude Code.
@@ -184,7 +193,8 @@ MVP implemented and smoke-tested with sample-v0 content (30 hand-authored questi
 
 ## Decisions (reviewed with Ian, 2026-07-25)
 
-1. **Low-stakes graded.** A few participation points for completing weekly sets, self-reported/screenshot — no backend. Adoption plan lever #2 is the plan of record.
+1. **Low-stakes graded.** A few participation points for completing weekly sets, ~~self-reported/screenshot~~ — no backend. Adoption plan lever #2 is the plan of record.
+   *Amended 2026-08-30 (reviewed with Ian):* the cadence is per-set, not weekly, and the log is signed rather than merely screenshotted. Weekly *publishing* is unchanged — each week's set still deploys after that week's class; only the hand-in is batched. Points stay honor-system: the codes make tampering visible, they don't prove anything.
 2. **Sources are mixed:** PPTX decks, PDFs, Obsidian/markdown notes, plus publisher/case materials. Ingestion step needs PPTX and PDF text extraction (markdown is pass-through). Publisher/case content is grounding input only and must never enter git.
 3. **~10 curated questions/week** (≈150/semester); over-generate ~30, expect ~2/3 rejects.
 4. **Two-tier naming (decided 2026-07-25):** the reusable framework/pipeline is **Groundwork** (grounded generation + foundational study; potential standalone productization later). The CIS 9000 course instance is **PAL 9000** — "Practice And Learn," a HAL 9000 backronym riffing on the course number (HAL turned on his crew; PAL is on your side). Tagline shape: "PAL 9000, built on Groundwork."

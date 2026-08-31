@@ -41,5 +41,5 @@ export function shortDate(iso) {
 
 // Header line for a set, shared by the home page and the completion log.
 export function setHeading(s) {
-  return `SET ${s.set} · ${weekRange(s)} · ${s.checkpoint} ${shortDate(s.checkpointDate)}`;
+  return `SET ${s.set} · ${weekRange(s)} · DUE ${shortDate(s.checkpointDate)} (${s.checkpoint})`;
 }

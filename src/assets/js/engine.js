@@ -274,7 +274,7 @@ export function runQuiz(container, questions, opts = {}) {
               ? `You retried ${missed} missed question${missed === 1 ? '' : 's'} just now — ${missed === 1 ? 'it' : 'they'}'ll come back for review in a day or so.`
               : 'Clean sweep on the first pass. These questions will check back in about a week.')
         }</p>
-        ${opts.mode === 'week' ? `<p class="done-stamp mono"><span class="stamp-line">${esc(completionStamp(opts.week, now))}</span><span class="stamp-code"></span><span class="stamp-note">Your completion code is now in the log on the SYSTEMS page — hand that log in once at the end of each set. This line also stays on this week's page.</span></p>` : ''}
+        ${opts.mode === 'week' ? `<p class="done-stamp mono"><span class="stamp-line">${esc(completionStamp(opts.week, now))}</span><span class="stamp-code"></span><span class="stamp-note">Logged. Nothing to hand in yet — before each test, copy your completion log from <a href="/systems/">SYSTEMS</a> into Brightspace. This line also stays on this week's page.</span></p>` : ''}
         <p><a class="btn-next" href="/">← MISSION SELECT</a></p>
       </div>`;
     opts.onComplete?.({ score, total, at: now });

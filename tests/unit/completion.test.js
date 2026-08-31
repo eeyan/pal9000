@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  CODE_RE, LOG_HEADER, NAME_MAX, buildLog, cleanName, decodeMinute, encodeMinute, logText,
+  CODE_RE, LOG_HEADER, NAME_MAX, buildLog, cleanName, decodeMinute, encodeMinute, foldCode, logText,
   normalizeName, parseLog, pendingLine, recordLine, signCompletion, verifyCompletion,
 } from '../../src/assets/js/completion.js';
 import { SETS, setHeading } from '../../src/assets/js/sets.js';
@@ -22,6 +22,13 @@ describe('names', () => {
     expect(cleanName('x'.repeat(NAME_MAX + 20)).length).toBe(NAME_MAX);
     expect(cleanName(undefined)).toBe('');
   });
+
+  it('folds every double quote to an apostrophe and strips control characters (log-format safety)', () => {
+    expect(cleanName('Jon "JD" Doe')).toBe("Jon 'JD' Doe");
+    expect(cleanName('Jon “JD” Doe')).toBe("Jon 'JD' Doe");
+    expect(cleanName('Ian\u001bAnderson\u0000')).toBe('Ian Anderson');
+    expect(normalizeName('Jon “JD” Doe')).toBe(normalizeName('Jon "JD" Doe'));
+  });
 });
 
 describe('minute encoding', () => {
@@ -30,8 +37,11 @@ describe('minute encoding', () => {
     expect(enc).toMatch(/^[0-9A-HJKMNP-TV-Z]{6}$/);
     expect(decodeMinute(enc)).toBe(Math.floor(AT / 60_000) * 60_000);
   });
-  it('rejects garbage', () => {
-    expect(decodeMinute('ILOU!!')).toBeNull();
+  it('folds Crockford confusables (O→0, I/L→1) and rejects garbage', () => {
+    expect(foldCode('0wdfs4-dg9qgm'.replace('0', 'O').replace('1', 'I'))).toBe('0WDFS4-DG9QGM');
+    expect(decodeMinute('OI0L1O')).toBe(decodeMinute('010110'));
+    expect(decodeMinute('')).toBeNull();
+    expect(decodeMinute('ABCU!!')).toBeNull();
     expect(() => encodeMinute(-1)).toThrow();
     expect(() => encodeMinute(NaN)).toThrow();
   });
@@ -60,6 +70,12 @@ describe('signCompletion / verifyCompletion', () => {
     }
     // Different minute → different code
     expect(await signCompletion({ ...base, at: AT + 60_000 })).not.toBe(code);
+  });
+
+  it('verifies a code retyped with O for 0 and l for 1', async () => {
+    const code = await signCompletion(base);
+    const retyped = code.replaceAll('0', 'O').replaceAll('1', 'l').toLowerCase();
+    expect((await verifyCompletion({ ...base, code: retyped })).ok).toBe(true);
   });
 
   it('rejects malformed codes without throwing', async () => {
@@ -107,10 +123,34 @@ describe('log text ⇄ parseLog', () => {
   it('marks records signed under a different name and parses the override', async () => {
     const progress = await fixture('Jon Doe', [2]);
     const line = recordLine(2, progress[2], 'Ian Anderson');
-    expect(line).toContain('· AS "Jon Doe"');
+    expect(line).toContain('· SIGNED AS "Jon Doe"');
     expect(recordLine(2, progress[2], 'jon  DOE')).not.toContain('AS "'); // normalization-equal
     const parsed = parseLog(`${LOG_HEADER}\nNAME · Ian Anderson\n${line}`);
     expect(parsed.records[0].name).toBe('Jon Doe');
+    // Smart quotes (autocorrect) and a quote inside the name still parse and verify.
+    const smart = line.replace('"Jon Doe"', '“Jon Doe”');
+    expect(parseLog(smart).records[0].name).toBe('Jon Doe');
+    const quoted = await fixture('Jon "JD" Doe', [2]);
+    const qLine = recordLine(2, quoted[2], 'Ian Anderson');
+    const qRec = parseLog(qLine).records[0];
+    expect(qRec.name).toBe("Jon 'JD' Doe");
+    expect((await verifyCompletion({ ...qRec, name: qRec.name })).ok).toBe(true);
+  });
+
+  it('reports every NAME line and flags record-looking lines that did not parse', () => {
+    const text = `NAME · A\nW01 ✓ Aug 1 - 9/11 - 0WDNEA-KZ1F20\nNAME · B\nW02 ✓ Aug 2 · 9/11 · 0WDNEA-KZ1F20`;
+    const parsed = parseLog(text);
+    expect(parsed.names).toEqual(['A', 'B']);
+    expect(parsed.name).toBe('B');
+    expect(parsed.records.map((r) => r.week)).toEqual([2]);
+    expect(parsed.unparsed.length).toBe(1);
+    expect(parsed.unparsed[0]).toMatch(/^W01/);
+  });
+
+  it('caps and scrubs a hostile NAME line', () => {
+    const parsed = parseLog(`NAME · \u001b[31m${'x'.repeat(200)}`);
+    expect(parsed.name.length).toBeLessThanOrEqual(NAME_MAX);
+    expect(parsed.name).not.toMatch(/\u001b/);
   });
 
   it('renders unsigned legacy records and parses them as code: null', () => {

@@ -8,12 +8,16 @@
 //
 // Input is plain text: every "PAL 9000 · COMPLETION LOG" header starts a new
 // student's log. Paste Brightspace text submissions one after another (or
-// export them and concatenate). Output: one row per log with the count of
-// weeks whose codes verify, plus flags — codes that don't verify, unsigned
-// records, records signed under a different name, and codes that appear in
-// more than one student's log (shared screenshots).
+// export them and concatenate). Output: one row per student (logs with the
+// same name are merged — phone + laptop) with the count of weeks whose codes
+// verify under that name, per set; a separate OTHER count for records that
+// verify only under a *different* name (SIGNED AS …) — those never count
+// automatically, the instructor decides; and flags: invalid codes, unsigned
+// records, codes that appear in more than one student's log (shared
+// screenshots), two NAME lines in one chunk (header-less paste), and record
+// lines that didn't parse (mangled separators).
 import { readFileSync } from 'node:fs';
-import { LOG_HEADER, parseLog, verifyCompletion } from '../src/assets/js/completion.js';
+import { LOG_HEADER, normalizeName, parseLog, verifyCompletion } from '../src/assets/js/completion.js';
 import { SETS } from '../src/assets/js/sets.js';
 
 const args = process.argv.slice(2);
@@ -44,70 +48,102 @@ if (chunks.length === 0) {
   process.exit(2);
 }
 
-const wanted = new Set((onlySet === null ? SETS : SETS.filter((s) => s.set === onlySet)).flatMap((s) => s.weeks));
+const activeSets = onlySet === null ? SETS : SETS.filter((s) => s.set === onlySet);
+const wanted = new Set(activeSets.flatMap((s) => s.weeks));
 const setOfWeek = (w) => SETS.find((s) => s.weeks.includes(w))?.set ?? null;
 const checkpointFor = (w) => SETS.find((s) => s.weeks.includes(w))?.checkpointDate ?? null;
+const label = (w) => `W${String(w).padStart(2, '0')}`;
 
-const seenCodes = new Map(); // code → first log index
-const sharedFrom = new Set(); // log indexes whose codes reappeared later
-const rows = [];
-for (const [i, chunk] of chunks.entries()) {
-  const log = parseLog(chunk);
-  const flags = [];
-  const valid = new Set();
+const logs = chunks.map((chunk, i) => ({ n: i + 1, ...parseLog(chunk) }));
+const headerNames = new Set(logs.map((l) => normalizeName(l.name)).filter(Boolean));
+
+// ---------- pass 1: verify each log ----------
+const seenCodes = new Map(); // code → first log number
+const sharedFrom = new Set(); // log numbers whose codes reappeared later
+for (const log of logs) {
+  log.flags = [];
+  log.valid = new Map(); // week → code
+  log.other = new Map(); // week → name it verifies under
+  if (!log.name) log.flags.push('no name');
+  if (log.names.length > 1) log.flags.push(`${log.names.length} NAME lines in one paste (two logs merged?)`);
+  for (const line of log.unparsed) log.flags.push(`unreadable line: "${line.slice(0, 40)}"`);
+
   for (const rec of log.records) {
     if (!wanted.has(rec.week)) continue;
-    const label = `W${String(rec.week).padStart(2, '0')}`;
-    if (!rec.code) {
-      flags.push(`${label} unsigned`);
-      continue;
-    }
-    if (valid.has(rec.week)) {
-      flags.push(`${label} duplicated`);
-      continue;
-    }
-    const name = rec.name ?? log.name;
-    if (rec.name !== null) flags.push(`${label} signed as "${rec.name}"`);
-    const { ok, at } = await verifyCompletion({ week: rec.week, code: rec.code, score: rec.score, total: rec.total, name });
-    if (!ok) {
-      flags.push(`${label} code invalid`);
-      continue;
-    }
+    const w = label(rec.week);
+    if (!rec.code) { log.flags.push(`${w} unsigned`); continue; }
+    if (log.valid.has(rec.week) || log.other.has(rec.week)) { log.flags.push(`${w} listed twice`); continue; }
+
+    const under = rec.name ?? log.name;
+    const { ok, at } = await verifyCompletion({ week: rec.week, code: rec.code, score: rec.score, total: rec.total, name: under });
+    if (!ok) { log.flags.push(`${w} code invalid`); continue; }
+
     const cp = checkpointFor(rec.week);
-    if (at > Date.now()) flags.push(`${label} dated in the future`);
-    else if (cp && at > Date.parse(`${cp}T23:59:59`)) flags.push(`${label} completed after checkpoint`);
+    if (at > Date.now()) log.flags.push(`${w} dated in the future`);
+    else if (cp && at > Date.parse(`${cp}T23:59:59`)) log.flags.push(`${w} completed after checkpoint`);
+
     if (seenCodes.has(rec.code)) {
-      flags.push(`${label} code also in log #${seenCodes.get(rec.code) + 1}`);
+      log.flags.push(`${w} code also in log #${seenCodes.get(rec.code)}`);
       sharedFrom.add(seenCodes.get(rec.code));
-    } else seenCodes.set(rec.code, i);
-    valid.add(rec.week);
+    } else seenCodes.set(rec.code, log.n);
+
+    if (rec.name !== null && normalizeName(rec.name) !== normalizeName(log.name)) {
+      // Verifies, but under someone else's name. Never counted automatically.
+      log.other.set(rec.week, rec.name);
+      const clash = headerNames.has(normalizeName(rec.name));
+      log.flags.push(`${w} signed as "${rec.name}"${clash ? ' — ANOTHER SUBMITTED LOG HAS THAT NAME' : ''}`);
+      continue;
+    }
+    log.valid.set(rec.week, rec.code);
   }
-  if (!log.name) flags.unshift('no name');
-  const bySet = {};
-  for (const w of valid) bySet[setOfWeek(w)] = (bySet[setOfWeek(w)] ?? 0) + 1;
-  rows.push({ n: i + 1, name: log.name || '(no name)', valid: valid.size, bySet, weeks: [...valid].sort((a, b) => a - b), flags });
 }
+for (const log of logs) if (sharedFrom.has(log.n)) log.flags.push('code shared with a later log');
 
-// Shared codes are flagged on the later log as they're met; mark the earlier one too.
-for (const i of sharedFrom) rows[i].flags.push('code shared with a later log');
+// ---------- pass 2: merge logs by name ----------
+const byName = new Map();
+for (const log of logs) {
+  const key = normalizeName(log.name) || `#${log.n}`;
+  if (!byName.has(key)) byName.set(key, { name: log.name || '(no name)', logs: [], valid: new Map(), other: new Map(), flags: [] });
+  const row = byName.get(key);
+  row.logs.push(log.n);
+  for (const [w, c] of log.valid) row.valid.set(w, c);
+  for (const [w, nm] of log.other) if (!row.valid.has(w)) row.other.set(w, nm);
+  row.flags.push(...log.flags);
+}
+const rows = [...byName.values()].map((r) => {
+  const bySet = {};
+  for (const w of r.valid.keys()) bySet[setOfWeek(w)] = (bySet[setOfWeek(w)] ?? 0) + 1;
+  if (r.logs.length > 1) r.flags.unshift(`${r.logs.length} logs merged (#${r.logs.join(', #')})`);
+  return {
+    name: r.name,
+    logs: r.logs,
+    bySet,
+    weeks: [...r.valid.keys()].sort((a, b) => a - b),
+    other: [...r.other.keys()].sort((a, b) => a - b),
+    flags: r.flags,
+  };
+});
 
-const setCols = (onlySet === null ? SETS : SETS.filter((s) => s.set === onlySet)).map((s) => s.set);
+// ---------- output ----------
+const setCols = activeSets.map((s) => s.set);
 if (csv) {
   const q = (v) => `"${String(v).replaceAll('"', '""')}"`;
-  console.log(['#', 'name', ...setCols.map((s) => `set${s}`), 'weeks', 'flags'].join(','));
+  console.log(['logs', 'name', ...setCols.map((s) => `set${s}`), 'weeks', 'other', 'flags'].join(','));
   for (const r of rows) {
-    console.log([r.n, q(r.name), ...setCols.map((s) => r.bySet[s] ?? 0), q(r.weeks.join(' ')), q(r.flags.join('; '))].join(','));
+    console.log([q(r.logs.join(' ')), q(r.name), ...setCols.map((s) => r.bySet[s] ?? 0),
+      q(r.weeks.join(' ')), q(r.other.join(' ')), q(r.flags.join('; '))].join(','));
   }
 } else {
   const w = Math.max(4, ...rows.map((r) => r.name.length));
-  console.log(['#'.padStart(3), 'NAME'.padEnd(w), ...setCols.map((s) => `SET${s}`), 'WEEKS'.padEnd(20), 'FLAGS'].join('  '));
+  console.log(['LOGS'.padEnd(6), 'NAME'.padEnd(w), ...setCols.map((s) => `SET${s}`), 'WEEKS'.padEnd(20), 'OTHER'.padEnd(8), 'FLAGS'].join('  '));
   for (const r of rows) {
     console.log([
-      String(r.n).padStart(3), r.name.padEnd(w),
+      r.logs.map((n) => `#${n}`).join(',').padEnd(6), r.name.padEnd(w),
       ...setCols.map((s) => String(r.bySet[s] ?? 0).padStart(4)),
-      r.weeks.map((x) => `W${String(x).padStart(2, '0')}`).join(' ').padEnd(20),
+      r.weeks.map(label).join(' ').padEnd(20),
+      (r.other.length ? r.other.map(label).join(' ') : '—').padEnd(8),
       r.flags.join('; ') || '—',
     ].join('  '));
   }
-  console.log(`\n${rows.length} log${rows.length === 1 ? '' : 's'} checked.`);
+  console.log(`\n${logs.length} log${logs.length === 1 ? '' : 's'} checked, ${rows.length} student${rows.length === 1 ? '' : 's'}.`);
 }

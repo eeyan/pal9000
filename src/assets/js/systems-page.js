@@ -1,7 +1,7 @@
 import { load, save, loadReviewState, loadName, saveName, KEYS } from './storage.js';
 import { queueSize } from './scheduler.js';
 import { makeBackup, parseBackup } from './backup.js';
-import { buildLog, logText, cleanName } from './completion.js';
+import { buildLog, logText, cleanName, CODE_RE } from './completion.js';
 import { SETS, setHeading } from './sets.js';
 
 // theme.js is a classic (non-module) script, so its key is duplicated here.
@@ -61,13 +61,28 @@ function render() {
     logBody.classList.add('empty');
   } else {
     logBody.classList.remove('empty');
-    logBody.replaceChildren(...currentRows().map((r) => {
+    const list = document.createElement('ul');
+    list.className = 'log-list';
+    for (const r of currentRows()) {
       // textContent, never innerHTML: the name is student-typed text.
-      const span = document.createElement('span');
-      span.className = `row ${ROW_CLASS[r.kind]}`;
-      span.textContent = r.text;
-      return span;
-    }));
+      const li = document.createElement('li');
+      li.className = `row ${ROW_CLASS[r.kind]}`;
+      // Keep the code on one line so a phone screenshot never splits it.
+      const parts = r.text.split(' ');
+      parts.forEach((word, i) => {
+        if (CODE_RE.test(word)) {
+          const c = document.createElement('span');
+          c.className = 'code';
+          c.textContent = word;
+          li.append(c);
+        } else {
+          li.append(word);
+        }
+        if (i < parts.length - 1) li.append(' ');
+      });
+      list.append(li);
+    }
+    logBody.replaceChildren(list);
   }
 }
 
@@ -79,7 +94,7 @@ el('name-form').addEventListener('submit', (e) => {
   const clean = saveName(nameInput.value);
   nameInput.value = clean;
   render();
-  if (!clean) say(nameMsg, before ? 'Name cleared. New completions will be signed without a name until you set one.' : 'Enter a name first.', !before);
+  if (!clean) say(nameMsg, before ? 'Name cleared. You’ll be asked for it again before your next week.' : 'Enter a name first.', !before);
   else if (clean === before) say(nameMsg, 'Name unchanged.');
   else say(nameMsg, `Saved. New completions will be signed as ${clean}.`);
 });
@@ -262,7 +277,7 @@ el('full-reset-btn').addEventListener('click', () => {
   el('clear-confirm').hidden = true;
   const done = completedWeeks();
   const detail = done.length
-    ? `This deletes your completion ${done.length === 1 ? 'record' : 'records'} for ${done.length === 1 ? 'week' : 'weeks'} ${done.join(', ')} — codes included — plus your name and review queue, with no undo. You can download a backup first.`
+    ? `This deletes your completion ${done.length === 1 ? 'record' : 'records'} for ${done.length === 1 ? 'week' : 'weeks'} ${done.join(', ')}, plus your name and review queue, with no undo. You can download a backup first.`
     : 'This erases your name, review queue, and saved settings on this device, with no undo.';
   el('reset-confirm-text').innerHTML = `<span class="strong">Erase everything on this device?</span><br>${detail}`;
   el('reset-backup').hidden = done.length === 0;

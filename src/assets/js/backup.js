@@ -5,7 +5,7 @@
 // v2 (2026-08-30) adds the top-level `name` and per-record `name` + `code`
 // (name-bound completion codes). v1 files still import; their records come
 // through unsigned.
-import { CODE_RE, NAME_MAX, cleanName } from './completion.js';
+import { CODE_RE, NAME_MAX, cleanName, foldCode } from './completion.js';
 
 export const BACKUP_FORMAT = 'pal9000-backup-v2';
 const ACCEPTED_FORMATS = new Set(['pal9000-backup-v1', BACKUP_FORMAT]);
@@ -52,10 +52,10 @@ export function parseBackup(text) {
     }
     const rec = { score: p.score, total: p.total, at: p.at };
     if (p.code !== undefined && p.code !== null) {
-      if (typeof p.code !== 'string' || !CODE_RE.test(p.code)) {
+      if (typeof p.code !== 'string' || !CODE_RE.test(foldCode(p.code))) {
         throw new Error('This backup file is damaged (bad completion code).');
       }
-      rec.code = p.code;
+      rec.code = foldCode(p.code);
     }
     if (p.name !== undefined && p.name !== null) {
       if (typeof p.name !== 'string' || p.name.length > NAME_MAX * 4) {
