@@ -12,7 +12,7 @@
 
   function paint(btn) {
     var dark = document.documentElement.dataset.theme === 'dark';
-    btn.textContent = dark ? '☀ LIGHT' : '☾ DARK';
+    btn.textContent = dark ? '☀' : '☾'; // icon-only; the aria-label carries the words
     btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
   }
 
