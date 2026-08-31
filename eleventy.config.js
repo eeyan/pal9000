@@ -1,4 +1,10 @@
+import { setForWeek } from './src/assets/js/sets.js';
+
 export default function (eleventyConfig) {
+  // Sets ↔ weeks lookups for templates (Nunjucks can't set a variable from
+  // inside a nested loop, so the search happens here).
+  eleventyConfig.addFilter('findWeek', (weeks, n) => weeks.find((w) => w.week === Number(n)) ?? null);
+  eleventyConfig.addFilter('setOf', (week) => setForWeek(week));
   eleventyConfig.addPassthroughCopy({ 'src/assets': 'assets' });
   // Stamps the service-worker cache name so every deploy replaces the precache.
   eleventyConfig.addGlobalData('buildStamp', String(Date.now()));

@@ -1,7 +1,7 @@
 {
   "name": "pal9000",
   "version": "0.1.0",
-  "description": "PAL 9000 — Practice And Learn. Practice-quiz site for CIS 9000 (IT Strategy), built on the Groundwork generation/curation pipeline.",
+  "description": "PAL 9000 \u2014 Practice And Learn. Practice-quiz site for CIS 9000 (IT Strategy), built on the Groundwork generation/curation pipeline.",
   "type": "module",
   "engines": {
     "node": ">=22"
@@ -11,7 +11,8 @@
     "dev": "eleventy --serve",
     "test": "vitest run",
     "generate": "node scripts/generate.js",
-    "eval-log": "node scripts/eval-log.js"
+    "eval-log": "node scripts/eval-log.js",
+    "verify": "node scripts/verify.js"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",

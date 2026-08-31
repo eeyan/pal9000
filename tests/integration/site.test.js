@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import * as cheerio from 'cheerio';
 import yaml from 'js-yaml';
 import { loadBank, WEEK_FILE_RE } from '../../src/lib/bank.js';
+import { SETS, setHeading } from '../../src/assets/js/sets.js';
 
 const ROOT = join(import.meta.dirname, '../..');
 const SITE = join(ROOT, '_site');
@@ -15,13 +16,37 @@ beforeAll(() => {
 }, 60_000);
 
 describe('built site', () => {
-  it('home page lists every week and the review queue', () => {
+  it('home page lists every set with a slot per week, released weeks linked, and the review queue', () => {
     const $ = cheerio.load(readFileSync(join(SITE, 'index.html'), 'utf8'));
-    const missions = $('.mission-list .mission');
-    expect(missions.length).toBe(bank.weeks.length);
+    const allWeeks = SETS.flatMap((s) => s.weeks);
+    expect($('.mission-list .mission').length).toBe(allWeeks.length);
+    expect($('.mission-list a.mission').length).toBe(bank.weeks.length);
+    expect($('.mission-list .mission-locked').length).toBe(allWeeks.length - bank.weeks.length);
+    for (const s of SETS) {
+      const head = $(`#set-${s.set}-h`);
+      expect(head.text(), `set ${s.set} heading`).toContain(setHeading(s));
+      expect(head.find(`[data-set-status="${s.set}"]`).length).toBe(1);
+      expect(head.closest('.set-block').find('.mission').length).toBe(s.weeks.length);
+    }
+    for (const w of bank.weeks) {
+      expect($(`a.mission[href="/week-${w.week}/"]`).length, `week ${w.week} link`).toBe(1);
+    }
     expect($('a[href="/review/"]').length).toBeGreaterThan(0);
     expect($('title').text()).toContain('PAL 9000');
   });
+
+  it('every released week belongs to a set (a stray week would never appear on the home page)', () => {
+    const allWeeks = new Set(SETS.flatMap((s) => s.weeks));
+    for (const w of bank.weeks) expect(allWeeks.has(w.week), `week ${w.week}`).toBe(true);
+  });
+
+  for (const w of bank.weeks) {
+    it(`week ${w.week} page names its set in the kicker`, () => {
+      const $ = cheerio.load(readFileSync(join(SITE, `week-${w.week}`, 'index.html'), 'utf8'));
+      const s = SETS.find((x) => x.weeks.includes(w.week));
+      expect($('.kicker').text()).toContain(`SET ${s.set} · WEEK ${String(w.week).padStart(2, '0')}`);
+    });
+  }
 
   it('home page ships the install hint hidden, for home.js to reveal', () => {
     const $ = cheerio.load(readFileSync(join(SITE, 'index.html'), 'utf8'));
@@ -93,20 +118,21 @@ describe('built site', () => {
   });
 
   it('assets are copied through', () => {
-    for (const f of ['assets/css/style.css', 'assets/js/engine.js', 'assets/js/scheduler.js', 'assets/js/theme.js', 'assets/js/backup.js', 'assets/js/systems-page.js']) {
+    for (const f of ['assets/css/style.css', 'assets/js/engine.js', 'assets/js/scheduler.js', 'assets/js/theme.js', 'assets/js/backup.js', 'assets/js/systems-page.js', 'assets/js/completion.js', 'assets/js/sets.js']) {
       expect(existsSync(join(SITE, f)), f).toBe(true);
     }
   });
 
-  it('systems page ships the storage controls and week list', () => {
+  it('systems page ships the name form, completion log, and storage controls', () => {
     const $ = cheerio.load(readFileSync(join(SITE, 'systems', 'index.html'), 'utf8'));
-    for (const id of ['log-body', 'copy-log', 'export-btn', 'import-btn', 'import-file',
+    for (const id of ['name-form', 'name-input', 'name-msg', 'log-body', 'copy-log', 'export-btn', 'import-btn', 'import-file',
       'copy-backup-btn', 'paste-btn', 'paste-form', 'paste-text', 'paste-import', 'paste-cancel',
       'clear-queue-btn', 'full-reset-btn', 'reset-confirm', 'clear-confirm', 'import-confirm']) {
       expect($(`#${id}`).length, `#${id}`).toBe(1);
     }
-    const weekNums = JSON.parse($('#weeks-data').text());
-    expect(weekNums).toEqual(bank.weeks.map((w) => w.week));
+    const input = $('#name-input');
+    expect(input.attr('maxlength')).toBe('60');
+    expect($('label[for="name-input"]').length).toBe(1);
     expect($('script[src="/assets/js/systems-page.js"]').length).toBe(1);
   });
 

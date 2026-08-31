@@ -4,22 +4,36 @@ layout: layout.njk
 <section class="hero">
   <p class="kicker mono">CIS 9000 · IT STRATEGY · PRACTICE CONSOLE</p>
   <h1>Good evening. Ready to practice?</h1>
-  <p class="lede">Short weekly question sets that mirror the exam’s case-based reasoning. Miss a question and PAL brings it back on a spaced schedule — that’s the part that makes it stick.</p>
+  <p class="lede">Short weekly question sets that mirror the exam’s case-based reasoning. Miss a question and PAL brings it back on a spaced schedule — that’s the part that makes it stick. Weeks are grouped into two sets; hand in your completion log from <a href="/systems/">SYSTEMS</a> once per set, before each test.</p>
 </section>
 
 <section aria-labelledby="missions-h">
   <h2 id="missions-h" class="panel-label mono">MISSION SELECT</h2>
-  <ol class="mission-list">
-    {% for w in bank.weeks %}
-    <li>
-      <a class="mission" href="/week-{{ w.week }}/" data-week="{{ w.week }}">
-        <span class="mission-num mono">W{{ w.week | pad2 }}</span>
-        <span class="mission-title">{{ w.title }}</span>
-        <span class="mission-meta mono"><span class="mission-count">{{ w.questions.length }} Q</span><span class="mission-status" data-week-status="{{ w.week }}"></span></span>
-      </a>
-    </li>
-    {% endfor %}
-  </ol>
+  {% for s in sets %}
+  <section class="set-block" aria-labelledby="set-{{ s.set }}-h">
+    <h3 id="set-{{ s.set }}-h" class="set-head mono"><span>{{ s.heading }}</span><span class="set-status" data-set-status="{{ s.set }}"></span></h3>
+    <ol class="mission-list">
+      {% for n in s.weeks %}
+      {% set w = bank.weeks | findWeek(n) %}
+      <li>
+        {% if w %}
+        <a class="mission" href="/week-{{ w.week }}/" data-week="{{ w.week }}">
+          <span class="mission-num mono">W{{ w.week | pad2 }}</span>
+          <span class="mission-title">{{ w.title }}</span>
+          <span class="mission-meta mono"><span class="mission-count">{{ w.questions.length }} Q</span><span class="mission-status" data-week-status="{{ w.week }}"></span></span>
+        </a>
+        {% else %}
+        <span class="mission mission-locked">
+          <span class="mission-num mono">W{{ n | pad2 }}</span>
+          <span class="mission-title">Releases after that week’s class</span>
+          <span class="mission-meta mono">LOCKED</span>
+        </span>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endfor %}
 </section>
 
 <section aria-labelledby="review-h" class="review-panel">

@@ -668,3 +668,51 @@ h1 {
   .pal-eye { animation: none; }
   .mission, .option, .btn-next { transition: none; }
 }
+
+/* ---------- sets (weeks grouped by checkpoint) ---------- */
+.set-block { margin-bottom: 1.6rem; }
+.set-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.6rem 1rem;
+  flex-wrap: wrap;
+  margin: 0 0 0.6rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--accent);
+}
+.set-status { color: var(--dim); font-weight: 400; }
+.set-status.ok { color: var(--green); }
+.set-block .mission-list { margin-bottom: 0; }
+.mission-locked { opacity: 0.6; }
+.mission-locked:hover, .mission-locked:focus-visible { border-color: var(--line); transform: none; }
+.mission-locked .mission-num { color: var(--dim); }
+.mission-locked .mission-title { font-weight: 400; color: var(--dim); }
+
+/* ---------- name (gate on the week page, form on SYSTEMS) ---------- */
+.name-form { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: stretch; }
+.name-input {
+  font: inherit;
+  font-size: 1rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  padding: 0.6rem 0.75rem;
+  flex: 1 1 14rem;
+  min-width: 0;
+}
+.name-input:focus-visible { border-color: var(--accent); }
+.name-gate .done-note { max-width: 60ch; }
+.name-gate .name-form { margin-top: 1rem; }
+
+/* ---------- completion stamps ---------- */
+.stamp-code { display: block; color: var(--accent); }
+.stamp-banner .stamp-code { margin: 0.2rem 0 0; font-size: 0.75rem; letter-spacing: 0.06em; }
+.term-body .row { display: block; }
+.term-body .hdr { color: var(--text); font-weight: 600; }
+.term-body .nm { color: var(--text); }
+.term-body .set { color: var(--accent); margin-top: 0.5rem; }
+.term-body .row.hdr + .row.nm { margin-bottom: 0.2rem; }

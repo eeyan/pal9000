@@ -8,9 +8,10 @@ permalink: "/week-{{ w.week }}/"
 eleventyComputed:
   title: "Week {{ w.week }} — {{ w.title }}"
 ---
+{% set s = w.week | setOf %}
 <nav class="crumb mono"><a href="/">← MISSION SELECT</a></nav>
 <section class="hero hero-quiz">
-  <p class="kicker mono">WEEK {{ w.week | pad2 }} · {{ w.questions.length }} QUESTIONS</p>
+  <p class="kicker mono">{% if s %}SET {{ s.set }} · {% endif %}WEEK {{ w.week | pad2 }} · {{ w.questions.length }} QUESTIONS</p>
   <h1>{{ w.title }}</h1>
 </section>
 

@@ -1,5 +1,6 @@
 import { load, loadReviewState, KEYS } from './storage.js';
 import { dueIds, queueSize } from './scheduler.js';
+import { SETS } from './sets.js';
 
 const progress = load(KEYS.progress, {});
 document.querySelectorAll('[data-week-status]').forEach((el) => {
@@ -8,6 +9,15 @@ document.querySelectorAll('[data-week-status]').forEach((el) => {
     el.textContent = `${p.score}/${p.total} ✓`;
     el.classList.add('ok');
   }
+});
+
+// Per-set tally in each set heading — the number a student hands in.
+document.querySelectorAll('[data-set-status]').forEach((el) => {
+  const s = SETS.find((x) => String(x.set) === el.dataset.setStatus);
+  if (!s) return;
+  const done = s.weeks.filter((w) => progress[w]).length;
+  el.textContent = `${done}/${s.weeks.length} COMPLETE`;
+  if (done === s.weeks.length) el.classList.add('ok');
 });
 
 // ---------- install hint ----------

@@ -1,14 +1,14 @@
-import { completionStamp } from './engine.js';
-import { load, save, loadReviewState, KEYS } from './storage.js';
+import { load, save, loadReviewState, loadName, saveName, KEYS } from './storage.js';
 import { queueSize } from './scheduler.js';
 import { makeBackup, parseBackup } from './backup.js';
+import { buildLog, logText, cleanName } from './completion.js';
+import { SETS, setHeading } from './sets.js';
 
 // theme.js is a classic (non-module) script, so its key is duplicated here.
 const THEME_KEY = 'pal9000.theme';
 // engine.js namespaces per-week quiz resume state under this prefix.
 const SESSION_PREFIX = 'pal9000.session:';
 
-const weeks = JSON.parse(document.getElementById('weeks-data').textContent);
 const pad2 = (n) => String(n).padStart(2, '0');
 
 const el = (id) => document.getElementById(id);
@@ -16,6 +16,8 @@ const strip = el('status-strip');
 const logBody = el('log-body');
 const backupMsg = el('backup-msg');
 const resetMsg = el('reset-msg');
+const nameMsg = el('name-msg');
+const nameInput = el('name-input');
 
 function say(target, text, isError = false) {
   target.textContent = text;
@@ -26,8 +28,14 @@ function say(target, text, isError = false) {
 
 function completedWeeks() {
   const progress = load(KEYS.progress, {});
-  return weeks.filter((w) => progress[w]);
+  return SETS.flatMap((s) => s.weeks).filter((w) => progress[w]);
 }
+
+function currentRows() {
+  return buildLog(SETS, load(KEYS.progress, {}), loadName(), setHeading);
+}
+
+const ROW_CLASS = { header: 'hdr', name: 'nm', set: 'set', done: 'ok', pending: 'off' };
 
 function render() {
   const progress = load(KEYS.progress, {});
@@ -38,35 +46,50 @@ function render() {
     ? new Date(lastAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
     : '—';
 
-  strip.innerHTML = `<span><span class="v">${done.length}/${weeks.length}</span> WEEKS COMPLETE</span>`
+  strip.innerHTML = SETS.map((s) => {
+    const n = s.weeks.filter((w) => progress[w]).length;
+    return `<span><span class="v">${n}/${s.weeks.length}</span> SET ${s.set}</span>`;
+  }).join('<span class="sep">·</span>')
     + `<span class="sep">·</span><span><span class="v">${queued}</span> IN REVIEW QUEUE</span>`
     + `<span class="sep">·</span><span>LAST ACTIVITY <span class="v">${last}</span></span>`;
   strip.hidden = false;
+
+  nameInput.value = loadName();
 
   if (done.length === 0) {
     logBody.textContent = 'No completed weeks yet — finish a week’s question set and it will appear here.';
     logBody.classList.add('empty');
   } else {
     logBody.classList.remove('empty');
-    logBody.innerHTML = weeks.map((w) => (progress[w]
-      ? `<span class="ok" aria-hidden="true">■</span> ${completionStamp(w, progress[w].at)}`
-      : `<span class="off">□ WEEK ${pad2(w)} · NOT YET COMPLETE</span>`)).join('<br>');
+    logBody.replaceChildren(...currentRows().map((r) => {
+      // textContent, never innerHTML: the name is student-typed text.
+      const span = document.createElement('span');
+      span.className = `row ${ROW_CLASS[r.kind]}`;
+      span.textContent = r.text;
+      return span;
+    }));
   }
 }
 
-function logText() {
-  const progress = load(KEYS.progress, {});
-  return weeks.map((w) => (progress[w]
-    ? completionStamp(w, progress[w].at)
-    : `WEEK ${pad2(w)} · NOT YET COMPLETE`)).join('\n');
-}
+// ---------- name ----------
+
+el('name-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const before = loadName();
+  const clean = saveName(nameInput.value);
+  nameInput.value = clean;
+  render();
+  if (!clean) say(nameMsg, before ? 'Name cleared. New completions will be signed without a name until you set one.' : 'Enter a name first.', !before);
+  else if (clean === before) say(nameMsg, 'Name unchanged.');
+  else say(nameMsg, `Saved. New completions will be signed as ${clean}.`);
+});
 
 // ---------- completion log ----------
 
 el('copy-log').addEventListener('click', async () => {
   const btn = el('copy-log');
   try {
-    await navigator.clipboard.writeText(logText());
+    await navigator.clipboard.writeText(logText(currentRows()));
     btn.textContent = 'COPIED ✓';
   } catch {
     btn.textContent = 'COPY FAILED';
@@ -77,7 +100,7 @@ el('copy-log').addEventListener('click', async () => {
 // ---------- backup & restore ----------
 
 function backupText() {
-  return JSON.stringify(makeBackup(loadReviewState(), load(KEYS.progress, {}), Date.now()), null, 2);
+  return JSON.stringify(makeBackup(loadReviewState(), load(KEYS.progress, {}), Date.now(), loadName()), null, 2);
 }
 
 function downloadBackup() {
@@ -136,9 +159,15 @@ function offerImport(text, returnFocusId) {
   const saved = pendingImport.exportedAt
     ? ` (saved ${new Date(pendingImport.exportedAt).toLocaleDateString(undefined, { dateStyle: 'medium' })})`
     : '';
-  el('import-confirm-text').innerHTML = `<span class="strong">Replace this device’s data with this backup?</span><br>`
-    + `It contains ${nDone} completed ${nDone === 1 ? 'week' : 'weeks'} and ${nQueue} review ${nQueue === 1 ? 'item' : 'items'}${saved}. `
-    + 'What’s currently on this device will be overwritten.';
+  const p = el('import-confirm-text');
+  p.replaceChildren();
+  const strong = document.createElement('span');
+  strong.className = 'strong';
+  strong.textContent = 'Replace this device’s data with this backup?';
+  p.append(strong, document.createElement('br'));
+  p.append(`It contains ${nDone} completed ${nDone === 1 ? 'week' : 'weeks'} and ${nQueue} review ${nQueue === 1 ? 'item' : 'items'}${saved}`
+    + (pendingImport.name ? `, under the name ${pendingImport.name}. ` : '. ')
+    + 'What’s currently on this device will be overwritten.');
   el('import-confirm').hidden = false;
   el('import-replace').focus();
   return true;
@@ -188,6 +217,8 @@ el('import-replace').addEventListener('click', () => {
   if (!pendingImport) return;
   save(KEYS.review, pendingImport.review);
   save(KEYS.progress, pendingImport.progress);
+  // A v1 backup carries no name — keep the device's rather than wipe it.
+  if (pendingImport.name) saveName(pendingImport.name);
   const nDone = Object.keys(pendingImport.progress).length;
   const nQueue = Object.keys(pendingImport.review.items).length;
   pendingImport = null;
@@ -231,8 +262,8 @@ el('full-reset-btn').addEventListener('click', () => {
   el('clear-confirm').hidden = true;
   const done = completedWeeks();
   const detail = done.length
-    ? `This deletes your completion ${done.length === 1 ? 'record' : 'records'} for ${done.length === 1 ? 'week' : 'weeks'} ${done.join(', ')}, with no undo. You can download a backup first.`
-    : 'This erases your review queue and saved settings on this device, with no undo.';
+    ? `This deletes your completion ${done.length === 1 ? 'record' : 'records'} for ${done.length === 1 ? 'week' : 'weeks'} ${done.join(', ')} — codes included — plus your name and review queue, with no undo. You can download a backup first.`
+    : 'This erases your name, review queue, and saved settings on this device, with no undo.';
   el('reset-confirm-text').innerHTML = `<span class="strong">Erase everything on this device?</span><br>${detail}`;
   el('reset-backup').hidden = done.length === 0;
   el('reset-confirm').hidden = false;
@@ -248,6 +279,7 @@ el('reset-yes').addEventListener('click', () => {
   try {
     localStorage.removeItem(KEYS.review);
     localStorage.removeItem(KEYS.progress);
+    localStorage.removeItem(KEYS.name);
     localStorage.removeItem(THEME_KEY);
     // In-progress quiz sessions (engine.js resume state) count as "everything"
     // too. That state lives in localStorage now; the sessionStorage sweep stays
@@ -268,5 +300,8 @@ el('reset-cancel').addEventListener('click', () => {
   el('reset-confirm').hidden = true;
   el('full-reset-btn').focus();
 });
+
+// cleanName is imported for parity with the gate; keep the input honest on blur.
+nameInput.addEventListener('blur', () => { nameInput.value = cleanName(nameInput.value); });
 
 render();
