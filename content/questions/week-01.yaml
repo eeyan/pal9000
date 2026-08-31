@@ -1,4 +1,6 @@
 week: 1
+# Held out until after the Sep 1 class (2026-08-31) — real Week 1 content replaces this sample set. Flip to true on deploy night.
+published: false
 title: IT Strategy & Alignment
 questions:
   - id: w01-q01

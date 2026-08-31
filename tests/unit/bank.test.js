@@ -144,7 +144,7 @@ describe('published flag', () => {
     expect(bank.totalQuestions).toBe(1);
   });
 
-  it('weeks 2 and 3 are held out until after their class sessions (2026-08-31 decision)', () => {
-    expect(loadBank().weeks.map((w) => w.week)).toEqual([1]);
+  it('sample weeks 1–3 are held out until each class has happened (2026-08-31 decision)', () => {
+    expect(loadBank().weeks.map((w) => w.week)).toEqual([]);
   });
 });

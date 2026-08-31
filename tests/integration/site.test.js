@@ -10,6 +10,9 @@ import { SETS, setHeading } from '../../src/assets/js/sets.js';
 const ROOT = join(import.meta.dirname, '../..');
 const SITE = join(ROOT, '_site');
 const bank = loadBank();
+// Every page type the layout wraps. Week pages exist only while at least one
+// week is published (all weeks are held out until each class has happened).
+const PAGES = ['index.html', ...bank.weeks.slice(0, 1).map((w) => `week-${w.week}/index.html`), 'review/index.html', 'systems/index.html', '404.html'];
 
 beforeAll(() => {
   // Eleventy never deletes stale output — an unpublished week's old page
@@ -140,7 +143,7 @@ describe('built site', () => {
   });
 
   it('every page links to the systems page from the header nav and the footer', () => {
-    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
+    for (const page of PAGES) {
       const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
       expect($('.site-head .head-nav a[href="/systems/"]').length, page).toBe(1);
       expect($('.site-foot a[href="/systems/"]').length, page).toBe(1);
@@ -193,7 +196,7 @@ describe('built site', () => {
   });
 
   it('every page links the manifest and registers the service worker', () => {
-    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
+    for (const page of PAGES) {
       const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
       expect($('link[rel="manifest"]').length, page).toBe(1);
       expect($('script[src="/assets/js/sw-register.js"]').length, page).toBe(1);
@@ -201,7 +204,7 @@ describe('built site', () => {
   });
 
   it('every page opts into the display cutout so safe-area insets resolve', () => {
-    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
+    for (const page of PAGES) {
       const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
       const viewport = $('meta[name="viewport"]').attr('content');
       expect(viewport, page).toBeTruthy();
@@ -210,7 +213,7 @@ describe('built site', () => {
   });
 
   it('every page ships the connectivity readout as a live region', () => {
-    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
+    for (const page of PAGES) {
       const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
       const status = $('.head-status');
       expect(status.length, page).toBe(1);
@@ -222,7 +225,7 @@ describe('built site', () => {
   });
 
   it('every page ships the analytics snippet scoped to the production domain', () => {
-    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
+    for (const page of PAGES) {
       const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
       const script = $('script[src="https://stats.ianjoshua.com/script.js"]');
       expect(script.length, page).toBe(1);
@@ -233,7 +236,7 @@ describe('built site', () => {
   });
 
   it('every page has the theme toggle and bootstrap script', () => {
-    for (const page of ['index.html', 'week-1/index.html', 'review/index.html', 'systems/index.html', '404.html']) {
+    for (const page of PAGES) {
       const $ = cheerio.load(readFileSync(join(SITE, page), 'utf8'));
       expect($('#theme-toggle').length, page).toBe(1);
       expect($('script[src="/assets/js/theme.js"]').length, page).toBe(1);
