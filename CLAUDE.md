@@ -41,7 +41,7 @@ Practice-quiz site for CIS 9000 (IT Strategy, Baruch) with a spaced review queue
 - Nunjucks has no `format` filter — use the custom `pad2` filter from `eleventy.config.js`
 - `content/sources/` is gitignored on purpose (publisher/case copyright) — never force-add anything from it
 - `*.candidates.yaml` files are gitignored pre-curation working output — don't commit them
-- Generation script accepts `.md`/`.txt`/`.pdf` only; PPTX must be exported to PDF first
+- Generation script accepts `.md`/`.txt`/`.pdf` and `.vtt`/`.srt` class transcripts (flattened by `src/lib/transcript.js`, tagged `kind="class-transcript"`, citations become "class discussion <date>" — put the date in the filename); PPTX must be exported to PDF first. Transcripts contain student voices: they live under the gitignored `content/sources/` and never leave the machine
 - The service worker registers on any origin, including localhost — if a stale build seems to be serving during local testing, it's the SW cache; unregister it in devtools (Application → Service Workers) or use a different port. `npm run dev` and one-off `python3 -m http.server` ports cross-contaminate this way
 - The name inputs carry `autocomplete="name"`, which triggers password-manager overlays (1Password) that can sit on top of the field and break browser-automation screenshots — drive the name gate with JS in tests rather than synthetic typing
 - **No grades, points, or extra-credit language in shipped copy** — the site says what to hand in and when ("before Test 1"); what it's worth lives only in the LMS announcement (PAL is off the syllabus). Keep it that way even in finish-screen and SYSTEMS copy

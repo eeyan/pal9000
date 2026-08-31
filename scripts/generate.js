@@ -3,6 +3,9 @@
 //
 // Usage:   node scripts/generate.js <week-number> [target-count] [--force]
 // Input:   content/sources/week-NN/  (.md/.txt read as text; .pdf sent natively;
+//          .vtt/.srt class transcripts (Zoom cloud recording → "audio transcript")
+//          are flattened to text and tagged as discussion sources — name them
+//          with the class date, e.g. class-2026-09-01.vtt, so citations carry it;
 //          .pptx not supported — export the deck to PDF first)
 // Output:  content/questions/week-NN.candidates.yaml (status: candidate on every
 //          question — curate by setting accepted / edited / rejected: <reason>,
@@ -15,6 +18,7 @@ import { readFileSync, readdirSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import Anthropic from '@anthropic-ai/sdk';
 import yaml from 'js-yaml';
+import { TRANSCRIPT_FILE_RE, transcriptToText, dateFromFilename } from '../src/lib/transcript.js';
 
 const PROMPT_VERSION = 'gen-v1';
 const MODEL = 'claude-opus-4-8';
@@ -60,6 +64,7 @@ if (!existsSync(sourceDir)) {
 
 const sourceBlocks = [];
 const sourceNames = [];
+const transcriptNames = [];
 let payloadBytes = 0;
 let estTokens = 0;
 for (const file of readdirSync(sourceDir).sort()) {
@@ -68,6 +73,14 @@ for (const file of readdirSync(sourceDir).sort()) {
     const text = readFileSync(path, 'utf8');
     sourceBlocks.push({ type: 'text', text: `<source doc="${file}">\n${text}\n</source>` });
     sourceNames.push(file);
+    payloadBytes += text.length;
+    estTokens += Math.ceil(text.length / 4);
+  } else if (TRANSCRIPT_FILE_RE.test(file)) {
+    const text = transcriptToText(readFileSync(path, 'utf8'));
+    const date = dateFromFilename(file);
+    sourceBlocks.push({ type: 'text', text: `<source doc="${file}" kind="class-transcript"${date ? ` date="${date}"` : ''}>\n${text}\n</source>` });
+    sourceNames.push(file);
+    transcriptNames.push(file);
     payloadBytes += text.length;
     estTokens += Math.ceil(text.length / 4);
   } else if (/\.pdf$/i.test(file)) {
@@ -85,7 +98,7 @@ for (const file of readdirSync(sourceDir).sort()) {
   }
 }
 if (sourceBlocks.length === 0) {
-  die(`No usable sources in ${sourceDir}/ (need .md, .txt, or .pdf).`);
+  die(`No usable sources in ${sourceDir}/ (need .md, .txt, .pdf, or a .vtt/.srt transcript).`);
 }
 if (payloadBytes > MAX_PAYLOAD_BYTES) {
   die(`Sources total ~${Math.round(payloadBytes / 1024 / 1024)} MB — over the request limit. Split the week into smaller runs or compress the PDFs.`);
@@ -108,6 +121,18 @@ Question quality rules (violations get rejected in curation — they count again
 - Self-explanation prompts chain the tested concept to a second course concept.
 - Concept-level, not trivia. Vendor-neutral generic names unless the material itself teaches a named case.
 - Mix: roughly 70% scenario-mcq, 30% definitional.`;
+
+// Class recordings are a different kind of source: what was actually said,
+// including improvised examples and student questions. Worth mining, with
+// guardrails — no logistics, no people.
+const TRANSCRIPT_RULES = `
+
+Sources marked kind="class-transcript" are automatic transcripts of the class session (the date attribute is the class date). For these:
+- Treat them as the record of what was actually discussed — improvised examples, analogies, and student questions are the most valuable material, because the exam draws on them.
+- Ignore logistics, small talk, technical difficulties, and anything about grading or the course itself.
+- Never name, quote, or describe any student. Refer to contributions only as "a student asked/suggested"; never reproduce a student's words.
+- Transcripts contain recognition errors — when a term is garbled, prefer the spelling used in the slides or readings, and skip a passage you cannot confidently interpret.
+- For a question grounded mainly in a transcript, set sourceDoc to the transcript file and sourceLoc to "class discussion <date>" (use the transcript's date attribute; add the topic in a few words). About a third of the batch may come from the transcript; the rest from the slides and readings.`;
 
 const SCHEMA = {
   type: 'object',
@@ -172,13 +197,13 @@ function validate(q, names) {
 
 const client = new Anthropic();
 
-console.log(`Generating ${overGenerate} candidates for week ${week} from: ${sourceNames.join(', ')} (~${Math.round(estTokens / 1000)}k input tokens est.)`);
+console.log(`Generating ${overGenerate} candidates for week ${week} from: ${sourceNames.join(', ')} (~${Math.round(estTokens / 1000)}k input tokens est.)${transcriptNames.length ? `\n  class transcript${transcriptNames.length === 1 ? '' : 's'}: ${transcriptNames.join(', ')} — questions from these cite "class discussion <date>"` : ''}`);
 
 const stream = client.messages.stream({
   model: MODEL,
   max_tokens: 64000,
   thinking: { type: 'adaptive' },
-  system: SYSTEM,
+  system: SYSTEM + (transcriptNames.length ? TRANSCRIPT_RULES : ''),
   output_config: { format: { type: 'json_schema', schema: SCHEMA } },
   messages: [
     {
