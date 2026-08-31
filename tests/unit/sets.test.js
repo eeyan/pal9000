@@ -31,5 +31,8 @@ describe('sets', () => {
     expect(shortDate('2026-12-01')).toBe('DEC 1');
     expect(weekRange(SETS[0])).toBe('WEEKS 1–5');
     expect(setHeading(SETS[0])).toBe('SET 1 · WEEKS 1–5 · DUE OCT 6 (TEST 1)');
+    // A set whose exact date isn't assigned yet carries a label instead.
+    expect(setHeading({ set: 9, weeks: [6, 7], checkpoint: 'FINAL EXAM', checkpointDate: '2026-12-21', dueLabel: 'FINALS WEEK' })).toBe('SET 9 · WEEKS 6–7 · DUE FINALS WEEK (FINAL EXAM)');
+    expect(setHeading(SETS[1])).toBe('SET 2 · WEEKS 6–12 · DUE FINALS WEEK (FINAL EXAM)');
   });
 });

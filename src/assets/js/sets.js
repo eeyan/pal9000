@@ -18,7 +18,12 @@ export const SETS = [
     set: 2,
     weeks: [6, 7, 8, 9, 10, 11, 12],
     checkpoint: 'FINAL EXAM',
-    checkpointDate: '2026-12-01',
+    // The final moved to finals week (Dec 15–21, 2026); the exact slot is
+    // assigned by the registrar. Until then the heading says FINALS WEEK and
+    // the verifier's "after checkpoint" check uses the end of that window.
+    // When the date lands: set checkpointDate and delete dueLabel.
+    checkpointDate: '2026-12-21',
+    dueLabel: 'FINALS WEEK',
   },
 ];
 
@@ -41,5 +46,5 @@ export function shortDate(iso) {
 
 // Header line for a set, shared by the home page and the completion log.
 export function setHeading(s) {
-  return `SET ${s.set} · ${weekRange(s)} · DUE ${shortDate(s.checkpointDate)} (${s.checkpoint})`;
+  return `SET ${s.set} · ${weekRange(s)} · DUE ${s.dueLabel ?? shortDate(s.checkpointDate)} (${s.checkpoint})`;
 }
