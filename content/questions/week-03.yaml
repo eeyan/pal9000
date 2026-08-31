@@ -1,4 +1,6 @@
 week: 3
+# Held out of the build until after that week's class (2026-08-31). Flip to true on deploy night.
+published: false
 title: "Build vs. Buy vs. SaaS"
 questions:
   - id: w03-q01

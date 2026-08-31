@@ -115,3 +115,22 @@ describe('loadBank', () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 });
+
+describe('published flag', () => {
+  it('holds a week out of the bank when published: false, without touching other weeks', async () => {
+    const { mkdtempSync, writeFileSync } = await import('node:fs');
+    const { tmpdir } = await import('node:os');
+    const { join } = await import('node:path');
+    const dir = mkdtempSync(join(tmpdir(), 'pal-bank-'));
+    const q = (id) => `  - id: ${id}\n    week: 1\n    type: scenario-mcq\n    status: accepted\n    stem: s\n    answer: A\n    options: [{key: A, text: a}]\n`;
+    writeFileSync(join(dir, 'week-01.yaml'), `week: 1\ntitle: One\nquestions:\n${q('w01-q01')}`);
+    writeFileSync(join(dir, 'week-02.yaml'), `week: 2\ntitle: Two\npublished: false\nquestions:\n${q('w02-q01').replace('week: 1', 'week: 2')}`);
+    const bank = loadBank(dir);
+    expect(bank.weeks.map((w) => w.week)).toEqual([1]);
+    expect(bank.totalQuestions).toBe(1);
+  });
+
+  it('weeks 2 and 3 are held out until after their class sessions (2026-08-31 decision)', () => {
+    expect(loadBank().weeks.map((w) => w.week)).toEqual([1]);
+  });
+});

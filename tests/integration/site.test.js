@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { execSync } from 'node:child_process';
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import * as cheerio from 'cheerio';
 import yaml from 'js-yaml';
@@ -12,6 +12,9 @@ const SITE = join(ROOT, '_site');
 const bank = loadBank();
 
 beforeAll(() => {
+  // Eleventy never deletes stale output — an unpublished week's old page
+  // would otherwise survive in _site and fool the leak test.
+  rmSync(SITE, { recursive: true, force: true });
   execSync('npx eleventy', { cwd: ROOT, stdio: 'pipe' });
 }, 60_000);
 
@@ -83,7 +86,7 @@ describe('built site', () => {
     for (const file of readdirSync(questionsDir).filter((f) => WEEK_FILE_RE.test(f))) {
       const doc = yaml.load(readFileSync(join(questionsDir, file), 'utf8'));
       for (const q of doc.questions ?? []) {
-        if (!['accepted', 'edited'].includes(q.status)) nonLiveIds.push(q.id);
+        if (doc.published === false || !['accepted', 'edited'].includes(q.status)) nonLiveIds.push(q.id);
       }
     }
     expect(nonLiveIds.length).toBeGreaterThan(0); // the guard must be guarding something

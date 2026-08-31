@@ -29,6 +29,9 @@ export function loadBank(dir = QUESTIONS_DIR) {
       throw new Error(`${file}: duplicate week number ${doc.week}`);
     }
     seen.add(doc.week);
+    // `published: false` holds a curated week out of the build (it shows as a
+    // locked row) — generate and curate ahead of class, flip it on deploy night.
+    if (doc.published === false) return { week: doc.week, title: doc.title, questions: [] };
     const questions = (doc.questions ?? []).filter((q) => LIVE_STATUSES.has(q.status));
     return { week: doc.week, title: doc.title, questions };
   }).filter((w) => w.questions.length > 0);

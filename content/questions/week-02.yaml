@@ -1,4 +1,6 @@
 week: 2
+# Held out of the build until after that week's class (2026-08-31). Flip to true on deploy night.
+published: false
 title: "IT Spend: Run vs. Change"
 questions:
   - id: w02-q01
