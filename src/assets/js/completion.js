@@ -11,7 +11,7 @@
 // The salt ships in this file (the repo is public and the JS ships to every
 // browser anyway). A student who reads the source can forge a code; the bar
 // this sets is "more effort than doing the 10-question set", which is the
-// right bar for a participation sliver. Points stay honor-system (SPEC).
+// right bar for a small extra-credit bonus, which stays honor-system (SPEC).
 //
 // Shared by the browser, tests, and scripts/verify.js — keep it free of DOM
 // and Node-only imports. Hashing uses Web Crypto, which both provide.

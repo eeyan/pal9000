@@ -148,6 +148,7 @@ stem: What does the acronym KTLO ("Keep The Lights On") stand for in IT budgetin
 Optional tools get ~15% usage. Levers, in Ian's control as instructor, strongest first:
 1. Reference the weekly set in class + a recurring LMS announcement (reminders are the cheapest proven lever).
 2. If Baruch course policy allows: a few low-stakes points for completing weekly sets ~~(self-reported or screenshot — no backend needed)~~.
+   *Amended 2026-08-31:* **extra credit, not participation** — PAL stays off the syllabus; up to 5 points on each test (Set 1: 1 per verified week; Set 2: 5 for any 5 of 7), added after any curve. The website never mentions grades or points; that lives in the LMS announcement.
    *Amended 2026-08-30:* still no backend, but hand-in is **two per-set checkpoints**, not weekly. Weeks group into sets (1–5 before Test 1, 6–12 before the final); students paste one signed completion log per set into a Brightspace assignment. 79 students × 2 submissions instead of × 12. See "As built (2026-08-30)".
 3. Seed exam-review sessions with questions drawn from the bank so the tool visibly mirrors the exam.
 
@@ -194,6 +195,7 @@ MVP implemented and smoke-tested with sample-v0 content (30 hand-authored questi
 ## Decisions (reviewed with Ian, 2026-07-25)
 
 1. **Low-stakes graded.** A few participation points for completing weekly sets, ~~self-reported/screenshot~~ — no backend. Adoption plan lever #2 is the plan of record.
+   *Amended 2026-08-31:* it's **extra credit on the two tests** (up to 5 points each), not participation, and not on the syllabus.
    *Amended 2026-08-30 (reviewed with Ian):* the cadence is per-set, not weekly, and the log is signed rather than merely screenshotted. Weekly *publishing* is unchanged — each week's set still deploys after that week's class; only the hand-in is batched. Points stay honor-system: the codes make tampering visible, they don't prove anything.
 2. **Sources are mixed:** PPTX decks, PDFs, Obsidian/markdown notes, plus publisher/case materials. Ingestion step needs PPTX and PDF text extraction (markdown is pass-through). Publisher/case content is grounding input only and must never enter git.
 3. **~10 curated questions/week** (≈150/semester); over-generate ~30, expect ~2/3 rejects.

@@ -33,7 +33,7 @@ Netlify, gated: production builds run only when the commit subject contains `[de
 
 Live at [pal9000.netlify.app](https://pal9000.netlify.app) (August 2026): app, scheduler, pipeline, offline/PWA support, storage management, per-set checkpoints with name-bound completion codes, and tests are built and deployed. Question content is still hand-authored **sample material** (`promptVersion: sample-v0`) pending the first real generation run against fall course materials.
 
-Completion codes are tamper-*evidence*, not proof — the salt ships in public source, and there's no backend to check against. The bar is "harder than doing the set"; participation points stay honor-system. Names never leave the browser except when a student pastes their own log into the LMS.
+Completion codes are tamper-*evidence*, not proof — the salt ships in public source, and there's no backend to check against. The bar is "harder than doing the set"; the credit at stake is a small test bonus and stays honor-system. Names never leave the browser except when a student pastes their own log into the LMS.
 
 Testing tip: to exercise the review queue without waiting a day, temporarily shrink `INTERVALS_DAYS` in `src/assets/js/scheduler.js`.
 
