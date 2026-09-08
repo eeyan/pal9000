@@ -46,12 +46,13 @@ const reasons = Object.entries(rejects).map(([r, n]) => `${r} ×${n}`).join(', '
 const date = new Date().toISOString().slice(0, 10);
 const title = (doc.title ?? '').replace(/^Week \d+ — /, '').replace(/ — CANDIDATES.*$/, '').replace(/CANDIDATES.*$/, '').trim();
 
-const row = `| ${date} | ${doc.promptVersion} | ${week}${title ? ` — ${title}` : ''} | ${generated} | ${accepted} | ${rejected} | ${rate}% | ${reasons} |`;
+const model = doc.model ?? '—';
+const row = `| ${date} | ${doc.promptVersion} | ${model} | ${week}${title ? ` — ${title}` : ''} | ${generated} | ${accepted} | ${rejected} | ${rate}% | ${reasons} |`;
 
 let log = readFileSync(logPath, 'utf8');
 const heading = `## ${doc.promptVersion}`;
 if (!log.includes(heading)) {
-  log += `\n${heading}\n\n| Date | promptVersion | Week | Generated | Accepted | Rejected | Accept rate | Reject reasons |\n|---|---|---|---|---|---|---|---|\n`;
+  log += `\n${heading}\n\n| Date | promptVersion | Model | Week | Generated | Accepted | Rejected | Accept rate | Reject reasons |\n|---|---|---|---|---|---|---|---|---|\n`;
 }
 log = log.trimEnd() + '\n';
 // Insert under the matching section if it exists mid-file, else append.

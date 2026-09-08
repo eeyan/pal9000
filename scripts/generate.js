@@ -13,6 +13,12 @@
 //
 // Runs locally only (needs ANTHROPIC_API_KEY or an `ant auth login` profile).
 // Never wired into CI — see docs/SPEC.md.
+//
+// Alternative path: generate in an interactive Claude Code session instead of
+// via the API (subscription-billed, no key). The session must write the same
+// candidates file shape this script does (see the `doc` object at the bottom)
+// so curation and scripts/eval-log.js work unchanged; set `model` to the
+// session model and keep `promptVersion` honest about which prompt was used.
 
 import { readFileSync, readdirSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -21,7 +27,9 @@ import yaml from 'js-yaml';
 import { TRANSCRIPT_FILE_RE, transcriptToText, dateFromFilename } from '../src/lib/transcript.js';
 
 const PROMPT_VERSION = 'gen-v1';
-const MODEL = 'claude-opus-4-8';
+// Not pinned: the model is a per-batch choice, recorded in the candidates file
+// and in EVAL-LOG next to promptVersion. Override with PAL_MODEL=<id>.
+const MODEL = process.env.PAL_MODEL ?? 'claude-fable-5-1';
 const MAX_TARGET = 40;
 // Request-size guards: the API caps requests at 32 MB; leave headroom for
 // base64 overhead and prompt text. Token estimate is rough (chars/4 for text,
@@ -245,6 +253,7 @@ const doc = {
   week,
   title: `Week ${week} — CANDIDATES (curate before build)`,
   promptVersion: PROMPT_VERSION,
+  model: MODEL,
   generated: questions.length,
   questions: questions.map((q, i) => {
     const problem = validate(q, sourceNames);
