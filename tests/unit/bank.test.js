@@ -28,7 +28,7 @@ describe('question bank schema (curation lint)', () => {
 
   it('no week-like file evades the lint (wrong extension or casing)', () => {
     const strays = readdirSync(QUESTIONS_DIR).filter(
-      (f) => /week/i.test(f) && !WEEK_FILE_RE.test(f) && !f.endsWith('.candidates.yaml'),
+      (f) => /week/i.test(f) && !WEEK_FILE_RE.test(f) && !f.endsWith('.candidates.yaml') && !f.endsWith('.review.html'),
     );
     expect(strays, `files the loader/lint would miss: ${strays.join(', ')}`).toEqual([]);
   });
@@ -144,7 +144,7 @@ describe('published flag', () => {
     expect(bank.totalQuestions).toBe(1);
   });
 
-  it('sample weeks 1–3 are held out until each class has happened (2026-08-31 decision)', () => {
-    expect(loadBank().weeks.map((w) => w.week)).toEqual([]);
+  it('only weeks whose class has happened are live — Week 1 since 2026-09-08; sample weeks 2–3 stay held out', () => {
+    expect(loadBank().weeks.map((w) => w.week)).toEqual([1]);
   });
 });

@@ -7,7 +7,8 @@ Practice-quiz site for CIS 9000 (IT Strategy, Baruch) with a spaced review queue
 - `npm run dev` — Eleventy dev server
 - `npm run build` — build to `_site/`
 - `npm test` — Vitest (run single files: `npx vitest run tests/unit/scheduler.test.js`)
-- `npm run generate <week> [target]` — Groundwork candidate generation (local only, needs Claude API auth; writes `content/questions/week-NN.candidates.yaml`)
+- `npm run generate <week> [target]` — Groundwork candidate generation (local only, needs Claude API auth; writes `content/questions/week-NN.candidates.yaml`). Alternative: generate in an interactive Claude Code session (subscription, no key) — reuse the SYSTEM prompt from `scripts/generate.js`, write the identical candidates file shape (top-level `model:` set to the session model), then curate and `node scripts/eval-log.js <week>` as usual. Week 1 Fall 2026 went this way on Fable 5.1
+- `npm run review <week>` — builds `content/questions/week-NN.review.html` (gitignored) from the candidates file: a local keyboard-driven curation page (A/E/R, reject reason, free-text guidance note per question). `npm run curate <week>` writes its exported decisions back into the candidates YAML (`pbpaste | npm run curate 1`); never edit candidate statuses by hand
 - `npm run verify <file>` — bulk-check pasted completion logs (`--set N`, `--csv`, `--min-score 0.7` default; stdin if no file)
 
 # Code Style
@@ -40,7 +41,7 @@ Practice-quiz site for CIS 9000 (IT Strategy, Baruch) with a spaced review queue
 - Eleventy data files (`src/_data/*.js`) must have ONLY a default export — a named export alongside it breaks pagination data resolution (that's why `loadBank` lives in `src/lib/bank.js`)
 - Nunjucks has no `format` filter — use the custom `pad2` filter from `eleventy.config.js`
 - `content/sources/` is gitignored on purpose (publisher/case copyright) — never force-add anything from it
-- `*.candidates.yaml` files are gitignored pre-curation working output — don't commit them
+- `*.candidates.yaml` files are gitignored pre-curation working output — don't commit them (same for the `*.review.html` pages built from them). A `note:` on a candidate is the curator's guidance for a better version — act on it when a question is `edited`, and drop it when promoting into `week-NN.yaml`
 - Generation script accepts `.md`/`.txt`/`.pdf` and `.vtt`/`.srt` class transcripts (flattened by `src/lib/transcript.js`, tagged `kind="class-transcript"`, citations become "class discussion <date>" — put the date in the filename); PPTX must be exported to PDF first. Transcripts contain student voices: they live under the gitignored `content/sources/` and never leave the machine
 - The service worker registers on any origin, including localhost — if a stale build seems to be serving during local testing, it's the SW cache; unregister it in devtools (Application → Service Workers) or use a different port. `npm run dev` and one-off `python3 -m http.server` ports cross-contaminate this way
 - The name inputs carry `autocomplete="name"`, which triggers password-manager overlays (1Password) that can sit on top of the field and break browser-automation screenshots — drive the name gate with JS in tests rather than synthetic typing

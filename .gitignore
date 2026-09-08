@@ -10,6 +10,7 @@ content/sources/*
 # Pre-curation LLM output — raw candidates are working files (and ~2/3 junk by
 # design); only curated week-NN.yaml files are committed. Stats go to EVAL-LOG.
 content/questions/*.candidates.yaml
+content/questions/*.review.html
 
 # Personal planning docs
 TODO.md

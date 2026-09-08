@@ -11,6 +11,8 @@
     "dev": "eleventy --serve",
     "test": "vitest run",
     "generate": "node scripts/generate.js",
+    "review": "node scripts/review.js",
+    "curate": "node scripts/curate.js",
     "eval-log": "node scripts/eval-log.js",
     "verify": "node scripts/verify.js"
   },
