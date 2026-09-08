@@ -6,7 +6,7 @@ pagination:
   alias: w
 permalink: "/week-{{ w.week }}/"
 eleventyComputed:
-  title: "Week {{ w.week }} — {{ w.title }}"
+  title: "Week {{ w.week }} — {{ w.title | safe }}"
 ---
 {% set s = w.week | setOf %}
 <nav class="crumb mono"><a href="/">← MISSION SELECT</a></nav>

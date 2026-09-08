@@ -23,3 +23,24 @@ worked example of each reject reason. The first real Claude-generated batch will
 be logged as **gen-v1**, where the accept rate becomes a genuine signal (the SPEC
 plans over-generating ~3x and expecting ~2/3 rejects, so gen-v1's rate is
 expected to start far below this baseline).
+
+From gen-v1 on, rows also carry a **Model** column (the model is not pinned —
+see SPEC). Week 1 of Fall 2026 was generated in an interactive Claude Code
+session on Claude Fable 5.1 rather than via `npm run generate`; the row is
+logged the same way from the candidates file.
+
+## gen-v1
+
+| Date | promptVersion | Model | Week | Generated | Accepted | Rejected | Accept rate | Reject reasons |
+|---|---|---|---|---|---|---|---|---|
+| 2026-09-08 | gen-v1 | claude-fable-5-1 | 1 | 30 | 25 | 5 | 83% | ambiguous ×3, leakage ×1, trivia ×1 |
+
+Week 1 notes (gen-v1, in-session): the 83% accept rate is per generated candidate; only 12 of the 25
+accepted were promoted after a duplicate-topic trim, so the effective yield was 12/30. Two batch-level
+defects to fix in gen-v2: (1) the correct option was the longest option in 28 of 30 candidates — a
+length-balancing edit pass on 22 questions brought it to 1 of 25, and the prompt should demand parallel
+option lengths; (2) stems of the form "which reasoning best matches/applies…" with yes/no option sets
+were rejected as ambiguous (c05, c06) — stems should ask a direct question that has a decision as its
+answer. Independent curator and generator reviews agreed on 20 of 30 statuses; the generator's own
+review was the more lenient one. The curator singled out the cross-source question (a real incident
+diagnosed with the textbook's four-component model) as the best item — generate these when natural.
