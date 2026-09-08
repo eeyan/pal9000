@@ -98,7 +98,7 @@ describe('week page name gate', () => {
     localStorage.setItem('pal9000.name.v1', 'Ian Anderson');
     localStorage.setItem('pal9000.progress.v1', JSON.stringify({ 1: { score: 2, total: 2, at: 1_690_000_000_000 } }));
     await loadPage();
-    expect(document.querySelector('.stamp-banner .stamp-note').textContent).toContain('before completion codes existed');
+    expect(document.querySelector('.stamp-banner .stamp-note').textContent).toContain('sign it with your name on SYSTEMS');
     settle(); click('.option[data-key="B"]'); click('.btn-next'); // miss q1 → 1/2
     settle(); click('.option[data-key="A"]'); click('.btn-next');
     settle(); click('.option[data-key="A"]'); click('.btn-next'); // retry

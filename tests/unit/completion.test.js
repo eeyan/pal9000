@@ -174,3 +174,21 @@ describe('log text ⇄ parseLog', () => {
     expect(parseLog('NAME · (not set)').name).toBe('');
   });
 });
+
+describe('signRecord', () => {
+  it('signs an unsigned record with the given name and keeps time and score', async () => {
+    const { signRecord, verifyCompletion } = await import('../../src/assets/js/completion.js');
+    const rec = { score: 9, total: 10, at: Date.parse('2026-09-04T01:14:30Z') };
+    const signed = await signRecord(1, rec, '  Ian   Anderson ');
+    expect(signed).toMatchObject({ score: 9, total: 10, at: rec.at, name: 'Ian Anderson' });
+    expect(rec.code).toBeUndefined(); // input untouched
+    const v = await verifyCompletion({ week: 1, code: signed.code, score: 9, total: 10, name: 'ian anderson' });
+    expect(v.ok).toBe(true);
+    expect(v.at).toBe(Math.floor(rec.at / 60_000) * 60_000);
+  });
+
+  it('refuses an empty name', async () => {
+    const { signRecord } = await import('../../src/assets/js/completion.js');
+    await expect(signRecord(1, { score: 1, total: 1, at: 0 }, '   ')).rejects.toThrow('name required');
+  });
+});

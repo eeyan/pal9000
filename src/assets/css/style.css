@@ -742,6 +742,7 @@ h1 {
 }
 .term-body .row.hdr, .term-body .row.nm, .term-body .row.set { padding-left: 0; text-indent: 0; }
 .term-body .code { white-space: nowrap; }
+.term-body .sign-btn { margin-left: 0.6em; padding: 0.15em 0.5em; text-indent: 0; vertical-align: middle; }
 .signing-as { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--dim); margin: -0.5rem 0 1rem; }
 .signing-as strong { color: var(--text); font-weight: 600; }
 .signing-as a { color: var(--accent); }

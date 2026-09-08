@@ -105,6 +105,17 @@ export async function signCompletion({ week, at, score, total, name }) {
   return `${minuteCode}-${hash}`;
 }
 
+// Sign an existing record with a (possibly different) name, keeping its
+// original time and score — how an UNSIGNED completion (made on a stale
+// build or an insecure connection) gets a code later from SYSTEMS. Returns
+// a new record; the input is not mutated.
+export async function signRecord(week, rec, name) {
+  const clean = cleanName(name);
+  if (!clean) throw new Error('name required');
+  const code = await signCompletion({ week, at: rec.at, score: rec.score, total: rec.total, name: clean });
+  return { ...rec, name: clean, code };
+}
+
 export const CODE_RE = /^([0-9A-Z]{6})-([0-9A-Z]{6})$/;
 
 // → { ok, at } — `at` is the minute the code claims, for plausibility checks.

@@ -5,9 +5,13 @@ eleventyExcludeFromCollections: true
 // PAL 9000 service worker — offline support for subway commutes.
 // The full app shell is precached on first visit. Navigations are
 // network-first with a short timeout, so fresh weeks always win when online
-// and the cache answers the moment a request hangs in a tunnel. Assets are
-// stale-while-revalidate. The cache name changes every build: a deploy fully
-// replaces the precache on the student's next online visit.
+// and the cache answers the moment a request hangs in a tunnel. Scripts and
+// the stylesheet are network-first too: a page and its modules must come
+// from the same build (stale-while-revalidate once paired a new week page
+// with the previous build's week-page.js, and the completion went out
+// unsigned). Only fonts, which never change, are stale-while-revalidate.
+// The cache name changes every build: a deploy fully replaces the precache
+// on the student's next online visit.
 const CACHE = 'pal9000-{{ buildStamp }}';
 const NETWORK_TIMEOUT_MS = 3500;
 const OFFLINE_URL = '/offline/';
@@ -138,7 +142,9 @@ self.addEventListener('fetch', (event) => {
     let key = url.pathname;
     if (!key.endsWith('/') && !key.includes('.')) key += '/';
     event.respondWith(networkFirst(request, key, event.preloadResponse));
-  } else {
+  } else if (/^\/assets\/fonts\//.test(url.pathname)) {
     event.respondWith(staleWhileRevalidate(request));
+  } else {
+    event.respondWith(networkFirst(request, request));
   }
 });

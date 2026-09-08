@@ -173,6 +173,11 @@ describe('built site', () => {
       expect(existsSync(file), `precached ${url} missing from build`).toBe(true);
     }
     expect(sw).toMatch(/pal9000-\d+/); // build-stamped cache name
+    // Scripts must never be served from a previous build's cache alongside a
+    // fresh page (that pairing once produced unsigned completions): only
+    // fonts are stale-while-revalidate, everything else is network-first.
+    expect(sw).toMatch(/assets\\\/fonts\\\/\/\.test\(url\.pathname\)\)\s*\{\s*event\.respondWith\(staleWhileRevalidate/);
+    expect(sw).toMatch(/else\s*\{\s*event\.respondWith\(networkFirst\(request, request\)\)/);
     // …and every module in src/assets/js/ is precached (a forgotten module
     // breaks the page offline while every other asset loads).
     for (const f of readdirSync(join(ROOT, 'src/assets/js')).filter((n) => n.endsWith('.js'))) {

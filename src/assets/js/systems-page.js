@@ -1,7 +1,7 @@
 import { load, save, loadReviewState, loadName, saveName, KEYS } from './storage.js';
 import { queueSize } from './scheduler.js';
 import { makeBackup, parseBackup } from './backup.js';
-import { buildLog, logText, cleanName, CODE_RE } from './completion.js';
+import { buildLog, logText, cleanName, signRecord, CODE_RE } from './completion.js';
 import { SETS, setHeading } from './sets.js';
 
 // theme.js is a classic (non-module) script, so its key is duplicated here.
@@ -18,6 +18,7 @@ const backupMsg = el('backup-msg');
 const resetMsg = el('reset-msg');
 const nameMsg = el('name-msg');
 const nameInput = el('name-input');
+const logMsg = el('log-msg');
 
 function say(target, text, isError = false) {
   target.textContent = text;
@@ -80,10 +81,42 @@ function render() {
         }
         if (i < parts.length - 1) li.append(' ');
       });
+      // An unsigned record (stale build, insecure connection) can be signed
+      // in place with the current name — its time and score stay as recorded.
+      if (r.kind === 'done' && !progress[r.week]?.code) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'term-copy mono sign-btn';
+        b.dataset.week = String(r.week);
+        b.textContent = 'SIGN WITH MY NAME';
+        b.addEventListener('click', () => signWeek(r.week));
+        li.append(' ', b);
+      }
       list.append(li);
     }
     logBody.replaceChildren(list);
   }
+}
+
+async function signWeek(week) {
+  const name = loadName();
+  if (!name) {
+    say(logMsg, 'Save your name above first, then sign this week.', true);
+    nameInput.focus();
+    return;
+  }
+  const progress = load(KEYS.progress, {});
+  const rec = progress[week];
+  if (!rec || rec.code) return;
+  try {
+    progress[week] = await signRecord(week, rec, name);
+  } catch {
+    say(logMsg, 'Could not sign on this connection — try again on a normal (https) connection.', true);
+    return;
+  }
+  save(KEYS.progress, progress);
+  render();
+  say(logMsg, `Week ${week} signed as ${name}.`);
 }
 
 // ---------- name ----------

@@ -38,6 +38,7 @@ function mountPage() {
     <div class="term-head"><span>COMPLETION RECORDS · THIS DEVICE</span><button class="term-copy mono" type="button" id="copy-log">COPY AS TEXT</button></div>
     <div class="term-body" id="log-body">CONNECTING…</div>
   </div>
+  <p class="status-msg" id="log-msg" aria-live="polite"></p>
 </section>
 
 <section class="sys-block" aria-labelledby="backup-h">
@@ -333,5 +334,47 @@ describe('full reset', () => {
     expect(el('log-body').textContent).toContain('No completed weeks yet');
     expect(el('name-input').value).toBe('');
     expect(el('status-strip').textContent).toContain('0/5 SET 1');
+  });
+});
+
+describe('sign an unsigned record', () => {
+  const UNSIGNED = { score: 9, total: 10, at: AT };
+  const signBtn = () => el('log-body').querySelector('.sign-btn');
+
+  it('offers SIGN WITH MY NAME only on unsigned records', async () => {
+    localStorage.setItem('pal9000.progress.v1', JSON.stringify({ 1: UNSIGNED, 2: REC }));
+    localStorage.setItem('pal9000.name.v1', 'Ian Anderson');
+    await loadPage();
+    const btns = el('log-body').querySelectorAll('.sign-btn');
+    expect(btns).toHaveLength(1);
+    expect(btns[0].dataset.week).toBe('1');
+    expect(btns[0].closest('.row').textContent).toContain('UNSIGNED');
+  });
+
+  it('signs the record with the saved name, keeping its time and score', async () => {
+    localStorage.setItem('pal9000.progress.v1', JSON.stringify({ 1: UNSIGNED }));
+    localStorage.setItem('pal9000.name.v1', 'Ian Anderson');
+    await loadPage();
+    signBtn().dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await vi.waitFor(() => expect(signBtn()).toBeNull());
+    const rec = JSON.parse(localStorage.getItem('pal9000.progress.v1'))[1];
+    expect(rec).toMatchObject({ score: 9, total: 10, at: AT, name: 'Ian Anderson' });
+    expect(rec.code).toMatch(/^[0-9A-Z]{6}-[0-9A-Z]{6}$/);
+    const done = rows().filter((r) => r.className === 'row ok');
+    expect(done[0].textContent).toContain(rec.code);
+    expect(done[0].textContent).not.toContain('UNSIGNED');
+    expect(done[0].textContent).not.toContain('SIGNED AS'); // signed under the current name
+    expect(el('log-msg').textContent).toBe('Week 1 signed as Ian Anderson.');
+  });
+
+  it('asks for a name first when none is saved', async () => {
+    localStorage.setItem('pal9000.progress.v1', JSON.stringify({ 1: UNSIGNED }));
+    await loadPage();
+    signBtn().dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 20));
+    expect(el('log-msg').textContent).toContain('Save your name above first');
+    expect(el('log-msg').classList.contains('err')).toBe(true);
+    expect(JSON.parse(localStorage.getItem('pal9000.progress.v1'))[1].code).toBeUndefined();
+    expect(signBtn()).not.toBeNull();
   });
 });

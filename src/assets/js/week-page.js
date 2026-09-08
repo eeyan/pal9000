@@ -19,7 +19,7 @@ if (prev && !prev.code) {
   container.insertAdjacentHTML('beforebegin', `
     <div class="stamp-banner">
       <p class="mono stamp-line"></p>
-      <p class="stamp-note">Completed with ${prev.score}/${prev.total} before completion codes existed — retake it and this week gets a code.</p>
+      <p class="stamp-note">Completed with ${prev.score}/${prev.total} but no completion code — sign it with your name on SYSTEMS, or retake it.</p>
     </div>`);
   document.querySelector('.stamp-banner .stamp-line').textContent = completionStamp(week, prev.at);
 } else if (prev) {
@@ -72,7 +72,7 @@ function start(name) {
       if (note && !keep) {
         note.prepend(`Your earlier ${best.score}/${best.total} stays on file — this is that record. `);
       } else if (note && !rec.code) {
-        note.textContent = 'This completion could not be signed (no secure connection), so it is recorded without a code. Retake it on a normal connection to get one.';
+        note.textContent = 'This completion could not be signed (no secure connection), so it is recorded without a code. Sign it with your name on SYSTEMS, or retake it on a normal connection.';
       }
     },
   });
