@@ -26,7 +26,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import yaml from 'js-yaml';
 import { TRANSCRIPT_FILE_RE, transcriptToText, dateFromFilename } from '../src/lib/transcript.js';
 
-const PROMPT_VERSION = 'gen-v1';
+const PROMPT_VERSION = 'gen-v2'; // v2 (2026-09-08): option parallelism + direct stems, from Week 1 curation findings
 // Not pinned: the model is a per-batch choice, recorded in the candidates file
 // and in EVAL-LOG next to promptVersion. Override with PAL_MODEL=<id>.
 const MODEL = process.env.PAL_MODEL ?? 'claude-fable-5-1';
@@ -128,7 +128,17 @@ Question quality rules (violations get rejected in curation — they count again
 - Correct-answer feedback teaches the underlying principle in 2-3 sentences.
 - Self-explanation prompts chain the tested concept to a second course concept.
 - Concept-level, not trivia. Vendor-neutral generic names unless the material itself teaches a named case.
-- Mix: roughly 70% scenario-mcq, 30% definitional.`;
+- Mix: roughly 70% scenario-mcq, 30% definitional.
+
+Option parallelism (the Week 1 batch failed this in 28 of 30 questions — students learn to pick the longest option):
+- All four options share one grammatical form and are close in length (within about 25% of each other). The correct option must not be the longest, and must not be the only one carrying a "because…" justification. Put the reasoning in the feedback, not in the correct option.
+- Distractors get the same fullness of wording as the correct option.
+
+Stems ask a direct question:
+- The stem ends in a question whose answer is a decision or a diagnosis: "Which component is undermining the system?", "What should the COO change?", "Which term describes this?". Never "Which reasoning best matches/applies…" and never an option set of yes/no verdicts with reasons attached — those were rejected as ambiguous.
+- One situation, one decision. If a stem needs two projects and a reversal, split it.
+
+Connect sources when it is natural (the curator's favorite Week 1 item did this): apply a textbook framework to the week's reading or news item, or map a reading's advice onto a textbook concept. Cite both locations in sourceLoc. Never force it.`;
 
 // Class recordings are a different kind of source: what was actually said,
 // including improvised examples and student questions. Worth mining, with
@@ -249,6 +259,12 @@ try {
 }
 
 let malformed = 0;
+let longestCorrect = 0;
+for (const q of questions) {
+  const lens = (q.options ?? []).map((o) => (o.text ?? '').trim().length);
+  const ans = (q.options ?? []).find((o) => o.key === q.answer);
+  if (ans && lens.length && ans.text.trim().length === Math.max(...lens)) longestCorrect += 1;
+}
 const doc = {
   week,
   title: `Week ${week} — CANDIDATES (curate before build)`,
@@ -281,5 +297,8 @@ const doc = {
 writeFileSync(outPath, yaml.dump(doc, { lineWidth: 100 }));
 console.log(`Wrote ${questions.length} candidates to ${outPath}${malformed ? ` (${malformed} pre-marked "rejected: malformed")` : ''}`);
 console.log(`Output tokens used: ${message.usage.output_tokens}`);
+if (longestCorrect > questions.length / 3) {
+  console.warn(`Warning: the correct option is the longest option in ${longestCorrect}/${questions.length} candidates — expect a length-balancing edit pass (chance level is ~25%).`);
+}
 console.log('Curate: set status to accepted / edited / "rejected: <reason>" (hallucination|leakage|trivia|ambiguous|duplicate),');
 console.log(`move accepted questions into content/questions/week-${ww}.yaml with sequential ids, then run: node scripts/eval-log.js ${week}`);

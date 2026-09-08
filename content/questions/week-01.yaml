@@ -1,8 +1,5 @@
 week: 1
-# Live since 2026-09-08 (class was 2026-09-01). Real gen-v1 content — replaced the sample-v0 set.
-# Provenance: promptVersion gen-v1 · model claude-fable-5-1 · generated in-session 2026-09-07 · curated 2026-09-08
-# Sources: P&P Ch. 1–2 decks, syllabus, Deloitte AI-strategy excerpt, OpenAI Hugging Face incident post (Black Hat talk).
-# 12 of 25 accepted candidates promoted (trimmed for duplicate topics); the rest stay in the candidates file.
+# Provenance: promptVersion gen-v1 · model claude-fable-5-1 · promoted 2026-09-08 (12 of 25 accepted candidates)
 published: true
 title: "IS vs. IT, IS in Organizations, AI & Strategy"
 questions:
