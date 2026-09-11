@@ -50,3 +50,18 @@ diagnosed with the textbook's four-component model) as the best item — generat
 | Date | promptVersion | Model | Week | Generated | Accepted | Rejected | Accept rate | Reject reasons |
 |---|---|---|---|---|---|---|---|---|
 | 2026-09-11 | gen-v2 | claude-fable-5-1 | 2 | 30 | 23 | 7 | 77% | trivia ×6, hallucination ×1 |
+
+Week 2 notes (gen-v2, in-session): 23 of 30 kept, 15 promoted (yield 15/30, up from 12/30). The batch
+was reviewed twice — by the curator on the review page and by a fresh-context model reviewer that had not
+seen the batch being written — and the two agreed on keep-vs-reject for 24 of 30 and on exact status for
+14 of 30; the disagreements were resolved in discussion (three trivia calls went the curator's way, one
+hallucination the reviewer's). gen-v2's parallelism rule worked: the correct option was the longest in 2 of
+30, both by term length. New defects for gen-v3: (1) 8 of 30 stems said "the chapter" / "the essay" or used
+bare acronyms (TPS/DSS/EIS, ERP, CRM) — the prompt now requires naming the source and expanding acronyms;
+(2) "reversal distractors" — option sets made of one source claim plus three negations of it, answerable
+from the direction of the author's thesis alone (c15, c20, c23, c28, c30) — distractors must now be real
+source claims that don't fit the scenario; (3) coverage skew — five Carr items, one on the back half of the
+slide deck — the prompt now asks for proportional coverage; (4) one hallucination (c30) misread the news
+source. Process changes from this batch: `scripts/build-candidates.js` makes the in-session path a command,
+`scripts/diff-decisions.js` compares two reviews, and the review page now shows lint warnings per question.
+

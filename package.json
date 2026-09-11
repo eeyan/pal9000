@@ -11,6 +11,8 @@
     "dev": "eleventy --serve",
     "test": "vitest run",
     "generate": "node scripts/generate.js",
+    "build-candidates": "node scripts/build-candidates.js",
+    "diff-decisions": "node scripts/diff-decisions.js",
     "review": "node scripts/review.js",
     "curate": "node scripts/curate.js",
     "promote": "node scripts/promote.js",

@@ -25,9 +25,10 @@ import { join } from 'node:path';
 import Anthropic from '@anthropic-ai/sdk';
 import yaml from 'js-yaml';
 import { TRANSCRIPT_FILE_RE, transcriptToText, dateFromFilename } from '../src/lib/transcript.js';
+import { buildCandidatesDoc, batchStats, formatStats } from '../src/lib/candidates.js';
 
 const PROMPT_VERSION = 'gen-v3'; // v2 (2026-09-08): option parallelism + direct stems, from Week 1 curation findings
-// v3 (2026-09-11): name the source and spell out acronyms; distractors are real source claims, from Week 2 curation findings
+// v3 (2026-09-11): name the source, spell out acronyms, real-claim distractors, proportional coverage — from Week 2 curation findings
 // Not pinned: the model is a per-batch choice, recorded in the candidates file
 // and in EVAL-LOG next to promptVersion. Override with PAL_MODEL=<id>.
 const MODEL = process.env.PAL_MODEL ?? 'claude-fable-5-1';
@@ -145,6 +146,8 @@ Name what you are testing (the Week 2 batch lost 8 of 30 to this in curation):
 - When the source teaches a named case, use the names (Borders and Amazon, American Hospital Supply); do not anonymize them into "a bookstore chain".
 - Distractors are real claims or terms from the source that do not fit the scenario, not negations or inversions of the correct claim. If knowing the direction of the author's thesis is enough to answer, rewrite the distractors.
 
+Cover the material in proportion (Week 2 put five items on one article and one on the second half of the slide deck): spread candidates across every source roughly by its weight in the week, and across the whole slide deck including its later sections, before adding a second item on any one idea.
+
 Connect sources when it is natural (the curator's favorite Week 1 item did this): apply a textbook framework to the week's reading or news item, or map a reading's advice onto a textbook concept. Cite both locations in sourceLoc. Never force it.`;
 
 // Class recordings are a different kind of source: what was actually said,
@@ -202,23 +205,8 @@ const SCHEMA = {
   },
 };
 
-// The JSON schema can't express everything (no minItems/uniqueness in
-// structured outputs) — validate each candidate post-parse. Failures are kept
-// but pre-marked rejected so they're visible and counted, never curated in.
-function validate(q, names) {
-  const keys = (q.options ?? []).map((o) => o.key);
-  if (keys.length !== 4 || new Set(keys).size !== 4) return 'options must be exactly A-D';
-  if (!keys.includes(q.answer)) return 'answer key not among options';
-  const fbKeys = new Set((q.distractorFeedback ?? []).map((d) => d.key));
-  for (const k of keys) {
-    if (k !== q.answer && !fbKeys.has(k)) return `missing distractor feedback for ${k}`;
-  }
-  if (!q.feedbackCorrect || q.feedbackCorrect.length < 20) return 'feedbackCorrect too short';
-  if (!q.stem || q.stem.length < 20) return 'stem too short';
-  if (!names.includes(q.sourceDoc)) return `sourceDoc "${q.sourceDoc}" not a provided source`;
-  if (q.type === 'scenario-mcq' && !q.selfExplainPrompt) return 'scenario-mcq missing selfExplainPrompt';
-  return null;
-}
+// Post-parse validation and the YAML shape live in src/lib/candidates.js,
+// shared with scripts/build-candidates.js (the in-session path).
 
 const client = new Anthropic();
 
@@ -265,47 +253,14 @@ try {
   die(`Response was not valid JSON (${err.message}) — inspect the run and retry.`);
 }
 
-let malformed = 0;
-let longestCorrect = 0;
-for (const q of questions) {
-  const lens = (q.options ?? []).map((o) => (o.text ?? '').trim().length);
-  const ans = (q.options ?? []).find((o) => o.key === q.answer);
-  if (ans && lens.length && ans.text.trim().length === Math.max(...lens)) longestCorrect += 1;
-}
-const doc = {
-  week,
-  title: `Week ${week} — CANDIDATES (curate before build)`,
-  promptVersion: PROMPT_VERSION,
-  model: MODEL,
-  generated: questions.length,
-  questions: questions.map((q, i) => {
-    const problem = validate(q, sourceNames);
-    if (problem) malformed += 1;
-    return {
-      id: `w${ww}-c${String(i + 1).padStart(2, '0')}`,
-      week,
-      type: q.type,
-      status: problem ? 'rejected: malformed' : 'candidate',
-      ...(problem ? { rejectNote: problem } : {}),
-      promptVersion: PROMPT_VERSION,
-      stem: q.stem,
-      options: q.options,
-      answer: q.answer,
-      feedback: {
-        correct: q.feedbackCorrect,
-        ...Object.fromEntries((q.distractorFeedback ?? []).map((d) => [d.key, d.text])),
-      },
-      ...(q.selfExplainPrompt ? { selfExplainPrompt: q.selfExplainPrompt } : {}),
-      source: { doc: q.sourceDoc, loc: q.sourceLoc },
-    };
-  }),
-};
-
+const { doc, malformed } = buildCandidatesDoc({ week, questions, promptVersion: PROMPT_VERSION, model: MODEL, sourceNames });
+const stats = batchStats(doc.questions);
 writeFileSync(outPath, yaml.dump(doc, { lineWidth: 100 }));
 console.log(`Wrote ${questions.length} candidates to ${outPath}${malformed ? ` (${malformed} pre-marked "rejected: malformed")` : ''}`);
 console.log(`Output tokens used: ${message.usage.output_tokens}`);
-if (longestCorrect > questions.length / 3) {
-  console.warn(`Warning: the correct option is the longest option in ${longestCorrect}/${questions.length} candidates — expect a length-balancing edit pass (chance level is ~25%).`);
+console.log(formatStats(stats));
+if (stats.longestCorrect > questions.length / 3) {
+  console.warn(`Warning: the correct option is the longest option in ${stats.longestCorrect}/${questions.length} candidates — expect a length-balancing edit pass (chance level is ~25%).`);
 }
 console.log('Curate: set status to accepted / edited / "rejected: <reason>" (hallucination|leakage|trivia|ambiguous|duplicate),');
 console.log(`move accepted questions into content/questions/week-${ww}.yaml with sequential ids, then run: node scripts/eval-log.js ${week}`);

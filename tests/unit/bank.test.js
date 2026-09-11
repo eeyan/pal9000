@@ -3,6 +3,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import yaml from 'js-yaml';
 import { loadBank, WEEK_FILE_RE } from '../../src/lib/bank.js';
+import { longQuote, MAX_QUOTED_WORDS } from '../../src/lib/candidates.js';
 
 const QUESTIONS_DIR = join(import.meta.dirname, '../../content/questions');
 const REJECT_REASONS = ['hallucination', 'leakage', 'trivia', 'ambiguous', 'duplicate', 'malformed'];
@@ -12,14 +13,9 @@ const weekFiles = readdirSync(QUESTIONS_DIR).filter((f) => WEEK_FILE_RE.test(f))
 
 // Long verbatim quotes are a copyright red flag: generated questions are
 // grounded in publisher/case materials, and a 15+ word quotation in committed
-// content suggests source text was copied rather than paraphrased.
-const MAX_QUOTED_WORDS = 15;
-function longQuote(text) {
-  for (const m of String(text ?? '').matchAll(/["“]([^"”]{40,})["”]/g)) {
-    if (m[1].trim().split(/\s+/).length > MAX_QUOTED_WORDS) return m[1];
-  }
-  return null;
-}
+// content suggests source text was copied rather than paraphrased. The check
+// (src/lib/candidates.js) tokenises quotes so two quoted titles in one stem
+// are not read as one quotation.
 
 describe('question bank schema (curation lint)', () => {
   it('has at least one week file', () => {
@@ -144,7 +140,21 @@ describe('published flag', () => {
     expect(bank.totalQuestions).toBe(1);
   });
 
-  it('only weeks whose class has happened are live — Weeks 1–2 since 2026-09-11; sample week 3 stays held out', () => {
-    expect(loadBank().weeks.map((w) => w.week)).toEqual([1, 2]);
+  // Data-driven guards instead of a hard-coded list of live weeks (which had to
+  // be edited on every deploy night): the hand-authored sample-v0 sets never go
+  // live, and published weeks are contiguous from week 1, so a later week can't
+  // be switched on ahead of the ones before it.
+  it('sample-v0 weeks are never published', () => {
+    for (const file of weekFiles) {
+      const doc = yaml.load(readFileSync(join(QUESTIONS_DIR, file), 'utf8'));
+      const sample = (doc.questions ?? []).some((q) => q.promptVersion === 'sample-v0');
+      if (sample) expect(doc.published, `${file} is sample-v0 content but published`).toBe(false);
+    }
+  });
+
+  it('published weeks are contiguous from week 1', () => {
+    const live = loadBank().weeks.map((w) => w.week);
+    expect(live).toEqual(live.map((_, i) => i + 1));
+    expect(live.length).toBeGreaterThan(0);
   });
 });

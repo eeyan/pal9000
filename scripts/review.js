@@ -14,6 +14,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import yaml from 'js-yaml';
+import { lintCandidate, batchStats, formatStats } from '../src/lib/candidates.js';
 
 const week = Number(process.argv[2]);
 if (!Number.isInteger(week) || week < 1) {
@@ -43,7 +44,11 @@ const questions = (doc.questions ?? []).map((q) => ({
   feedback: q.feedback,
   selfExplainPrompt: q.selfExplainPrompt ?? '',
   source: q.source,
+  // Style warnings (longest correct option, bare acronyms, unnamed source,
+  // verbatim spans…) — the checks Week 2 ran by hand after promotion.
+  lint: lintCandidate(q),
 }));
+const stats = formatStats(batchStats(doc.questions ?? []));
 
 const REJECT_REASONS = ['hallucination', 'leakage', 'trivia', 'ambiguous', 'duplicate'];
 
@@ -53,6 +58,7 @@ const payload = JSON.stringify({
   week,
   promptVersion: doc.promptVersion ?? null,
   model: doc.model ?? null,
+  stats,
   reasons: REJECT_REASONS,
   questions,
 }).replace(/<\//g, '<\\/');
@@ -127,6 +133,11 @@ const html = `<!doctype html>
   .se b { display: block; font-size: 13px; color: var(--muted); }
   .cite { color: var(--muted); font-size: 13px; margin: 8px 0 20px; }
   .prior { color: var(--red); font-size: 13px; margin-bottom: 10px; }
+  .lint { margin: 0 0 12px; padding: 8px 12px; background: var(--amber-soft); border-left: 3px solid var(--amber); border-radius: 6px; font-size: 13px; }
+  .lint b { display: block; color: var(--muted); font-weight: 600; }
+  .lint ul { margin: 4px 0 0; padding-left: 18px; }
+  nav li .warn { color: var(--amber); font-weight: 700; font-size: 11px; margin-left: 4px; }
+  header .stats { font-size: 12px; color: var(--muted); width: 100%; }
 
   .decide { background: var(--panel); border-top: 1px solid var(--line); padding: 14px 28px 18px; max-width: 900px; }
   .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
@@ -158,6 +169,7 @@ const html = `<!doctype html>
       <button id="download">Download JSON</button>
       <button id="reset">Reset</button>
     </div>
+    <div class="stats" id="stats"></div>
   </header>
   <main>
     <nav><ol id="list"></ol></nav>
@@ -191,6 +203,8 @@ const html = `<!doctype html>
   const decided = (q) => decisions[q.id] && decisions[q.id].status && (decisions[q.id].status !== 'rejected' || decisions[q.id].reason);
 
   $('model').textContent = [data.promptVersion, data.model].filter(Boolean).join(' · ');
+  const warned = data.questions.filter((q) => q.lint && q.lint.length).length;
+  $('stats').textContent = data.stats + (warned ? ' · lint warnings on ' + warned : ' · no lint warnings');
 
   function renderHeader() {
     const n = data.questions.length;
@@ -210,7 +224,9 @@ const html = `<!doctype html>
     data.questions.forEach((q, i) => {
       const d = decisions[q.id];
       const li = el('li', (decided(q) ? d.status : '') + (i === idx ? ' current' : '') + (onlyOpen && decided(q) && i !== idx ? ' hidden' : ''));
-      li.append(el('span', 'dot'), el('span', 'id', q.id), el('span', 'short', q.stem.trim()));
+      const short = el('span', 'short', q.stem.trim());
+      if (q.lint && q.lint.length) short.prepend(el('span', 'warn', '⚠' + q.lint.length + ' '));
+      li.append(el('span', 'dot'), el('span', 'id', q.id), short);
       li.addEventListener('click', () => go(i));
       list.append(li);
     });
@@ -230,6 +246,10 @@ const html = `<!doctype html>
     meta.append(el('span', 'id', q.id), el('span', 'pill', q.type), el('span', null, (idx + 1) + ' of ' + data.questions.length));
     card.append(meta);
     if (q.rejectNote) card.append(el('div', 'prior', 'Pre-marked malformed by the generator: ' + q.rejectNote));
+    if (q.lint && q.lint.length) {
+      const box = el('div', 'lint'); box.append(el('b', null, 'Lint'));
+      const ul = el('ul'); for (const w of q.lint) ul.append(el('li', null, w)); box.append(ul); card.append(box);
+    }
     card.append(el('p', 'stem', q.stem.trim()));
 
     const ol = el('ul', 'options');
