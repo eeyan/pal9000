@@ -44,3 +44,9 @@ were rejected as ambiguous (c05, c06) — stems should ask a direct question tha
 answer. Independent curator and generator reviews agreed on 20 of 30 statuses; the generator's own
 review was the more lenient one. The curator singled out the cross-source question (a real incident
 diagnosed with the textbook's four-component model) as the best item — generate these when natural.
+
+## gen-v2
+
+| Date | promptVersion | Model | Week | Generated | Accepted | Rejected | Accept rate | Reject reasons |
+|---|---|---|---|---|---|---|---|---|
+| 2026-09-11 | gen-v2 | claude-fable-5-1 | 2 | 30 | 23 | 7 | 77% | trivia ×6, hallucination ×1 |

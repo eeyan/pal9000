@@ -144,7 +144,7 @@ describe('published flag', () => {
     expect(bank.totalQuestions).toBe(1);
   });
 
-  it('only weeks whose class has happened are live — Week 1 since 2026-09-08; sample weeks 2–3 stay held out', () => {
-    expect(loadBank().weeks.map((w) => w.week)).toEqual([1]);
+  it('only weeks whose class has happened are live — Weeks 1–2 since 2026-09-11; sample week 3 stays held out', () => {
+    expect(loadBank().weeks.map((w) => w.week)).toEqual([1, 2]);
   });
 });

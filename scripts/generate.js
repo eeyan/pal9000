@@ -26,7 +26,8 @@ import Anthropic from '@anthropic-ai/sdk';
 import yaml from 'js-yaml';
 import { TRANSCRIPT_FILE_RE, transcriptToText, dateFromFilename } from '../src/lib/transcript.js';
 
-const PROMPT_VERSION = 'gen-v2'; // v2 (2026-09-08): option parallelism + direct stems, from Week 1 curation findings
+const PROMPT_VERSION = 'gen-v3'; // v2 (2026-09-08): option parallelism + direct stems, from Week 1 curation findings
+// v3 (2026-09-11): name the source and spell out acronyms; distractors are real source claims, from Week 2 curation findings
 // Not pinned: the model is a per-batch choice, recorded in the candidates file
 // and in EVAL-LOG next to promptVersion. Override with PAL_MODEL=<id>.
 const MODEL = process.env.PAL_MODEL ?? 'claude-fable-5-1';
@@ -137,6 +138,12 @@ Option parallelism (the Week 1 batch failed this in 28 of 30 questions — stude
 Stems ask a direct question:
 - The stem ends in a question whose answer is a decision or a diagnosis: "Which component is undermining the system?", "What should the COO change?", "Which term describes this?". Never "Which reasoning best matches/applies…" and never an option set of yes/no verdicts with reasons attached — those were rejected as ambiguous.
 - One situation, one decision. If a stem needs two projects and a reversal, split it.
+
+Name what you are testing (the Week 2 batch lost 8 of 30 to this in curation):
+- Say which source the question draws on, in the stem: the book title and chapter ("Chapter 1 of The Adventures of an IT Leader"), the article and author ("Carr's 'IT Doesn't Matter'", "Andreessen's 'Why Software Is Eating the World'"), or the news event by name. Never "the chapter", "the essay", "a report", "the reading".
+- Spell out every acronym the first time it appears in a stem or option set ("enterprise resource planning (ERP)", "customer relationship management (CRM)"). Never build an option set out of bare acronyms.
+- When the source teaches a named case, use the names (Borders and Amazon, American Hospital Supply); do not anonymize them into "a bookstore chain".
+- Distractors are real claims or terms from the source that do not fit the scenario, not negations or inversions of the correct claim. If knowing the direction of the author's thesis is enough to answer, rewrite the distractors.
 
 Connect sources when it is natural (the curator's favorite Week 1 item did this): apply a textbook framework to the week's reading or news item, or map a reading's advice onto a textbook concept. Cite both locations in sourceLoc. Never force it.`;
 

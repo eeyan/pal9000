@@ -1,460 +1,697 @@
 week: 2
-# Held out of the build until after that week's class (2026-08-31). Flip to true on deploy night.
-published: false
-title: "IT Spend: Run vs. Change"
+# Provenance: promptVersion gen-v2 · model claude-fable-5-1 · promoted 2026-09-11 (15 of 23 accepted candidates)
+published: true
+title: "Organizational Systems, the Cloud, and Does IT Matter?"
 questions:
   - id: w02-q01
     week: 2
     type: scenario-mcq
-    status: accepted
-    promptVersion: sample-v0
-    stem: >
-      A CIO presents the board a budget in which 78% of IT spend goes to keeping
-      current systems running and 22% to new initiatives. A board member reacts:
-      "So 78% is wasted — cut it." How should the CIO reframe the 78%?
+    status: edited
+    promptVersion: gen-v2
+    stem: >-
+      A regional bank's new CIO receives three requests. The head of branch operations wants a
+      system that lets tellers post deposits and withdrawals accurately hundreds of times a day. The
+      branch managers want reports on which products sell in their branches. The executive team
+      wants to model how a rate change would affect deposits over five years, using aggregated data
+      they can drill into. Which assignment matches Chapter 3's hierarchical perspective?
     options:
       - key: A
-        text: >
-          The board member is right; run spend is pure waste and should be
-          eliminated.
+        text: >-
+          Transaction processing system for tellers, decision support system for branch managers,
+          executive information system for executives
       - key: B
-        text: >
-          The 78% is the innovation budget and should be protected from any cuts.
+        text: >-
+          Decision support system for tellers, transaction processing system for branch managers,
+          executive information system for executives
       - key: C
-        text: >
-          Run-the-business ("KTLO") spending keeps existing operations, licenses,
-          and infrastructure functioning — it is largely non-discretionary; the
-          strategic concern is its ratio, because every run dollar is one not
-          available for change-the-business investment.
+        text: >-
+          Transaction processing system for tellers, executive information system for branch
+          managers, decision support system for executives
       - key: D
-        text: >
-          The split is meaningless, because all IT spending is ultimately
-          equivalent.
-    answer: C
+        text: >-
+          Executive information system for tellers, decision support system for branch managers,
+          transaction processing system for executives
+    answer: A
     feedback:
-      correct: >
-        Run (KTLO) spend is mostly the cost of staying operational, not waste —
-        turning it off breaks the business. The strategic lever is the ratio: a
-        high run share crowds out change spending. You attack it by lowering run
-        cost through simplification and retirement, not by slashing operations.
-      A: >
-        Cutting non-discretionary run spend indiscriminately takes systems down;
-        the goal is to shrink the ratio, not gut operations.
-      B: >
-        This reverses the definitions — run is the opposite of the
-        innovation/change bucket.
-      D: >
-        The split is the central diagnostic of IT financial strategy; treating
-        all spend as equivalent hides the crowd-out problem entirely.
-    selfExplainPrompt: >
-      The CIO wants to lower the run share to free change capacity. Name one
-      driver that pushes KTLO share up over time (for example, accumulating
-      systems or technical debt), and explain why "just cut run spend" fails
-      without addressing that driver.
-    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 4-6 }
-
+      correct: >-
+        The hierarchical perspective matches system type to organizational level. The operational
+        level needs efficient, accurate transaction processing under limited uncertainty, which is a
+        transaction processing system (TPS). Functional managers at the tactical level use decision
+        support systems (DSS), which draw on TPS data. Executives at the strategic level use
+        executive information systems (EIS) built for highly aggregated data, scenario analysis, and
+        drill-down.
+      B: >-
+        This swaps the bottom two levels. Tellers perform recurring day-to-day activities, which is
+        what a transaction processing system automates; branch managers make tactical decisions,
+        which a decision support system supports.
+      C: >-
+        This puts the executive system one level too low. Executive information system features such
+        as scenario analysis over aggregated data with drill-down are designed for the executive
+        echelon, not for branch-level product reports.
+      D: >-
+        This inverts the hierarchy. A transaction processing system structures routine operations,
+        not long-range strategic decisions, and an executive information system would be wasted on
+        posting deposits.
+    selfExplainPrompt: >-
+      Chapter 3 says decision support systems rely on transaction processing systems as data
+      sources. Explain what happens to the branch managers' product reports if the tellers' system
+      records transactions inaccurately, and identify which of Chapter 2's IS components (people,
+      process, structure, technology) is most likely at fault.
+    source:
+      doc: CIS 9000 Chapter 3.pdf
+      loc: 'slides 18-21 (Hierarchical Perspective: Operational, Tactical, Strategic levels)'
   - id: w02-q02
     week: 2
     type: scenario-mcq
     status: accepted
-    promptVersion: sample-v0
-    stem: >
-      Over eight years a company's KTLO share of the IT budget has crept from 60%
-      to 80%, even though headline IT spending rose every year. Leadership is
-      baffled: "We keep adding budget — why is there less for new projects?" What
-      best explains the rising KTLO share?
+    promptVersion: gen-v2
+    stem: >-
+      A customer calls an insurer to change an address, is transferred to billing to change it
+      again, then to claims to change it a third time. Each department runs its own application
+      built around its own needs. Which limitation of the functional perspective, as Chapter 3
+      describes it, explains this experience?
     options:
       - key: A
-        text: >
-          Vendors arbitrarily raised prices; there is nothing structural to
-          manage here.
+        text: Overcentralization that strips local budget control from each function
       - key: B
-        text: >
-          Each new system, once launched, becomes something to run, patch, and
-          support indefinitely; without retiring old systems and paying down
-          technical debt, cumulative run obligations grow and consume each budget
-          increase.
+        text: Local optimization that makes every department's data needs identical
       - key: C
-        text: >
-          The finance team is miscategorizing change spend as run spend.
+        text: Redundancy from siloed applications built for one vertical need
       - key: D
-        text: >
-          KTLO always stays flat, so the numbers must be an accounting error.
-    answer: B
+        text: Insufficient transaction volume in each department's operational system
+    answer: C
     feedback:
-      correct: >
-        Change work is a one-time build; run work is a perpetual obligation that
-        each project adds to the stack. Absent decommissioning and debt paydown,
-        the run base ratchets upward and eats budget growth. That is why "add more
-        budget" alone never restores change capacity.
-      A: >
-        Price increases are marginal; the structural driver is the accumulating
-        installed base of things that must be maintained.
-      C: >
-        Possible in theory, but the ratchet described here is the normal
-        structural pattern even under correct accounting.
-      D: >
-        KTLO characteristically grows with the installed base — flatness would be
-        the anomaly, not the rule.
-    selfExplainPrompt: >
-      The run base ratchets up as systems accumulate. How does deferring
-      maintenance (technical debt) accelerate this, and why can a decommissioning
-      program do more for change capacity than a budget increase?
-    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 10-13 }
-
+      correct: >-
+        Functional systems rest on local optimization: each area's information needs are treated as
+        unique, so each gets a tailored application. Chapter 3 names the cost: siloed applications
+        that serve a vertical need well but cannot communicate across areas, producing duplicated
+        effort and customers referred to different representatives of the same organization. The
+        address is stored three times because the systems were designed three times.
+      A: >-
+        The functional perspective is decentralized by design; each business function manages its
+        own budget. Too much central control is not what produced three copies of the address.
+      B: >-
+        Local optimization says needs are homogeneous within a functional area and unique across
+        areas. Identical needs across departments would have argued for one shared system.
+      D: >-
+        Volume is not the issue; each department's system may handle its own transactions well. The
+        failure is integration between them.
+    selfExplainPrompt: >-
+      BPR emerged to break down exactly these silos. Explain why an ERP with a single database at
+      its core would eliminate the triple address change, and what the insurer gives up in return
+      according to Chapter 3's list of enterprise-system limitations.
+    source:
+      doc: CIS 9000 Chapter 3.pdf
+      loc: slides 22-24 (Functional Perspective, Functional Systems, Limitations)
   - id: w02-q03
     week: 2
     type: scenario-mcq
     status: accepted
-    promptVersion: sample-v0
-    stem: >
-      Two proposals to replace a warehouse system land on your desk. Option X has
-      a license price 40% lower than Option Y. On a five-year view, Option X
-      requires costly custom integration, heavy annual support, specialized staff,
-      and a painful data migration; Option Y bundles integration and support.
-      Finance wants to pick X on sticker price. What concept should drive the
-      decision instead?
+    promptVersion: gen-v2
+    stem: >-
+      A hospital's discharge process passes paperwork from nursing to pharmacy to billing to
+      transport, each waiting on the one before. A consultant proposes starting from a blank page,
+      asking why each step exists at all, and redesigning discharge as one end-to-end process with a
+      single owner accountable from the discharge order to the patient leaving. Which approach from
+      Chapter 3 is the consultant applying?
     options:
       - key: A
-        text: >
-          Total cost of ownership — the full five-year cost including integration,
-          support, staffing, migration, and downtime, not just the license price.
+        text: Business process improvement
       - key: B
-        text: >
-          Return on investment only — pick whichever option has the lowest
-          upfront cost.
+        text: Business process reengineering
       - key: C
-        text: >
-          Capital-expenditure minimization — always choose the lower purchase
-          price.
+        text: Functional systems design
       - key: D
-        text: >
-          Payback period of the license fee alone.
-    answer: A
+        text: Systems integration
+    answer: B
     feedback:
-      correct: >
-        TCO captures the full lifecycle cost — acquisition plus integration,
-        operations, support, staffing, migration, and eventual retirement.
-        Sticker price is often a small fraction of the total; a "cheaper" system
-        can cost more over its life once run costs are counted. TCO is how
-        run-cost implications enter a purchase decision.
-      B: >
-        ROI needs the full cost side too; anchoring on upfront cost alone
-        reproduces the sticker-price trap.
-      C: >
-        Minimizing purchase price ignores the ongoing run costs that dominate
-        lifecycle spend.
-      D: >
-        License payback ignores integration, support, and staffing — precisely
-        the costs that differ between these two options.
-    selfExplainPrompt: >
-      TCO folds ongoing run costs into a buy decision. How does choosing the
-      lower-TCO option today affect the organization's future KTLO share, and why
-      does sticker-price thinking quietly inflate run-the-business spend?
-    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 18-21 }
-
+      correct: >-
+        BPR takes a process view of the organization and is radical by design: it disregards
+        existing processes to make room for redesigned ones, typically opening with the question of
+        why a process exists at all. Work is reorganized into processes built around intended
+        outcomes, each overseen start to finish by a process champion. Eliminating the handoffs
+        between functions is the whole point.
+      A: >-
+        BPI is the practice of continuously improving processes in increments. A blank-page redesign
+        with a new owner is the opposite of incremental.
+      C: >-
+        Functional design is what produced the four departmental handoffs in the first place. It
+        optimizes within each area rather than across the end-to-end process.
+      D: >-
+        Systems integration links the IT systems and databases. The consultant is redesigning the
+        work itself, which Chapter 3 calls business integration; system changes may follow but are
+        not what is proposed.
+    selfExplainPrompt: >-
+      Chapter 3 says BPR requires third-order change and provokes significant resistance. Name the
+      two groups in this hospital most likely to resist the redesign and connect each to one of the
+      BPR risks on slide 27.
+    source:
+      doc: CIS 9000 Chapter 3.pdf
+      loc: slides 25-27 (Process Perspective, BPR, BPR risks)
   - id: w02-q04
     week: 2
-    type: scenario-mcq
+    type: definitional
     status: accepted
-    promptVersion: sample-v0
-    stem: >
-      An engineering lead warns that years of shipping fast with quick fixes and
-      skipped upgrades mean routine changes now take three times longer and
-      outages are rising. The CFO asks why maintenance keeps getting more expensive
-      when "nothing new is even being built." What is the CFO missing?
+    promptVersion: gen-v2
+    stem: >-
+      A logistics start-up rents virtual servers, storage, and network connectivity from a cloud
+      provider. Its own engineers install and patch the operating systems, configure backups, and
+      deploy the application code. Which of Chapter 3's cloud delivery models has it chosen?
     options:
       - key: A
-        text: >
-          Nothing — if no new features ship, maintenance costs should fall.
+        text: Software as a service (SaaS)
       - key: B
-        text: >
-          The engineers are simply underperforming and should work faster.
+        text: Platform as a service (PaaS)
       - key: C
-        text: >
-          Maintenance cost is fixed and unrelated to past design choices.
+        text: Infrastructure as a service (IaaS)
       - key: D
-        text: >
-          Technical debt: accumulated shortcuts and deferred upgrades impose an
-          ongoing "interest" cost — slower changes, more failures, higher run
-          spend — until it is paid down through refactoring or modernization.
-    answer: D
+        text: Multitenant hosting
+    answer: C
     feedback:
-      correct: >
-        Technical debt behaves like debt: past shortcuts accrue interest as
-        rising maintenance effort, fragility, and slower delivery. It is a real
-        budget force that inflates run cost even with zero new features, and it
-        compounds until deliberately paid down. Ignoring it guarantees KTLO keeps
-        climbing.
-      A: >
-        "No new features" does not stop the interest — accrued fragility keeps
-        raising run cost on its own.
-      B: >
-        Blaming speed treats a systemic design-quality problem as an individual
-        one; the drag is structural, not personal.
-      C: >
-        Maintenance cost is very much a function of accumulated design choices —
-        that is the whole point of the debt metaphor.
-    selfExplainPrompt: >
-      Technical debt is framed as interest on past shortcuts. Trace how unpaid
-      technical debt feeds the rising-KTLO ratchet, and why paying it down is
-      itself a change-the-business investment rather than pure maintenance.
-    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 24-27 }
-
+      correct: >-
+        IaaS is the level closest to hardware: the client buys computational power, storage, and
+        network connectivity, and all software, including the operating system and backup and
+        recovery, remains its responsibility. The provider runs and maintains the physical
+        infrastructure for a fee. The tell in the scenario is who patches the operating system.
+      A: >-
+        SaaS is a finished application running in the cloud, like email or a CRM. A SaaS customer
+        never touches an operating system or a backup schedule.
+      B: >-
+        PaaS rents a platform on which the client builds its own applications; the provider handles
+        the operating system and the plumbing beneath it. Managing the OS yourself is the signature
+        of the layer below.
+      D: >-
+        This confuses a tenancy model with a delivery model. Single- versus multitenant describes
+        how instances are shared among customers, not which layer of the stack is being rented.
+    selfExplainPrompt: >-
+      Chapter 3 lists lower entry barriers as a cloud advantage because IT cost shifts from capital
+      to operating expense. Explain whether IaaS or SaaS gives this start-up the lowest entry
+      barrier, and what it trades away for that.
+    source:
+      doc: CIS 9000 Chapter 3.pdf
+      loc: slide 10 (Cloud computing delivery models)
   - id: w02-q05
     week: 2
     type: scenario-mcq
-    status: accepted
-    promptVersion: sample-v0
-    stem: >
-      To hit an aggressive cost target, a new CIO freezes all "change-the-business"
-      projects for a year and protects only run spending, declaring the
-      organization "efficient." Two years later the company has fallen behind
-      competitors on digital capabilities. What strategic error did the freeze
-      represent?
+    status: edited
+    promptVersion: gen-v2
+    stem: >-
+      A hotel chain's CEO announces that the company is buying a customer relationship management
+      (CRM) system, assigns the project to IT, and defines success as having the software live in
+      six months. A board member objects. According to Chapter 3's definition of CRM, what should
+      the board member object to?
     options:
       - key: A
-        text: >
-          None — protecting run spend and cutting change is always the prudent
-          cost move.
+        text: Involving IT at all, since CRM belongs to marketing
       - key: B
-        text: >
-          Starving change-the-business investment sacrifices future
-          competitiveness for short-term cost optics; run and change are different
-          strategic bets, and cutting all change mortgages the firm's future
-          capability.
+        text: Starting before the firm has enough customer data to mine
       - key: C
-        text: >
-          The CIO should also have cut run spending to zero to save even more.
+        text: Choosing a packaged system rather than building one in-house
       - key: D
-        text: >
-          Change spending has no strategic value, so the only real mistake was
-          communication.
-    answer: B
+        text: Treating CRM as a product to install, not a strategy to run
+    answer: D
     feedback:
-      correct: >
-        Run keeps you alive today; change keeps you relevant tomorrow. Zeroing
-        change may flatter this year's budget but forfeits the capability pipeline
-        that competitiveness depends on. The strategic task is balancing the two,
-        not maximizing one at the other's expense.
-      A: >
-        Prudence is about balance; a total change freeze trades the future for a
-        one-year optic.
-      C: >
-        Cutting run to zero destroys operations — the opposite failure, not a fix.
-      D: >
-        Change spend is precisely where future capability comes from; dismissing
-        its value is the core misconception here.
-    selfExplainPrompt: >
-      The freeze optimized a short-term ratio at long-term cost. How does the
-      McFarlan grid's "Strategic/Turnaround" category argue against freezing all
-      change spend, and which systems should a freeze never touch?
-    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 7-9 }
-
+      correct: >-
+        Chapter 3 treats CRM as a strategic orientation, not a technology: a set of iterative
+        processes for turning what the firm learns from customer data into relationships that raise
+        profitability. IT enables all but the smallest initiatives, so involving IT is fine; the
+        mistake is defining the initiative as software and declaring victory at go-live. Going live
+        is where the learning starts.
+      A: >-
+        IT is an essential enabler of nearly every CRM initiative in Chapter 3's account. The
+        objection is to IT owning the initiative and defining its success, not to IT's involvement.
+      B: >-
+        Data volume is not the criterion. CRM is iterative: the firm learns from whatever customer
+        data it has and refines its inferences over time.
+      C: >-
+        Build versus buy is not addressed by the definition at all. Chapter 3 says the technologies
+        a firm uses will vary; what matters is the orientation behind them.
+    selfExplainPrompt: >-
+      Slide 37 distinguishes descriptive, predictive, and prescriptive analytics. Explain which of
+      the three turns customer data into the inferences about behavior and value that Chapter 3's
+      CRM definition demands, and why a chain that stops at descriptive reporting has not done CRM.
+    source:
+      doc: CIS 9000 Chapter 3.pdf
+      loc: slide 35 (Customer Relationship Management); slide 50 (Summary 4/8)
   - id: w02-q06
     week: 2
     type: scenario-mcq
-    status: accepted
-    promptVersion: sample-v0
-    stem: >
-      A department proudly builds an internal tool "for free" using spare staff
-      time and open-source components, avoiding any license fee. Two years on, the
-      original developer has left, no one can safely modify it, and it needs
-      security patching the team cannot provide. Which run-versus-change lesson
-      does this illustrate?
+    status: edited
+    promptVersion: gen-v2
+    stem: >-
+      In 'Why Software Is Eating the World' (2011), Marc Andreessen notes that running a basic
+      Internet application cost roughly $150,000 a month in 2000 and about $1,500 a month in
+      Amazon's cloud a decade later. A student says the comparison only proves that hardware got
+      cheaper. Which cloud advantage from Chapter 3 does the comparison actually illustrate?
     options:
       - key: A
-        text: >
-          In-house builds are always cheaper, because they avoid license fees.
+        text: Higher scalability as resources are allocated on actual demand
       - key: B
-        text: >
-          The team simply chose the wrong open-source components.
+        text: Faster innovation as user training is no longer required
       - key: C
-        text: >
-          "Free" to acquire is not free to own — the build created a perpetual
-          run and maintenance obligation (support, patching, key-person risk) that
-          its zero sticker price hid; TCO covers the whole life, not just
-          acquisition.
+        text: Thin-client computing as the interface moves off the device
       - key: D
-        text: >
-          Open-source software cannot be used safely in a business.
-    answer: C
+        text: Lower entry barriers as IT cost shifts to operating expense
+    answer: D
     feedback:
-      correct: >
-        Acquisition cost and ownership cost are different things. A build with no
-        license fee still incurs support, security, and knowledge-continuity costs
-        for its whole life — often the larger share. This is why TCO, not sticker
-        price, governs build decisions, and why every build adds to KTLO.
-      A: >
-        Avoiding a license fee says nothing about ownership cost, which here
-        dominates and was ignored.
-      B: >
-        Component choice is not the issue; any unmaintained build accrues the same
-        ownership burden.
-      D: >
-        Open source is fine; the lesson is about unowned maintenance, not the
-        license model.
-    selfExplainPrompt: >
-      The "free" tool became a permanent run obligation. How does this decision
-      preview the build-versus-buy trade-off, and why does key-person risk belong
-      inside a TCO calculation rather than outside it?
-    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 22-23 }
-
+      correct: >-
+        Chapter 3 lists lower entry barriers first among the cloud's advantages: firms with limited
+        capital get dynamically priced, enterprise-class resources, IT costs move from capital to
+        operating expenditure, and start-ups launch with initial investments an order of magnitude
+        lower than before. That is exactly Andreessen's point: new global start-ups can launch
+        without investing in infrastructure. The slide even asks what role cloud computing played in
+        his essay.
+      A: >-
+        Scalability is a genuine cloud advantage, but it concerns growing and shrinking capacity.
+        The comparison is about the cost of getting started at all.
+      B: >-
+        Faster innovation in Chapter 3 comes from immediate access to IT resources shortening time
+        to market, not from training. The monthly cost figures do not speak to either.
+      C: >-
+        Thin versus thick client is an architectural framing of where computation happens. It is not
+        a cost advantage and has nothing to do with the two dollar figures.
+    selfExplainPrompt: >-
+      Carr predicted in 2003 that firms would buy IT as fee-based utility services. Explain how the
+      cloud's shift from capital to operating expense fulfills that prediction, and whether
+      Andreessen's software start-ups confirm or complicate Carr's conclusion that IT no longer
+      confers advantage.
+    source:
+      doc: CIS 9000 Chapter 3.pdf
+      loc: >-
+        slide 15 (Cloud Computing Advantages, incl. the Andreessen discussion question); Andreessen,
+        paragraph on Loudcloud and Amazon's cloud
   - id: w02-q07
     week: 2
     type: scenario-mcq
-    status: accepted
-    promptVersion: sample-v0
-    stem: >
-      A CIO wants to shift the run/change mix from 75/25 toward 60/40 within three
-      years without cutting the change budget. An advisor suggests simply demanding
-      that the operations team "do more with less." Which approach actually attacks
-      the run share structurally?
+    status: edited
+    promptVersion: gen-v2
+    stem: >-
+      A specialty retailer's edge is a returns-and-alterations service no competitor matches. The
+      best-practice returns workflow in its new enterprise resource planning (ERP) system cannot
+      represent that service, and the implementation team recommends changing the service to fit the
+      software. Which outcome does Porter's 'Strategy and the Internet' warn is the likely result?
     options:
       - key: A
-        text: >
-          Order the operations team to cut its spending by 20% across the board.
+        text: Vendor lock-in, as switching ERP suppliers becomes prohibitively costly
       - key: B
-        text: >
-          Reduce the run base itself — retire redundant and legacy systems,
-          consolidate platforms, pay down technical debt, and standardize — so
-          there is structurally less to run, freeing capacity for change.
+        text: Data loss, as the legacy returns database must be migrated
       - key: C
-        text: >
-          Reclassify some run spending as change spending in the reports.
+        text: Competitive convergence, as the firm adopts practices rivals share
       - key: D
-        text: >
-          Freeze all hiring in operations indefinitely.
-    answer: B
+        text: Cost overruns, as customizing the returns module drags on
+    answer: C
     feedback:
-      correct: >
-        The run share falls durably only when there is structurally less to run:
-        fewer systems, less duplication, less debt, more standardization.
-        Across-the-board squeezes and relabeling move the numbers without changing
-        the underlying obligation, so the ratio drifts back.
-      A: >
-        A blunt cut risks reliability and does not remove the underlying systems
-        that generate the run cost.
-      C: >
-        Relabeling is accounting theater — the real obligation and its crowd-out
-        effect are unchanged.
-      D: >
-        A hiring freeze starves operations without retiring the workload that
-        drives the cost.
-    selfExplainPrompt: >
-      The durable lever is shrinking the run base. Connect system retirement to
-      both technical-debt paydown and end-of-support risk, and explain why
-      consolidation is a change-the-business investment that lowers future run
-      cost.
-    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 28-30 }
-
+      correct: >-
+        Porter observes that packaged software was hard to customize, so companies changed how they
+        conducted activities to conform to the best practices embedded in it, and that IT therefore
+        became a force for standardizing activities and speeding competitive convergence. Chapter 3
+        lists the same danger among enterprise-system limitations as the limits of best-practice
+        software and the potential for strategic clash. Adopting the standard workflow would erase
+        the one activity that made the retailer distinctive.
+      A: >-
+        Lock-in is a real cost of enterprise systems, but it is not the harm Porter describes. His
+        concern is what conforming to the software does to a firm's strategy, not the cost of
+        leaving the vendor.
+      B: >-
+        Migration risk is technical and temporary. Porter's warning is strategic and permanent: the
+        firm stops doing the thing that set it apart.
+      D: >-
+        Porter argues the reverse: the difficulty of customizing packaged applications contributes
+        to the sustainability of the advantage. The risk lies in not customizing.
+    selfExplainPrompt: >-
+      Chapter 3 names the trade-off between standardization and flexibility as an enterprise-system
+      limitation. Using Porter's distinction between operational effectiveness and strategic
+      positioning, explain when a firm should accept the ERP's standard process and when it should
+      refuse.
+    source:
+      doc: Porter - Strategy and the Internet (2001, HBS WK excerpt).md
+      loc: >-
+        The Absence of Strategy, paragraphs on packaged software and ERP; CIS 9000 Chapter 3 slide
+        49 (Summary 3/8, ES limitations)
   - id: w02-q08
     week: 2
     type: definitional
     status: accepted
-    promptVersion: sample-v0
-    stem: >
-      The distinction between "run-the-business" and "change-the-business" IT
-      spending is best described as…
+    promptVersion: gen-v2
+    stem: >-
+      An executive argues that because her company now spends nearly half its capital budget on IT
+      and every process depends on it, IT must be the firm's most strategic asset. Which principle
+      from Carr's 'IT Doesn't Matter' undercuts this argument?
     options:
       - key: A
-        text: >
-          Run-the-business funds maintaining and operating existing systems and
-          services; change-the-business funds new capabilities, improvements, and
-          innovation
-      - { key: B, text: Run-the-business is hardware spending; change-the-business is software spending }
-      - { key: C, text: Run-the-business is the IT budget; change-the-business is the marketing budget }
-      - { key: D, text: They are two names for the same thing }
-    answer: A
-    feedback:
-      correct: >
-        The split separates keeping current operations alive (run) from building
-        new capability (change). It is a strategic lens because the ratio between
-        them reveals how much capacity is left for innovation after the lights are
-        kept on.
-      B: >
-        The line is operate-versus-build, not hardware-versus-software; both
-        buckets contain both.
-      C: >
-        Both are IT spend; change-the-business is not the marketing budget.
-      D: >
-        They are deliberately opposed categories; collapsing them hides the
-        crowd-out dynamic.
-    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 3-4 }
-
-  - id: w02-q09
-    week: 2
-    type: definitional
-    status: accepted
-    promptVersion: sample-v0
-    stem: "\"Total cost of ownership (TCO)\" for an IT system refers to…"
-    options:
-      - { key: A, text: The purchase price plus sales tax }
-      - { key: B, text: The annual software license fee only }
+        text: Strategic value comes from spending more than rivals on technology
+      - key: B
+        text: Strategic value comes from ubiquity, as network effects reward scale
       - key: C
-        text: >
-          The full lifecycle cost of acquiring, operating, maintaining, and
-          eventually retiring a system — not just its purchase or license price
-      - { key: D, text: The cost of the hardware the system runs on }
+        text: Strategic value comes from scarcity, not from ubiquity or spending
+      - key: D
+        text: Strategic value comes from replicable best practices built into software
     answer: C
     feedback:
-      correct: >
-        TCO sums every cost across a system's life: acquisition, integration,
-        operations, support, staffing, upgrades, and decommissioning. Because run
-        costs usually dwarf the sticker price, TCO is the honest basis for
-        comparing options.
-      A: >
-        Sticker-plus-tax captures only acquisition, missing the larger ongoing
-        costs.
-      B: >
-        The license fee is one recurring line; TCO also includes integration,
-        support, and staff.
-      D: >
-        Hardware is one component; TCO spans software, people, and process across
-        the full life.
-    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 16-17 }
-
+      correct: >-
+        Carr's central claim is that what makes a resource strategic is scarcity, not ubiquity: you
+        gain an edge only by having or doing something rivals cannot. Because data storage,
+        processing, and transport are now available and affordable to all, IT has become a commodity
+        factor of production, a cost paid by all that provides distinction to none. Rising spending
+        is evidence of essentiality, which is not the same thing as strategic value.
+      A: >-
+        Carr cites a 2002 study of 7,500 companies in which the top performers were among the most
+        tightfisted IT spenders. Outspending rivals is his example of a penalty, not an advantage.
+      B: >-
+        Ubiquity is precisely what destroys strategic potential in Carr's framework. A capability
+        everyone has cannot differentiate anyone.
+      D: >-
+        Carr argues that best practices embedded in generic software are replicated by everyone who
+        buys it. Buying a generic application means buying a generic process.
+    selfExplainPrompt: >-
+      Porter reaches a similar conclusion about operational effectiveness. Explain what Porter would
+      tell this executive to look for instead, and whether Carr would agree that it is available.
+    source:
+      doc: Carr - IT Doesn't Matter (2003, parts 1-8).md
+      loc: Part 1 (scarcity vs. ubiquity); Part 8 (Alinean and Forrester spending studies)
+  - id: w02-q09
+    week: 2
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v2
+    stem: >-
+      A CIO proposes replacing all four thousand employee PCs with the newest models and adopting
+      the vendor's latest office suite, arguing that falling behind on technology is a strategic
+      risk. Most staff use the machines for email, documents, and spreadsheets. Which response
+      follows the advice in Carr's 'IT Doesn't Matter' on moving from offense to defense?
+    options:
+      - key: A
+        text: Keep the fleet and negotiate hard caps on future upgrade costs
+      - key: B
+        text: Approve it now, since IT first-mover advantages are still worth capturing
+      - key: C
+        text: Approve only the software suite, since the hardware is a commodity
+      - key: D
+        text: Cancel all discretionary IT spending until returns can be proven
+    answer: A
+    feedback:
+      correct: >-
+        Carr's point is that everyday applications matured long ago and use a sliver of the
+        computing power now sold, yet firms keep buying across-the-board upgrades that vendors time
+        to force purchases. His remedy is to use buying power: contracts that keep existing PCs
+        useful for the long term and hard limits on what upgrades may cost, with cheaper
+        alternatives on the table if vendors balk. Spending less while getting more is the defensive
+        posture he recommends.
+      B: >-
+        Carr says that, except in very rare cases, the hope of first-mover advantage that drove
+        1990s IT spending was unwarranted. Commodity PCs are not a rare case.
+      C: >-
+        The suite upgrade is exactly the vendor-driven cycle Carr targets, and calling the hardware
+        a commodity is a reason not to buy the newest of it. Splitting the proposal keeps half the
+        waste.
+      D: >-
+        Carr distinguishes essential from discretionary investments and says staying in business
+        will still require big IT outlays. Cutting to zero confuses frugality with abandonment.
+    selfExplainPrompt: >-
+      Carr's other defensive priority is operational risk: outages, obsolescence, security breaches.
+      Explain how a fleet of aging, unpatched PCs could turn a cost-saving delay into exactly that
+      risk, and how you would balance the two.
+    source:
+      doc: Carr - IT Doesn't Matter (2003, parts 1-8).md
+      loc: >-
+        Part 7 (From offense to defense: overspending, PCs, vendor upgrade cycles); Part 8 (delaying
+        investments)
   - id: w02-q10
     week: 2
-    type: definitional
+    type: scenario-mcq
     status: accepted
-    promptVersion: sample-v0
-    stem: In IT budgeting, "technical debt" refers to…
+    promptVersion: gen-v2
+    stem: >-
+      Two competing regional banks roll out the same vendor's online account-opening application in
+      the same year, and each cuts onboarding time in half. The CEO of one bank calls the result a
+      competitive advantage. Using the distinction in Porter's 'Strategy and the Internet', what has
+      the bank achieved?
     options:
-      - { key: A, text: Money the IT department borrows to fund new projects }
+      - key: A
+        text: A strategic-positioning gain that rivals cannot copy, so an advantage
       - key: B
-        text: >
-          The accumulated future cost of expedient short-term technical choices —
-          quick fixes, skipped upgrades — that must eventually be "repaid" through
-          rework, showing up as higher maintenance effort and risk
-      - { key: C, text: The depreciation schedule of IT hardware assets }
-      - { key: D, text: Unpaid invoices owed to technology vendors }
-    answer: B
+        text: An operational-effectiveness gain unique to it, so a lasting advantage
+      - key: C
+        text: An operational-effectiveness gain that rivals share, so no advantage
+      - key: D
+        text: A strategic-positioning gain from the vendor, so a temporary advantage
+    answer: C
     feedback:
-      correct: >
-        Technical debt is a metaphor: shortcuts taken for speed accrue "interest"
-        as slower changes, more defects, and rising run cost until deliberately
-        paid down. It is a genuine budget force because it inflates KTLO even
-        without any new features.
-      A: >
-        It is not literal borrowing; it is the deferred cost of design shortcuts.
-      C: >
-        Depreciation is an accounting schedule for assets, unrelated to the
-        shortcut-cost metaphor.
-      D: >
-        Vendor invoices are ordinary payables, not the accumulated cost of
-        expedient engineering.
-    source: { doc: week-02-it-spend-run-change.pptx, loc: slides 25-26 }
-
+      correct: >-
+        Operational effectiveness is doing the same things as competitors but better, and Porter
+        insists it yields advantage only if a firm sustains a higher level than rivals. Best
+        practices are copied quickly, producing competitive convergence and price-based competition,
+        and generic Internet applications from third-party developers make the improvements broadly
+        shared. Two banks running the same package have converged, not differentiated.
+      A: >-
+        Strategic positioning means doing things differently in a way that delivers unique value.
+        Deploying the same application as your rival is the definition of not doing that.
+      B: >-
+        The gain is not unique; the rival bought the same application and got the same benefit.
+        Porter's point is that operational gains from packaged applications are rarely durable for
+        exactly this reason.
+      D: >-
+        A vendor's generic package cannot supply positioning. Positioning comes from a tailored,
+        integrated value chain that a firm configures for itself.
+    selfExplainPrompt: >-
+      Carr reaches the same verdict on generic applications: buying one means buying a generic
+      process. Explain where Porter and Carr part ways on what this bank should do next.
+    source:
+      doc: Porter - Strategy and the Internet (2001, HBS WK excerpt).md
+      loc: Operational Effectiveness section (competitive convergence, generic packages)
   - id: w02-q11
     week: 2
-    type: definitional
-    status: "rejected: trivia"
-    promptVersion: sample-v0
-    stem: >
-      KTLO stands for "Keep The Lights On." In which decade did the phrase "keep
-      the lights on" first enter use as IT-budgeting jargon?
-    # Reject note: pure trivia — it tests the historical origin date of a phrase,
-    # not the run-versus-change budget concept the phrase names. The week
-    # materials give no source for such a date, so it also flirts with
-    # hallucination. Counted against sample-v0 accept rate in docs/EVAL-LOG.md.
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v2
+    stem: >-
+      An online grocery start-up gives away delivery, discounts every order, adds any product
+      category customers mention, partners with every retailer willing to list it, and measures
+      success by customers acquired. Which of the criticisms of Internet pioneers in Porter's
+      'Strategy and the Internet' does it exemplify?
+    options:
+      - key: A
+        text: Overinvesting in proprietary assets instead of forming partnerships
+      - key: B
+        text: Making too many trade-offs about what not to offer
+      - key: C
+        text: Competing on service and customization instead of price
+      - key: D
+        text: Confusing customer acquisition with building profitability
+    answer: D
+    feedback:
+      correct: >-
+        Porter charges the Internet pioneers with violating nearly every precept of strategy:
+        maximizing revenue and share through discounting and giveaways, refusing to make trade-offs,
+        offering every conceivable product, and entering a rash of partnerships that eroded their
+        distinctiveness. The result was a zero-sum form of competition that confused acquiring
+        customers with building profitability and made price the sole competitive variable. The
+        start-up is running that playbook line by line.
+      A: >-
+        This reverses Porter's complaint. He faults the pioneers for failing to build and control
+        proprietary assets and channels, entering partnerships and outsourcing deals instead.
+      B: >-
+        Porter's criticism is that they made no trade-offs at all, rushing to offer every product
+        and service. Trade-offs are what strategy requires.
+      C: >-
+        Porter wishes they had competed on convenience, service, specialization, and customization,
+        which justify attractive prices. Instead they turned competition into a race to the bottom
+        on price.
+    selfExplainPrompt: >-
+      Andreessen argues the post-bubble software companies are real, high-margin, defensible
+      businesses. Pick one example from his essay and explain whether it counts as Porter-style
+      strategic positioning or as the race to the bottom.
+    source:
+      doc: Porter - Strategy and the Internet (2001, HBS WK excerpt).md
+      loc: The Absence of Strategy, first two paragraphs
+  - id: w02-q12
+    week: 2
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v2
+    stem: >-
+      In 2001 Borders handed its online bookselling to Amazon, judging online sales non-strategic. A
+      decade later, as Andreessen recounts in 'Why Software Is Eating the World', Amazon was the
+      world's largest bookseller and Borders was collapsing into bankruptcy. Carr's 2003 article "IT
+      Doesn't Matter" argued that IT was a commodity input. Which concept from Carr's own article
+      best accounts for Amazon's durable position?
+    options:
+      - key: A
+        text: Proprietary technology that rivals were legally barred from copying
+      - key: B
+        text: An early technology edge converted into durable positioning advantages
+      - key: C
+        text: Superior spending on IT relative to the rest of the retail industry
+      - key: D
+        text: Avoiding the cutting edge until standards and best practices solidified
+    answer: B
+    feedback:
+      correct: >-
+        Carr concedes that a few firms that won through IT innovation went on to gain other
+        advantages, above all scale and brand, which outlasted the technology edge that started
+        them; Wal-Mart and Dell are his examples of a temporary technological lead turned into a
+        lasting positioning one. He also credits companies that saw earlier than rivals how IT would
+        reshape an industry. Andreessen tells the same story from the other side, calling Amazon's
+        software engine its core capability.
+      A: >-
+        No patent or exclusive right stopped anyone from selling books online. Carr's proprietary
+        category, like the pharmaceutical patent, does not describe an open web storefront.
+      C: >-
+        Carr's evidence says the biggest IT spenders rarely post the best results. Outlay explains
+        neither the winner nor the loser here.
+      D: >-
+        Carr does praise followers who let others shoulder the cost of experimentation, but Amazon
+        moved early. The concept that fits is what it built on top of the lead, not when it moved.
+    selfExplainPrompt: >-
+      Andreessen says that with the Kindle even the books themselves are software. Explain whether
+      that shift is an infrastructural-technology story in Carr's sense or a strategic-positioning
+      story in Porter's, and what Borders should have done in 2001.
+    source:
+      doc: Andreessen - Why Software Is Eating the World (2011).md
+      loc: >-
+        Borders and Amazon paragraphs; Carr Part 5 (Wal-Mart and Dell as enduring positioning
+        advantages)
+  - id: w02-q13
+    week: 2
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v2
+    stem: >-
+      In Chapter 1 of The Adventures of an IT Leader, new CEO Carl Williams names Jim Barton, head
+      of loan operations with no IT background, as CIO after the veteran technologist in the role
+      fails. A skeptical director asks why the gap between business and technology should be crossed
+      from the business side. Which argument from the chapter's capability-gap discussion supports
+      Williams?
+    options:
+      - key: A
+        text: Technical knowledge goes obsolete within a few years, so it is not worth learning
+      - key: B
+        text: Business managers already know as much technology as IT leaders do
+      - key: C
+        text: IT leaders lack authority, so any executive would outperform them
+      - key: D
+        text: Technical knowledge is explicit and learnable; management skill is tacit
+    answer: D
+    feedback:
+      correct: >-
+        The chapter argues that the valley between IT leaders and executives can be spanned from
+        either side but may be easier to cross from the business side: the technical knowledge an IT
+        manager needs is relatively explicit and learnable, whereas much of what makes managers
+        effective is tacit, such as mastery of relationships and political factors. Those tacit
+        areas were exactly where the departing technologist kept failing. The bet is that a strong
+        manager can learn technology faster than a strong technologist can learn management.
+      A: >-
+        The chapter argues the opposite: the core of IT management is not transitory, and Barton
+        will have to learn enough technology to bridge the gap, not skip it.
+      B: >-
+        The capability-gap figure shows the two groups peaking over different disciplines. The
+        argument is about who can learn the other side faster, not about existing knowledge.
+      C: >-
+        Authority is not the chapter's argument; capability is. Barton reports directly to Williams,
+        but that reporting line is a consequence of the appointment, not the reason for it.
+    selfExplainPrompt: >-
+      The chapter says IT is positioned to see the business end to end across departmental
+      boundaries. Using Chapter 3's functional versus process perspectives, explain why an IT group
+      would have that vantage point and why Barton believes IT fails to use it.
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch01 The New CIO.md
+      loc: >-
+        Friday 2:41 p.m. passage: the IT leader/general manager capability gap figure and the
+        tacit-vs-explicit argument
+  - id: w02-q14
+    week: 2
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v2
+    stem: >-
+      OpenAI released GPT-6 Astra in September 2026 in phases: a limited group of companies in an
+      application-based cybersecurity program received first access to capabilities the company
+      gates behind an internal threshold, before broader availability through subscription plans,
+      its API, and a cloud marketplace in the following days. A firm in the early-access group
+      claims a lasting competitive advantage. Using the framework in Carr's 'IT Doesn't Matter', how
+      long does that advantage last?
+    options:
+      - key: A
+        text: Permanently, as early adopters lock in learning that others cannot copy
+      - key: B
+        text: Only while access is restricted; it fades as the model reaches everyone
+      - key: C
+        text: Never; Carr holds that no technology confers advantage at any stage
+      - key: D
+        text: Until a rival outspends it on the model, since spend sets the edge
+    answer: B
+    feedback:
+      correct: >-
+        Carr allows that in the earliest phase of its buildout an infrastructural technology can
+        behave like a proprietary one: as long as access is restricted by physical limits,
+        intellectual property, high cost, or missing standards, a company can gain an edge over
+        rivals. The window closes as availability rises and cost falls. A model rolling out to every
+        paid plan, an API, and a cloud marketplace within days is the buildout happening in real
+        time.
+      A: >-
+        Carr grants durable advantage only when a temporary technological edge is converted into
+        positioning advantages such as scale or brand. Learning how to use a tool everyone will soon
+        have is exactly the kind of best practice he says gets replicated quickly.
+      C: >-
+        Carr explicitly credits early-buildout advantages, from factories sited near the first power
+        stations to American Hospital Supply's ordering system. His claim is that they are brief,
+        not that they do not exist.
+      D: >-
+        Carr's evidence is that the heaviest IT spenders rarely post the best results. The edge here
+        comes from restricted access, not from outlay, and it disappears as access widens regardless
+        of who spends more.
+    selfExplainPrompt: >-
+      Carr also argues that once a technology becomes essential but not strategic, its risks matter
+      more than its advantages. Connect that to why the release announcement emphasized safeguards
+      added after the Hugging Face incident, and what a CIO adopting the model should prioritize.
+    source:
+      doc: News - OpenAI GPT-6 Astra release (2026-09-03, CNBC report).md
+      loc: >-
+        paragraphs 3-9 (phased rollout, Daybreak program, Critical threshold, rollout channels);
+        Carr Part 2 (restricted access) and Part 5 (dwindling opportunities)
+  - id: w02-q15
+    week: 2
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v2
+    stem: >-
+      Meta's Muse, launched in September 2026, runs each user's agent on its own dedicated virtual
+      machine in the cloud that holds that user's data and credentials, contained so that no one
+      else's agent can reach it, while the user talks to it through a phone app or a messaging
+      client. Which pair of Chapter 3 terms describes this architecture?
+    options:
+      - key: A
+        text: Multitenant hosting accessed through a thin client
+      - key: B
+        text: Single-tenant hosting accessed through a thick client
+      - key: C
+        text: Single-tenant hosting accessed through a thin client
+      - key: D
+        text: Multitenant hosting accessed through a thick client
+    answer: C
+    feedback:
+      correct: >-
+        Chapter 3 defines single-tenant as the architecture in which each customer gets dedicated
+        software resources on its own virtual server, even if the physical hardware is shared
+        through virtualization; a per-user secure VM is exactly that. The phone app is essentially
+        the user interface, with the computation done on remote hardware reached over the network,
+        which is the definition of a thin client. Meta chose isolation over sharing on purpose.
+      A: >-
+        Multitenant means one instance of the software serves all customers on shared resources.
+        Meta's design is the deliberate opposite: a dedicated VM per person so that no other agent
+        can reach it.
+      B: >-
+        A thick client does the computational work on the user's own device. Here the agent runs in
+        the cloud VM and the phone only carries the conversation.
+      D: >-
+        Both halves are wrong: the hosting is dedicated rather than shared, and the computation
+        happens off the device rather than on it.
+    selfExplainPrompt: >-
+      Chapter 3 says multitenancy is a root cause of the cloud's economies of scale. Explain what
+      Meta gives up by running a VM per user, and why the security claims in the launch post, read
+      alongside Week 1's Hugging Face incident, might justify that cost.
+    source:
+      doc: News - Meta introduces Muse personal AI agent (2026-09-08).md
+      loc: >-
+        Introduction and 'Built to be Private, Safe, and Secure' bullets; CIS 9000 Chapter 3 slides
+        13 and 16
