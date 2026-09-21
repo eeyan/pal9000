@@ -187,6 +187,7 @@ export function batchStats(records) {
   const types = {};
   const bySource = {};
   let longestCorrect = 0;
+  let shortestCorrect = 0;
   for (const q of records) {
     if (q.answer in keys) keys[q.answer] += 1;
     types[q.type] = (types[q.type] ?? 0) + 1;
@@ -195,12 +196,14 @@ export function batchStats(records) {
     const lens = (q.options ?? []).map((o) => String(o.text ?? '').trim().length);
     const ai = (q.options ?? []).findIndex((o) => o.key === q.answer);
     if (ai >= 0 && lens[ai] > Math.max(...lens.filter((_, i) => i !== ai))) longestCorrect += 1;
+    // Week 3: "never the longest" was overcorrected into "usually the shortest".
+    if (ai >= 0 && lens[ai] < Math.min(...lens.filter((_, i) => i !== ai))) shortestCorrect += 1;
   }
-  return { total: records.length, keys, types, bySource, longestCorrect };
+  return { total: records.length, keys, types, bySource, longestCorrect, shortestCorrect };
 }
 
 export function formatStats(s) {
   const keys = KEYS.map((k) => `${k}=${s.keys[k]}`).join(' ');
   const types = Object.entries(s.types).map(([t, n]) => `${t}=${n}`).join(' ');
-  return `${s.total} candidates · keys ${keys} · ${types} · correct-is-longest ${s.longestCorrect}/${s.total}`;
+  return `${s.total} candidates · keys ${keys} · ${types} · correct-is-longest ${s.longestCorrect}/${s.total} · correct-is-shortest ${s.shortestCorrect}/${s.total}`;
 }

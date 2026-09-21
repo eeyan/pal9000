@@ -1,472 +1,741 @@
 week: 3
-# Held out of the build until after that week's class (2026-08-31). Flip to true on deploy night.
-published: false
-title: "Build vs. Buy vs. SaaS"
+# Provenance: promptVersion gen-v3 · model claude-opus-5[1m] · promoted 2026-09-21 (15 of 29 accepted candidates)
+published: true
+title: "Value Creation, Digital Value Creation, and the New CIO"
 questions:
   - id: w03-q01
     week: 3
-    type: scenario-mcq
+    type: definitional
     status: accepted
-    promptVersion: sample-v0
-    stem: >
-      A company needs two new systems: a standard payroll system, and a
-      proprietary pricing engine that is central to how it beats competitors. A
-      consultant recommends building both in-house for "full control." What
-      sourcing principle argues against building the payroll system?
+    promptVersion: gen-v3
+    stem: >-
+      A bank runs a payroll system that every employee depends on and that would halt operations if
+      it failed, but that works the same way it does at every rival bank. By the distinction drawn
+      in the Chapter 7 (Value Creation and Strategic Information Systems) summary, how should this
+      system be classified?
     options:
       - key: A
-        text: >
-          Always buy everything to minimize headcount.
+        text: >-
+          A strategic information system, since a failure would stop operations and destroy value
+          for the firm
       - key: B
-        text: >
-          Build what differentiates you; buy what does not. Payroll is a commodity
-          capability available off-the-shelf — building it spends scarce
-          engineering on undifferentiated work and incurs a lifelong maintenance
-          obligation.
+        text: >-
+          An information technology dependent strategic initiative, since it is a large ongoing
+          investment in technology
       - key: C
-        text: >
-          Always build everything to maximize control.
+        text: >-
+          A transformation process, since it converts input resources into outputs the firm's
+          customers pay for
       - key: D
-        text: >
-          Build the payroll system, because control matters more than cost for
-          every system.
-    answer: B
+        text: >-
+          A tactical information system, critical to operations but not a source of distinctive
+          value for the firm
+    answer: D
     feedback:
-      correct: >
-        Sourcing should follow strategic value: invest build effort where you can
-        differentiate (the pricing engine) and buy the commodity capabilities
-        (payroll) that rivals also just buy. Building a commodity burns scarce
-        talent and creates a permanent maintenance obligation for zero competitive
-        gain.
-      A: >
-        "Buy everything" would outsource the differentiating pricing engine —
-        surrendering the very thing that creates advantage.
-      C: >
-        "Build everything" wastes engineering on commodities and multiplies the
-        maintenance burden.
-      D: >
-        Control has a cost; for a commodity that cost is not repaid in advantage —
-        TCO and focus both argue for buy.
-    selfExplainPrompt: >
-      The principle sorts systems by whether they differentiate. Tie this to the
-      McFarlan grid: which quadrant is payroll, which is the pricing engine, and
-      why does the quadrant predict the sourcing choice?
-    source: { doc: week-03-build-buy-saas.pptx, loc: slides 5-8 }
-
+      correct: >-
+        The chapter separates systems by the value they create, not by how badly the firm would miss
+        them. A system every competitor runs identically cannot produce added value, however
+        essential it is to keeping the lights on. Strategic systems are the ones designed to create
+        and appropriate value.
+      A: >-
+        Criticality is not the test. This confuses the cost of losing a system with the distinctive
+        value it creates.
+      B: >-
+        Such an initiative is an identifiable competitive move that creates added value, not simply
+        a sizable technology spend.
+      C: >-
+        The transformation process describes the firm's whole conversion of inputs into outputs, not
+        one supporting system inside it.
+    selfExplainPrompt: >-
+      Explain why a system that is indispensable can still generate no added value, using the
+      perfect-substitute logic from the cake example.
+    source:
+      doc: CIS 9000 Chapter 7.pdf
+      loc: Chapter 7 slide 24 (summary; strategic versus tactical information systems)
   - id: w03-q02
     week: 3
     type: scenario-mcq
-    status: accepted
-    promptVersion: sample-v0
-    stem: >
-      Three years into a CRM SaaS contract, a company wants to switch providers
-      for better pricing. It discovers that its customizations, workflows, and
-      years of data all live in the vendor's proprietary formats, that staff are
-      trained only on this tool, and that integrations are hard-wired to it.
-      Migration would be enormously costly. What does this situation illustrate?
+    status: edited
+    promptVersion: gen-v3
+    stem: >-
+      An online ticketing startup builds a booking tool that saves every customer roughly two hours
+      per purchase. Customers love it, but two rivals copy the tool within months, prices fall, and
+      the startup's profit ends up back where it started. Using Chapter 7 (Value Creation and
+      Strategic Information Systems), what best describes the startup's situation?
     options:
       - key: A
-        text: >
-          The company simply negotiated a bad contract; there is no general lesson
-          here.
+        text: >-
+          It created real value but, no longer differentiated from its rivals, competed that value
+          away to customers
       - key: B
-        text: >
-          SaaS never allows switching, so this outcome is normal and unavoidable.
+        text: >-
+          It created no value, since a profit that never rose shows that customers gained nothing
+          from the tool
       - key: C
-        text: >
-          Vendor lock-in via accumulated switching costs — proprietary formats,
-          custom integrations, retrained staff, and data gravity make leaving
-          expensive, which weakens the buyer's future bargaining power.
+        text: >-
+          It differentiated itself, but priced too low to appropriate the value that the booking
+          tool created
       - key: D
-        text: >
-          The company should never have adopted a CRM in the first place.
-    answer: C
-    feedback:
-      correct: >
-        Lock-in is the buildup of switching costs — proprietary data formats, deep
-        integrations, retraining, and data gravity — that make leaving painful and
-        hand pricing power to the incumbent. It is a foreseeable strategic cost to
-        weigh at selection, via data-portability and exit terms, not a surprise at
-        renewal.
-      A: >
-        It is a general, predictable pattern, not a one-off contracting slip —
-        which is exactly why exit terms belong in the selection criteria.
-      B: >
-        Switching is possible but costly; the lesson is to manage switching costs,
-        not to assume they are fixed and immovable.
-      D: >
-        CRMs are valuable; the lesson is to negotiate portability up front, not to
-        abstain from the category.
-    selfExplainPrompt: >
-      Lock-in grows from accumulated switching costs. How does data egress
-      (getting your data back out) relate to lock-in, and why should exit and
-      portability terms be negotiated before signing rather than at renewal?
-    source: { doc: week-03-build-buy-saas.pptx, loc: slides 18-21 }
-
-  - id: w03-q03
-    week: 3
-    type: scenario-mcq
-    status: accepted
-    promptVersion: sample-v0
-    stem: >
-      A CFO is comparing buying and hosting an application on owned servers (a
-      large upfront purchase, depreciated over years) against a SaaS subscription
-      (a predictable monthly per-user fee, no hardware). She likes that SaaS "has
-      no capital cost." Beyond cash-flow timing, what trade-off should she weigh?
-    options:
-      - key: A
-        text: >
-          SaaS shifts spend from capex to opex — predictable, scalable, no
-          hardware to run — but over a long horizon subscription fees can exceed
-          the cost of owning, and you trade control and customization for the
-          vendor's roadmap and terms.
-      - key: B
-        text: >
-          SaaS is strictly cheaper in all cases, because there is no upfront cost.
-      - key: C
-        text: >
-          Owning is always cheaper, because you stop paying once it is purchased.
-      - key: D
-        text: >
-          The capex-versus-opex choice is purely an accounting formality with no
-          strategic consequence.
+        text: >-
+          It raised supplier opportunity cost, since rivals bidding for the same inputs pushed the
+          floor of the analysis up
     answer: A
     feedback:
-      correct: >
-        SaaS converts a capital outlay into an operating subscription: lower
-        upfront cost, elasticity, and offloaded operations, but potentially higher
-        long-run cost and less control over customization, data, and upgrade
-        timing. The right choice depends on horizon, scale, and how much control
-        the capability warrants — not on "no capex" alone.
-      B: >
-        "No upfront cost" is not "cheaper overall"; recurring fees can surpass
-        ownership over a long life.
-      C: >
-        Owning still incurs run costs — maintenance, upgrades, staff — so the
-        purchase is not the end of spending.
-      D: >
-        The choice shapes cost structure, control, and flexibility — very much
-        strategic, not a mere accounting detail.
-    selfExplainPrompt: >
-      SaaS trades capex for opex and control for convenience. Connect the "over a
-      long horizon subscription can exceed owning" point to TCO thinking, and
-      explain when a high-control, differentiating capability might justify owning
-      despite the capex hit.
-    source: { doc: week-03-build-buy-saas.pptx, loc: slides 22-25 }
-
+      correct: >-
+        Creating value and appropriating it are separate questions. The tool widened the gap between
+        willingness to pay and supplier opportunity cost, but once rivals matched it nothing about
+        the startup was unique, so its added value fell toward zero and competition handed the value
+        to customers as savings. Differentiation, doing something valuable that others cannot, is
+        what lets a firm keep a share.
+      B: >-
+        Profit measures appropriation, not creation. Customers saving two hours each is value
+        created, and it did not vanish because the firm failed to capture it.
+      C: >-
+        Price only divides value a firm is in a position to claim. With two rivals offering the same
+        tool, a higher price would send customers elsewhere; the problem is lost uniqueness, not
+        timid pricing.
+      D: >-
+        Nothing in the scenario changes what the input resources would earn elsewhere. The pressure
+        described is competition in the output market.
+    selfExplainPrompt: >-
+      The next chapter asks whether an advantage is sustainable. Explain what the startup would have
+      needed so that its added value did not disappear when rivals copied the tool.
+    source:
+      doc: CIS 9000 Chapter 7.pdf
+      loc: Chapter 7 slides 11, 16, 18 (value appropriation; added value and competitive advantage)
+  - id: w03-q03
+    week: 3
+    type: definitional
+    status: edited
+    promptVersion: gen-v3
+    stem: >-
+      A fuel retailer sells a product its customers buy every week and that is identical for every
+      buyer, and its payment app already records every purchase without asking anyone to do anything
+      extra. On the customer data framework in Chapter 8 (Digital Value Creation), which strategy
+      fits this position?
+    options:
+      - key: A
+        text: A personalization strategy
+      - key: B
+        text: An acquisition strategy
+      - key: C
+        text: A low payoff position
+      - key: D
+        text: A reward strategy
+    answer: D
+    feedback:
+      correct: >-
+        The framework places strategies on repurchase frequency and customizability, with a third
+        dimension for how easily the data can be captured. Frequent purchases of a standard product
+        make loyalty rewards the natural play, and a high degree of unobtrusive data capture means
+        the retailer can run it without changing customer habits.
+      A: >-
+        Personalization needs something to vary for each customer. A product that is identical for
+        every buyer gives it nothing to work with.
+      B: >-
+        Acquisition (the chapter summary calls it an attraction strategy) suits customizable
+        offerings bought rarely, where the effort goes into winning the transaction rather than
+        deepening a habit.
+      C: >-
+        That quadrant sits at the low end of both dimensions. Weekly purchases place this retailer
+        well above it.
+    selfExplainPrompt: >-
+      The chapter calls unobtrusive data capture largely given at any point in time. Explain what
+      the retailer would have to spend or change if its app did not already capture purchases.
+    source:
+      doc: CIS 9000 Chapter 8.pdf
+      loc: 'Chapter 8 slide 23 (acquiring the needed data: the third dimension)'
   - id: w03-q04
     week: 3
     type: scenario-mcq
-    status: accepted
-    promptVersion: sample-v0
-    stem: >
-      A vendor announces that the on-premises database powering your logistics
-      platform reaches end-of-life in 12 months: no more security patches or
-      support after that date, though the software will keep running. Operations
-      says "it still works — leave it." As IT strategist, why is "leave it" the
-      risky choice?
+    status: edited
+    promptVersion: gen-v3
+    stem: >-
+      A kitchenware brand sells mainly through a large marketplace that owns the customer
+      relationship, ranks listings by its own algorithm, and sees every transaction. Sales are
+      steady, but shoppers treat its pans as interchangeable with a dozen look-alikes and its
+      listings are sinking in the rankings. Following Chapter 8 (Digital Value Creation) on creating
+      value inside an aggregator, what should the brand treat as its central problem?
     options:
       - key: A
-        text: >
-          The database will stop functioning at the end-of-life date and halt
-          logistics.
+        text: >-
+          That the marketplace has weak network effects, so the brand should subsidize one side to
+          build the network
       - key: B
-        text: >
-          End-of-life ends patches and support, not function — so vulnerabilities
-          go unfixed, defects go unaddressed, expertise dwindles, and compliance
-          and KTLO risk climb the longer you stay.
+        text: >-
+          That the brand has failed at wrapping, so it should bundle analytics with its pans to
+          differentiate the product
       - key: C
-        text: >
-          The vendor is legally required to keep issuing security patches after
-          end-of-life.
+        text: >-
+          That the aggregator commoditizes its suppliers, so the brand must work at visibility and
+          conversion inside it
       - key: D
-        text: >
-          Continuing to run the software after end-of-life breaches the license
-          and is illegal.
-    answer: B
+        text: >-
+          That its supplier opportunity cost is too high, so it should renegotiate upstream to widen
+          the value continuum
+    answer: C
     feedback:
-      correct: >
-        End-of-life ends the vendor's obligations, not the software's operation.
-        Risk transfers to you: unpatched security holes, no defect fixes, a
-        shrinking talent pool, and rising compliance exposure — a growing run
-        burden that quietly crowds out change spending. "It still works" is true
-        and beside the point.
-      A: >
-        This confuses end of support with end of function — it keeps running,
-        which is exactly what makes "leave it" tempting and dangerous.
-      C: >
-        Backwards — ending precisely those obligations is what end-of-life means.
-      D: >
-        Running past end-of-life is legal, just increasingly risky; the license is
-        not voided by the date.
-    selfExplainPrompt: >
-      End-of-life shifts risk onto you while the system still runs. Trace how
-      staying on unsupported software raises the KTLO share over the following
-      years, and why that constrains the firm's change-the-business capacity.
-    source: { doc: week-03-build-buy-saas.pptx, loc: slides 26-29 }
-
+      correct: >-
+        Aggregators control the customer interface and the discovery algorithms, which pushes the
+        sellers behind them toward interchangeability. A seller's room to create value runs through
+        being found and converting once found, which is why the chapter describes
+        search-engine-style tactics and a deep reading of the ranking algorithm.
+      A: >-
+        Creating and subsidizing a side of the network is advice for the platform owner, not for a
+        seller trading on someone else's platform.
+      B: >-
+        Wrapping needs customer data the brand does not hold, since the aggregator keeps the
+        relationship and the visibility.
+      D: >-
+        The squeeze described happens downstream, at the customer interface, not in what the brand
+        pays for its inputs.
+    selfExplainPrompt: >-
+      The chapter lists compliance and outside moves alongside visibility and conversion. Explain
+      what an outside move would look like here and why the brand might want one.
+    source:
+      doc: CIS 9000 Chapter 8.pdf
+      loc: >-
+        Chapter 8 slides 25-27 and summary slide 32 (value creation as an aggregator; value creation
+        within aggregators)
   - id: w03-q05
     week: 3
     type: scenario-mcq
     status: accepted
-    promptVersion: sample-v0
-    stem: >
-      A company adopts a leading SaaS ERP to replace a heavily customized
-      on-premises system. Business units demand that the vendor replicate dozens
-      of their unique, hard-coded workflows. The vendor allows only configuration
-      within set limits, not deep custom code, and leadership is frustrated. What
-      is the more strategically sound response?
+    promptVersion: gen-v3
+    stem: >-
+      In Chapter 2 of The Adventures of an IT Leader, Jim Barton tells a young technologist at the
+      bar that he definitely does not know the technical side but definitely does know the
+      management side. The technologist is unconvinced. What is the point he is pressing on Barton?
     options:
       - key: A
-        text: >
-          Force the vendor to build every custom workflow, or the SaaS model is
-          worthless.
+        text: >-
+          That Barton may be wrong about which things belong in his known category, not only about
+          the unknown one
       - key: B
-        text: >
-          Abandon SaaS entirely and rebuild the fully custom on-premises system.
+        text: >-
+          That Barton should learn the technical material himself before trying to lead a technical
+          organization
       - key: C
-        text: >
-          Keep both systems running in parallel indefinitely.
+        text: >-
+          That management skill does not transfer between departments, so his record in loan
+          operations counts for nothing
       - key: D
-        text: >
-          Reconsider whether each bespoke workflow truly differentiates; SaaS
-          trades deep customization for standardization, lower maintenance, and
-          continuous updates — often the better move is to adopt standard
-          best-practice processes and reserve customization for genuinely
-          differentiating needs.
-    answer: D
+        text: >-
+          That the boundary between technical and management work is clear, so Barton should stay on
+          his own side of it
+    answer: A
     feedback:
-      correct: >
-        SaaS deliberately limits customization to keep every tenant on a
-        maintainable standard version; that constraint is the source of its lower
-        run cost and steady updates. The strategic question is which "unique"
-        workflows actually differentiate — most do not and should conform to the
-        standard, saving customization for the few that do.
-      A: >
-        Demanding unlimited custom code defeats the SaaS model and rebuilds the
-        maintenance burden you just left behind.
-      B: >
-        Reverting to full custom reclaims flexibility but restores the high TCO
-        and upgrade pain that motivated the move.
-      C: >
-        Running both indefinitely doubles cost and complexity — a non-decision,
-        not a strategy.
-    selfExplainPrompt: >
-      SaaS constrains customization by design. Link this to the
-      utility-versus-differentiator idea: why should undifferentiating workflows
-      conform to the vendor standard, and how does over-customizing a SaaS product
-      recreate technical debt and lock-in?
-    source: { doc: week-03-build-buy-saas.pptx, loc: slides 30-33 }
-
+      correct: >-
+        The advice to know what you don't know is about sorting knowledge into categories
+        accurately, and the harder error is misfiling something as known. The technologist's
+        complaint about managers who cannot tell a rainforest from a desert is aimed exactly there:
+        they succeed by managing the appearance of success.
+      B: >-
+        The technologist gives the opposite advice, telling Barton to start by working out who on
+        his team is good.
+      C: >-
+        Neither the technologist nor the book argues that management skill fails to travel. The
+        doubt is about self-assessment.
+      D: >-
+        Barton concludes the opposite, that the boundary between technical and management work may
+        not be clear-cut at all.
+    selfExplainPrompt: >-
+      Barton writes this advice on his whiteboard as a private reminder. Connect it to his decision
+      in Chapter 3 to buy a stack of technical books, and say whether that decision honored the
+      advice.
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch02 CIO Challenges.md
+      loc: Chapter 2, Friday March 23 evening (the conversation at Vinnie's Bar)
   - id: w03-q06
     week: 3
     type: scenario-mcq
-    status: accepted
-    promptVersion: sample-v0
-    stem: >
-      While evaluating two competing analytics SaaS providers, a strategist
-      insists on asking each vendor how the firm would get its data out — in
-      what format, how fast, and at what cost — if it left in three years. A
-      colleague calls the question premature. Why is the exit question
-      strategically essential at selection time?
+    status: edited
+    promptVersion: gen-v3
+    stem: >-
+      A newly appointed technology chief presents to the executive committee in the vocabulary of
+      throughput, latency, and platform migrations, and leaves with nothing approved. Maggie's notes
+      at the end of Chapter 2 of The Adventures of an IT Leader list imperatives for the role. Which
+      one does this executive most clearly need?
     options:
       - key: A
-        text: >
-          It is not — exit terms only matter once you have actually decided to
-          leave.
+        text: >-
+          Safeguard the information assets of the organization and assure the continuity of the
+          business
       - key: B
-        text: >
-          Because the cheapest provider is always the one with the easiest exit.
+        text: >-
+          Establish a robust governance framework and manage the project portfolio to maximize its
+          return
       - key: C
-        text: >
-          Data egress and portability terms determine future switching costs and
-          lock-in; negotiating them at selection, when you still have leverage,
-          protects bargaining power and avoids being trapped by data gravity
-          later.
+        text: >-
+          Invest in the agility of the organization's systems and of its underlying technology
+          architecture
       - key: D
-        text: >
-          Exit terms are a legal formality with no bearing on strategy.
-    answer: C
+        text: >-
+          Speak the language of business, inside the technology group and especially with business
+          partners
+    answer: D
     feedback:
-      correct: >
-        Your leverage is highest before you sign; that is when to lock in
-        data-egress rights, formats, timelines, and costs. Skip it and switching
-        costs and data gravity accumulate silently, so by renewal the vendor holds
-        the pricing power. Exit planning is lock-in prevention.
-      A: >
-        Waiting until you want to leave is exactly when you have no leverage and
-        the lock-in is already set.
-      B: >
-        Price and exit ease are independent; a cheap tool can carry brutal egress
-        terms.
-      D: >
-        Egress terms directly shape switching cost and future negotiating power —
-        core strategy, not formality.
-    selfExplainPrompt: >
-      The strategist treats exit terms as leverage. Connect data egress to vendor
-      lock-in and switching costs: why does negotiating portability up front
-      change the balance of power across the whole contract life?
-    source: { doc: week-03-build-buy-saas.pptx, loc: slides 20-21 }
-
+      correct: >-
+        The notes list speaking the language of business first among the imperatives, and the same
+        notes rank misperceptions of the role as the top barrier. An executive who can only describe
+        work in technical terms feeds that misperception and leaves peers unable to judge the
+        trade-offs, so nothing gets approved.
+      A: >-
+        This is one of the listed imperatives, but the failure described is one of communication
+        rather than of protection.
+      B: >-
+        Governance is on the list and would help over time, yet the immediate obstacle is that the
+        committee could not follow the case.
+      C: >-
+        Agility appears among the imperatives, but investing in it does not make the argument for it
+        any clearer to peers.
+    selfExplainPrompt: >-
+      Chapter 7 describes value in terms of willingness to pay and opportunity cost. Explain how
+      framing a migration in those terms would change how this committee hears the proposal.
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch02 CIO Challenges.md
+      loc: Chapter 2, Maggie's Notes on The New CIO Role (imperatives)
   - id: w03-q07
     week: 3
     type: scenario-mcq
-    status: accepted
-    promptVersion: sample-v0
-    stem: >
-      A fast-growing startup needs a customer-support system now. It has a tiny
-      engineering team, unpredictable growth, and no differentiating requirements
-      for support tooling. Leadership debates building it, buying and self-hosting
-      it, or subscribing to a SaaS product. Which choice best fits the situation,
-      and why?
+    status: edited
+    promptVersion: gen-v3
+    stem: >-
+      In Chapter 3 of The Adventures of an IT Leader, Barton's directors insist they cannot hold a
+      planning discussion without bringing specialists such as John Cho. Bernie Ruben then explains
+      why technology management might be different. What is the core of his explanation?
     options:
       - key: A
-        text: >
-          Build it in-house, for maximum control.
+        text: >-
+          That the specialists are more intelligent than the managers, so authority should follow
+          technical talent
       - key: B
-        text: >
-          Subscribe to a SaaS product: with no differentiation, a tiny team, and
-          volatile scale, SaaS offloads operations, scales elastically, and
-          preserves scarce engineering for the product — accepting standard
-          features and some lock-in as a reasonable trade.
+        text: >-
+          That technology changes so fast that a manager's technical knowledge soon stops being
+          relevant at all
       - key: C
-        text: >
-          Buy and self-host, to avoid subscription fees.
+        text: >-
+          That the directors lack confidence in Barton, so they want allies in the room for a first
+          meeting
       - key: D
-        text: >
-          Delay the decision until the startup is large enough to build its own.
-    answer: B
+        text: >-
+          That managers can judge whether work is done but cannot independently verify the details
+          in between
+    answer: D
     feedback:
-      correct: >
-        Match sourcing to context: no differentiation, scarce engineering, and
-        uncertain scale all point to SaaS, which trades some control and lock-in
-        for speed, elasticity, and offloaded run cost — freeing the small team for
-        differentiating product work. Build or self-host would divert exactly the
-        talent the startup cannot spare.
-      A: >
-        Building a commodity support tool squanders a tiny team's scarce capacity
-        for zero competitive gain.
-      C: >
-        Self-hosting still demands ops, patching, and scaling work the startup
-        cannot staff, and locks in capacity it may outgrow or underuse.
-      D: >
-        Deferring leaves a real current need unmet; the situation already points
-        clearly to SaaS.
-    selfExplainPrompt: >
-      The recommendation weighs differentiation, team size, and scale. How do the
-      run-versus-change and utility-versus-differentiator ideas jointly justify
-      SaaS here, and what would have to change to make building worthwhile?
-    source: { doc: week-03-build-buy-saas.pptx, loc: slides 9-12 }
-
+      correct: >-
+        Ruben's argument is about observability: he can check the big things, such as whether
+        something works, while the daily interim work stays opaque to him. Because business
+        trade-offs in technology are wound around technical ones, managers need specialists to tease
+        the two apart and put dimensions on the choice.
+      A: >-
+        Ruben grants that some specialists have more horsepower in their specialty, but his
+        conclusion concerns verification, not who should hold authority.
+      B: >-
+        He does say his own programming knowledge aged badly, yet the speed of change is the setup
+        for the verification problem rather than the point.
+      C: >-
+        Nothing in the chapter suggests the directors doubt Barton; the doubt runs the other way,
+        with Barton wondering whether his managers are any good. Ruben's explanation is about what
+        managers can verify.
+    selfExplainPrompt: >-
+      Barton recalls a definition of supervision as encouraging appropriate behavior and directing
+      changes to it. Explain how the verification problem complicates that definition.
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch03 CIO Leadership.md
+      loc: Chapter 3, Monday March 26 (Ruben's explanation in his office)
   - id: w03-q08
     week: 3
-    type: definitional
-    status: accepted
-    promptVersion: sample-v0
-    stem: "\"Vendor lock-in\" refers to…"
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v3
+    stem: >-
+      In Chapter 3 of The Adventures of an IT Leader, Barton spends more than $1,200 on technical
+      books and works through subnets and the seven layers late into the night. When Maggie calls
+      just before midnight, what conclusion does he report?
     options:
       - key: A
-        text: >
-          A situation where switching to an alternative provider is difficult or
-          costly — due to proprietary formats, deep integrations, retraining, or
-          data gravity — which reduces the customer's future bargaining power
-      - { key: B, text: A contractual clause that legally forbids ever changing vendors }
-      - { key: C, text: The vendor physically hosting the customer's servers }
-      - { key: D, text: A discount offered for signing a multi-year agreement }
+        text: >-
+          That the detail he learned would help him manage only by accident, so his ideas of who can
+          know what must change
+      - key: B
+        text: >-
+          That he can master the technical material if he keeps studying, so the specialists are
+          less necessary than claimed
+      - key: C
+        text: >-
+          That his directors were protecting their specialists, so the off-site meeting should
+          proceed with the five of them
+      - key: D
+        text: >-
+          That the hospital chief on the radio was unusual, so his own lack of technical depth is
+          nothing to worry about
     answer: A
     feedback:
-      correct: >
-        Lock-in is the accumulation of switching costs that make leaving a vendor
-        expensive and thus weaken your leverage — even when no clause forbids
-        leaving. It arises from proprietary formats, custom integrations,
-        retraining, and data gravity, which is why exit terms matter at selection.
-      B: >
-        Lock-in is usually economic, not a legal prohibition — you can leave, it
-        just costs a great deal.
-      C: >
-        Where servers physically sit is a hosting detail, not the switching-cost
-        concept.
-      D: >
-        A multi-year discount is pricing; it may contribute to lock-in but is not
-        its definition.
-    source: { doc: week-03-build-buy-saas.pptx, loc: slides 16-17 }
-
+      correct: >-
+        Barton set out to test his directors' claim that a manager cannot know enough to work
+        without specialists, and the night undermined his own premise instead. He had no idea how
+        much complexity sat below the floorboards, and Maggie's reply is that he reached the right
+        conclusion faster than most managers do.
+      B: >-
+        This is the hypothesis he set out to prove, and the evening is written as its defeat rather
+        than its confirmation.
+      C: >-
+        The suspicion that his managers were making things difficult belongs to Monday's management
+        meeting, two days before the reading.
+      D: >-
+        The radio story pushed him toward the bookstore in the first place, and it ends with that
+        chief naming his own blind spot.
+    selfExplainPrompt: >-
+      Barton's whiteboard already reads that technology management is about management. Explain how
+      the bookstore night supports or complicates the line he wrote.
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch03 CIO Leadership.md
+      loc: Chapter 3, Wednesday March 28 late evening (the bookstore purchase and late-night study)
   - id: w03-q09
     week: 3
-    type: definitional
-    status: accepted
-    promptVersion: sample-v0
-    stem: "\"Software as a Service (SaaS)\" is best defined as…"
-    options:
-      - { key: A, text: Software you purchase once and install on your own servers, maintaining it yourself }
-      - { key: B, text: Any software that happens to be free of charge }
-      - key: C
-        text: >
-          Software licensed on a subscription basis and centrally hosted by the
-          vendor, accessed over the internet, with the provider handling
-          infrastructure, maintenance, and updates
-      - { key: D, text: Custom software built in-house for a single organization }
-    answer: C
-    feedback:
-      correct: >
-        SaaS delivers centrally hosted software by subscription over the internet,
-        with the vendor operating and updating it. This shifts spend from capex to
-        opex and offloads operations, in exchange for less control over
-        customization and upgrade timing.
-      A: >
-        That describes traditional on-premises licensing — the model SaaS is
-        contrasted with.
-      B: >
-        Price is not the defining trait; SaaS is a hosting-and-delivery model, and
-        most SaaS is paid.
-      D: >
-        Bespoke in-house software is the "build" option, not a hosted subscription
-        service.
-    source: { doc: week-03-build-buy-saas.pptx, loc: slides 13-15 }
-
-  - id: w03-q10
-    week: 3
-    type: definitional
-    status: accepted
-    promptVersion: sample-v0
-    stem: In a sourcing context, "switching costs" are…
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v3
+    stem: >-
+      The FreshDirect case reports that when Richard Braddock took over, nobody could say where an
+      order was at a given moment or who was responsible for it. What did the new database and
+      business intelligence system change about that situation?
     options:
       - key: A
-        text: >
-          The one-time and ongoing costs a customer incurs to move from one
-          provider or system to another — data migration, re-integration,
-          retraining, and lost productivity during the transition
-      - { key: B, text: The monthly subscription fee charged by a SaaS vendor }
-      - { key: C, text: The purchase price of a new system only }
-      - { key: D, text: Penalties defined solely in the contract's early-termination clause }
-    answer: A
+        text: >-
+          It replaced the refrigerated packing plant's manual processes with automated carousels and
+          conveyors
+      - key: B
+        text: >-
+          It gave continuous feedback on each step, so small failures surfaced while they were still
+          small ones
+      - key: C
+        text: >-
+          It profiled shoppers as new, infrequent, lapsed, or loyal, so the site could show each
+          group its own messages
+      - key: D
+        text: >-
+          It let the company deal directly with growers and manufacturers, cutting out the
+          middle-level distributors
+    answer: B
     feedback:
-      correct: >
-        Switching costs are the total burden of changing providers — migrating
-        data, rebuilding integrations, retraining staff, and absorbing transition
-        disruption. High switching costs are the engine of vendor lock-in, so
-        anticipating them is part of a sound sourcing decision.
-      B: >
-        The subscription fee is the cost of staying, not the cost of leaving.
-      C: >
-        A new system's price is one element; switching costs also include
-        migration, integration, and retraining.
-      D: >
-        Early-termination penalties are one contractual piece; most switching cost
-        is operational, not a clause.
-    source: { doc: week-03-build-buy-saas.pptx, loc: slides 17-18 }
-
+      correct: >-
+        Braddock's diagnosis was that the firm had no visibility into its own processes. A real-time
+        system that follows every step and every misstep converts scattered data into information a
+        manager can act on, which is why a late truck or a missing container can now be traced to
+        its source.
+      A: >-
+        The carousels and conveyors move orders to packers, but mechanization is not what resolved
+        the blindness Braddock described.
+      C: >-
+        The case does describe this profiling, but it belongs to the website upgrade and its
+        marketing, not to knowing where an order stands.
+      D: >-
+        Direct dealing is part of the supply chain design in the case. It lowers costs but does
+        nothing to show where an order is or who is responsible for it.
+    selfExplainPrompt: >-
+      The case asks how a firm can have a great deal of data but little information. Explain the
+      difference in your own words using one example from FreshDirect's operation.
+    source:
+      doc: Freshdirect-5-1.pdf
+      loc: FreshDirect case (Braddock on visibility into the workflow; building the real-time database)
+  - id: w03-q10
+    week: 3
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v3
+    stem: >-
+      The FreshDirect case reports that 85% of customers ordered three times or fewer before
+      leaving, and that Braddock responded by ending first-time-buyer discounts for two years. Using
+      the servitized-business metrics of Chapter 8 (Digital Value Creation), what was wrong with the
+      model he stopped?
+    options:
+      - key: A
+        text: >-
+          Monthly recurring revenue was understated, since discounted orders were recorded below
+          their true value
+      - key: B
+        text: >-
+          Acquisition cost was paid up front, but most customers left before their orders had repaid
+          that cost
+      - key: C
+        text: >-
+          Supplier opportunity cost rose with volume, since more orders forced purchases from
+          costlier growers
+      - key: D
+        text: >-
+          The firm was wrapping when it should have been selling, since the data never became a
+          revenue stream
+    answer: B
+    feedback:
+      correct: >-
+        Customer acquisition costs are front-loaded while revenue arrives order by order over the
+        relationship, so a firm only profits if customers stay long enough to repay the cost of
+        winning them. Discount-driven customers who left after three orders never reached that
+        point, which is why Braddock said the trick is to make customers loyal rather than to
+        acquire them.
+      A: >-
+        The problem was that customers left, not that their orders were mismeasured. Discounts
+        reduce real revenue rather than hiding it.
+      C: >-
+        The case describes FreshDirect pushing supplier costs down rather than up, by dealing
+        directly and paying quickly.
+      D: >-
+        This misapplies the data monetization categories. The failure described concerns retention
+        economics, not how data was monetized.
+    selfExplainPrompt: >-
+      Today a loyal 65% of the base contributes 80% of revenue. Explain how the lifetime value of a
+      customer and the cost of acquiring one together account for that shift.
+    source:
+      doc: Freshdirect-5-1.pdf
+      loc: >-
+        FreshDirect case (churn and first-time-buyer discounts) with Chapter 8 slides 21-22 and
+        summary slide 31 (servitized metrics; front-loaded acquisition cost)
   - id: w03-q11
     week: 3
     type: scenario-mcq
-    status: "rejected: ambiguous"
-    promptVersion: sample-v0
-    stem: >
-      A company's SaaS vendor raises prices 30% at renewal. Should the company
-      switch providers?
-    # Reject note: the correct answer is underspecified. "It depends on switching
-    # costs versus the increase" is defensible, but the stem gives no data on
-    # switching costs, contract terms, or alternatives, so a case-reasoning
-    # student can justify multiple options. Rewrite with concrete numbers (egress
-    # cost, retraining, alternative pricing) so exactly one option is best.
-    # Counted against sample-v0 accept rate in docs/EVAL-LOG.md.
+    status: accepted
+    promptVersion: gen-v3
+    stem: >-
+      The FreshDirect case reports that the company refuses slotting fees, asks suppliers to help it
+      market directly and lower prices, and pays them four business days after delivery rather than
+      the industry's thirty-five. In the terms of Chapter 7 (Value Creation and Strategic
+      Information Systems), what is this arrangement doing?
+    options:
+      - key: A
+        text: >-
+          Raising customer willingness to pay, by signaling to shoppers that the company's produce
+          is fresher
+      - key: B
+        text: >-
+          Raising firm cost deliberately, by giving up the slotting fee revenue that rival grocers
+          collect from suppliers
+      - key: C
+        text: >-
+          Lowering supplier opportunity cost, by giving its suppliers a real incentive to supply it
+          for less money
+      - key: D
+        text: >-
+          Increasing added value directly, by performing a transformation process that no other
+          grocer could perform
+    answer: C
+    feedback:
+      correct: >-
+        Paying in four days instead of thirty-five changes what serving this buyer is worth to a
+        supplier, which is the upstream route to creating value described in Chapter 7. Refusing
+        slotting fees works the same way: rather than collecting payments for shelf space, the firm
+        converts that leverage into lower prices.
+      A: >-
+        Freshness ratings and the packing plant work on the downstream bound. Payment terms are
+        invisible to shoppers.
+      B: >-
+        Forgoing slotting fees does cost revenue, but the case frames it as the price of obtaining
+        lower supplier prices in exchange.
+      D: >-
+        Added value is the result of such moves rather than a lever pulled on its own, and payment
+        terms are readily imitable.
+    selfExplainPrompt: >-
+      A rival grocer could copy the four-day payment terms tomorrow. Explain what that implies about
+      whether this part of FreshDirect's model yields lasting added value.
+    source:
+      doc: Freshdirect-5-1.pdf
+      loc: >-
+        FreshDirect case (supply chain, slotting fees, payment terms) with Chapter 7 slide 17 (how
+        added value is created)
+  - id: w03-q12
+    week: 3
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v3
+    stem: >-
+      The FreshDirect case reports two changes that used customer data: a Favorites feature
+      presenting each customer's past purchases for reordering, which raised order size by 10%, and
+      a cross-selling tool recommending products that other customers purchased, which added 5% to
+      revenue. Using the data monetization approaches in Chapter 8 (Digital Value Creation), how are
+      these best classified?
+    options:
+      - key: A
+        text: >-
+          Selling initiatives, since both features are credited with producing measurable new
+          revenue for the company
+      - key: B
+        text: >-
+          Wrapping initiatives, since both features face the customer and augment an offering the
+          firm already sells
+      - key: C
+        text: >-
+          Improving initiatives, since both features use stored data to refine decisions made inside
+          the organization
+      - key: D
+        text: >-
+          Linkage initiatives, since both features connect the company's value chain to the chains
+          of its customers
+    answer: B
+    feedback:
+      correct: >-
+        Neither feature is sold to anyone; each uses the company's own data to make the existing
+        grocery service more valuable, and both are measured by their effect on that service's
+        revenue. That is precisely the signature of wrapping rather than of selling or of internal
+        improvement.
+      A: >-
+        Selling means the data is a stand-alone offering with its own revenue stream. Here the
+        revenue arrives through grocery orders.
+      C: >-
+        Improving initiatives are inward looking and serve internal process owners. These features
+        face the shopper directly.
+      D: >-
+        Linkages are a value chain concept, the contact points between separate chains, not one of
+        the three data monetization approaches.
+    selfExplainPrompt: >-
+      Place these two features on the customer service life cycle from Chapter 8. Which phase do
+      they act on, and which stage within it?
+    source:
+      doc: Freshdirect-5-1.pdf
+      loc: >-
+        FreshDirect case (Favorites and the cross-selling recommender) with Chapter 8 slides 17-18
+        (data monetization)
+  - id: w03-q13
+    week: 3
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v3
+    stem: >-
+      Venkatraman's article on Netflix reports that the company built its streaming infrastructure
+      on Amazon Web Services even though Amazon runs a competing video service, and that Reed
+      Hastings wrote in 2012 that he did not expect Amazon to use that operation against Netflix.
+      Why, according to the article, did Netflix not settle for another provider to avoid depending
+      on a rival?
+    options:
+      - key: A
+        text: >-
+          That Netflix was poor at predicting its own growth, which made owning data center capacity
+          a costly bet
+      - key: B
+        text: >-
+          That cloud computing was the future, and Netflix had so far only experimented with it at
+          small scale
+      - key: C
+        text: >-
+          That a second-best provider would have compromised the quality of service Netflix offered
+          its customers
+      - key: D
+        text: >-
+          That a contract prevented Amazon from competing in video while it supplied the
+          infrastructure to Netflix
+    answer: C
+    feedback:
+      correct: >-
+        The article frames the decision as a judgment about where Netflix should spend its own
+        engineering attention: letting Amazon run data center infrastructure freed Netflix engineers
+        for the customer-facing business. Choosing a weaker provider to avoid depending on a rival
+        would have cost the very quality the strategy rested on.
+      A: >-
+        This is one of the four reasons the article lists for moving to the cloud, but any cloud
+        provider would have solved it. It does not explain accepting dependence on a rival.
+      B: >-
+        Also among the article's four reasons, and also true of the cloud in general rather than of
+        Amazon in particular.
+      D: >-
+        No such restriction appears. Hastings expressed a belief about Amazon's conduct, not a
+        contractual guarantee.
+    selfExplainPrompt: >-
+      Chapter 7 separates a firm's distinctive transformation process from the resources it buys.
+      Explain which of the two Netflix treated its data centers as, and why that made the decision
+      easier.
+    source:
+      doc: Venkatraman - Netflix A Case of Transformation for the Digital Future (2017, Medium).md
+      loc: Netflix article, Cloud Plus Data and Analytics; point 2 of The Digital Matrix in Action
+  - id: w03-q14
+    week: 3
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v3
+    stem: >-
+      Venkatraman's article on Netflix contrasts how networks traditionally commissioned shows with
+      how Netflix committed to two full seasons of House of Cards without seeing a scene. According
+      to the article, what made Netflix's commitment different in kind from the networks' approach?
+    options:
+      - key: A
+        text: >-
+          Netflix held viewing data that let it estimate demand, where its rivals relied on pilots
+          and sampling
+      - key: B
+        text: >-
+          Netflix paid more than its rivals, outbidding the incumbents and so securing first rights
+          to the show
+      - key: C
+        text: >-
+          Netflix owned the distribution channel, so it could schedule the show without negotiating
+          for airtime
+      - key: D
+        text: >-
+          Netflix faced no competition for original programming, so the commitment carried little
+          real risk
+    answer: A
+    feedback:
+      correct: >-
+        The article describes other studios as handicapped by lacking the data and analytics
+        capability, leaving them with outmoded models of pilots and sampling. The advantage was in
+        converting accumulated viewing behavior into a forecast, which is data creating value inside
+        the firm's own decision-making rather than a larger appetite for risk.
+      B: >-
+        The article does report a bid above $100 million, but price is what the advantage bought
+        rather than what created it.
+      C: >-
+        The article does not discuss scheduling or airtime; its contrast is about the evidence
+        behind the commission.
+      D: The article names two established rivals bidding against Netflix for the same show.
+    selfExplainPrompt: >-
+      Chapter 8 divides data initiatives into improving, wrapping, and selling. Explain which of the
+      three the House of Cards decision belongs to, and why.
+    source:
+      doc: Venkatraman - Netflix A Case of Transformation for the Digital Future (2017, Medium).md
+      loc: Netflix article, Cloud Plus Data and Analytics; point 3 of The Digital Matrix in Action
+  - id: w03-q15
+    week: 3
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v3
+    stem: >-
+      Venkatraman's article on Netflix argues that the company's first decade of success in
+      mail-order rentals should have trapped it. What does the article say the trap was?
+    options:
+      - key: A
+        text: >-
+          Relying on its recommendation engine, the analytics competency it had built alongside its
+          distribution network
+      - key: B
+        text: >-
+          Building its future around shipping and distribution, the skill that its first decade had
+          perfected
+      - key: C
+        text: >-
+          Betting on a rival's cloud, which left its streaming service dependent on a potential
+          competitor
+      - key: D
+        text: >-
+          Commissioning shows from pilots and sampling, the outmoded model that its data should have
+          replaced
+    answer: B
+    feedback:
+      correct: >-
+        The article's claim is that a decade of success in warehousing and shipping invited Netflix
+        to treat those skills as its identity. The company instead abandoned a working model for
+        streaming, which the author calls preserving the core while creating the new, and warns that
+        past success guarantees nothing.
+      A: >-
+        The article treats the recommendation work as the capability Netflix carried forward, not as
+        the trap it escaped.
+      C: >-
+        The article presents the Amazon Web Services decision as a deliberate strength of the
+        streaming era, not as the trap of the rental era.
+      D: >-
+        Pilots and sampling are how the article says other studios still decide. Netflix is the
+        contrast case, not the example.
+    selfExplainPrompt: >-
+      Chapter 7 says a firm can appropriate no more than its added value. Explain what happened to
+      the added value of fifty regional warehouses once streaming arrived.
+    source:
+      doc: Venkatraman - Netflix A Case of Transformation for the Digital Future (2017, Medium).md
+      loc: Netflix article, Origins (DVD-by-Mail business model) and Netflix 2.0 — Video Streaming

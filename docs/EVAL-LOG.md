@@ -65,3 +65,28 @@ slide deck — the prompt now asks for proportional coverage; (4) one hallucinat
 source. Process changes from this batch: `scripts/build-candidates.js` makes the in-session path a command,
 `scripts/diff-decisions.js` compares two reviews, and the review page now shows lint warnings per question.
 
+
+## gen-v3
+
+| Date | promptVersion | Model | Week | Generated | Accepted | Rejected | Accept rate | Reject reasons |
+|---|---|---|---|---|---|---|---|---|
+| 2026-09-21 | gen-v3 | claude-opus-5[1m] | 3 | 30 | 29 | 1 | 97% | trivia ×1 |
+
+Week 3 notes (gen-v3, in-session): 29 of 30 kept by the curator, 15 promoted, capped at 15 and split
+about evenly across the four sources (textbook chapters 7–8, *The Adventures of an IT Leader* chapters 2–3,
+the FreshDirect case, the Netflix article). The batch was written in a session running Opus 5, then re-checked
+on Fable 5.1 before curation (one factual slip in a stem, four answer leaks, three unsupported feedback
+lines fixed). The 97% accept rate overstates quality: the fresh-context reviewer kept 21 of 30 and wanted
+edits on 15 of those; the two reviews agreed on keep-vs-reject for 20 of 30 and on exact status for 6 of 30.
+gen-v3's rules held where lint can see them — zero lint warnings, every stem named its source, no bare
+acronyms, coverage proportional. What lint cannot see, for gen-v4: (1) **shortest-option tell** — the
+"correct must not be longest" rule overcorrected, and the correct option was the shortest in 14 of 30; the
+correct option should sit mid-pack, and lint should warn on shortest as well as longest; (2) **stem-to-key
+word echo** — five stems carried the distinctive word of the keyed option (warehouses → logistics, new
+carriers → new entrants); (3) **self-defining options** — option sets that restate a framework's cell
+definitions let the scenario be pattern-matched without knowing the framework; options should be the bare
+terms; (4) **feedback drift** — feedback lines asserting links the source does not make ("precisely
+because…"), or describing the reverse of the distractor they belong to; feedback needs the same grounding
+check as the stem; (5) reversal distractors survived in two items despite the gen-v3 rule — replace with
+true source claims that do not answer the question. Source prep: exhibits in the IT Leader ebook and
+several slide figures are images, invisible to text extraction; they were transcribed or viewed by hand.

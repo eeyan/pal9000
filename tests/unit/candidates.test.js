@@ -129,5 +129,6 @@ describe('batchStats', () => {
     expect(s.keys).toEqual({ A: 1, B: 0, C: 1, D: 0 });
     expect(s.types).toEqual({ 'scenario-mcq': 1, definitional: 1 });
     expect(s.longestCorrect).toBe(0);
+    expect(s.shortestCorrect).toBe(0);
   });
 });

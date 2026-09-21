@@ -27,8 +27,9 @@ import yaml from 'js-yaml';
 import { TRANSCRIPT_FILE_RE, transcriptToText, dateFromFilename } from '../src/lib/transcript.js';
 import { buildCandidatesDoc, batchStats, formatStats } from '../src/lib/candidates.js';
 
-const PROMPT_VERSION = 'gen-v3'; // v2 (2026-09-08): option parallelism + direct stems, from Week 1 curation findings
+const PROMPT_VERSION = 'gen-v4'; // v2 (2026-09-08): option parallelism + direct stems, from Week 1 curation findings
 // v3 (2026-09-11): name the source, spell out acronyms, real-claim distractors, proportional coverage — from Week 2 curation findings
+// v4 (2026-09-20): correct option mid-length (not shortest either), no stem-to-key echo, bare-term option sets, grounded feedback, honest cross-source framing, one item per keyed concept — from Week 3 curation findings
 // Not pinned: the model is a per-batch choice, recorded in the candidates file
 // and in EVAL-LOG next to promptVersion. Override with PAL_MODEL=<id>.
 const MODEL = process.env.PAL_MODEL ?? 'claude-fable-5-1';
@@ -133,7 +134,7 @@ Question quality rules (violations get rejected in curation — they count again
 - Mix: roughly 70% scenario-mcq, 30% definitional.
 
 Option parallelism (the Week 1 batch failed this in 28 of 30 questions — students learn to pick the longest option):
-- All four options share one grammatical form and are close in length (within about 25% of each other). The correct option must not be the longest, and must not be the only one carrying a "because…" justification. Put the reasoning in the feedback, not in the correct option.
+- All four options share one grammatical form and are close in length (within about 25% of each other). The correct option must be neither the longest nor the shortest of the four — aim for the middle (Week 3 overcorrected: shortest in 14 of 30, which is just a different tell). It must not be the only option carrying a "because…" or "since…" clause, and must not be the only one without one. Put the reasoning in the feedback, not in the correct option.
 - Distractors get the same fullness of wording as the correct option.
 
 Stems ask a direct question:
@@ -144,11 +145,24 @@ Name what you are testing (the Week 2 batch lost 8 of 30 to this in curation):
 - Say which source the question draws on, in the stem: the book title and chapter ("Chapter 1 of The Adventures of an IT Leader"), the article and author ("Carr's 'IT Doesn't Matter'", "Andreessen's 'Why Software Is Eating the World'"), or the news event by name. Never "the chapter", "the essay", "a report", "the reading".
 - Spell out every acronym the first time it appears in a stem or option set ("enterprise resource planning (ERP)", "customer relationship management (CRM)"). Never build an option set out of bare acronyms.
 - When the source teaches a named case, use the names (Borders and Amazon, American Hospital Supply); do not anonymize them into "a bookstore chain".
-- Distractors are real claims or terms from the source that do not fit the scenario, not negations or inversions of the correct claim. If knowing the direction of the author's thesis is enough to answer, rewrite the distractors.
+- Distractors are real claims or terms from the source that do not fit the scenario, not negations or inversions of the correct claim. If knowing the direction of the author's thesis is enough to answer, rewrite the distractors. Test: if a distractor's feedback would read "the source says the opposite", it is a reversal — replace it with something the source does say that fails to answer this question. Never invent events for a named case (an acquisition offer, an expansion, an outsourcing deal the source never mentions).
+
+Do not let the wording answer the question (Week 3 needed fixes on 9 of 30 for this, all invisible to lint):
+- No stem-to-key echo. The distinctive word of the correct option, or an obvious cue for it, must not appear in the stem: a stem about warehouses and shipped discs keyed to "logistics", "new carriers" keyed to "new entrants", "what the firm actually pays" keyed to "the sum actually disbursed". Describe the situation in neutral terms and let the concept do the work.
+- When the options are the terms or cells of a framework, give the bare terms ("A reward strategy"), never each term followed by its definition — self-defining options let the scenario be matched to the definition without knowing the framework. Never build an option set where the answer is the largest number shown.
+- The stem's closing question must be answerable, grammatically, by every option.
+- One defensible answer. If the source gives several true reasons for a decision, ask about the one the scenario isolates. Check that the symptom in the scenario points to the keyed concept and not to a neighboring one, and that the scenario's own arithmetic supports the key (rising volume at flat margins is rising profit, not zero appropriation).
+
+Feedback is held to the same grounding as the stem (Week 3: eight feedback lines said things the sources do not):
+- Every number, name, day and sequence of events in feedback must be in the source. Keep the source's hedges ("more than $1,200", not "$1,200").
+- Never assert a causal link the source does not make ("precisely because…") — two items appearing in the same exhibit is not a reason.
+- Each distractor's feedback answers that distractor's claim, not its mirror image, and does not describe what "the slides say" unless the slide says it.
+
+One item per keyed concept: two questions with the same key and the same distractor set are duplicates even when one is a scenario and one is a case. A second item on a concept must come at it from a different source and ask a different question.
 
 Cover the material in proportion (Week 2 put five items on one article and one on the second half of the slide deck): spread candidates across every source roughly by its weight in the week, and across the whole slide deck including its later sections, before adding a second item on any one idea.
 
-Connect sources when it is natural (the curator's favorite Week 1 item did this): apply a textbook framework to the week's reading or news item, or map a reading's advice onto a textbook concept. Cite both locations in sourceLoc. Never force it.`;
+Connect sources when it is natural (the curator's favorite Week 1 item did this): apply a textbook framework to the week's reading or news item, or map a reading's advice onto a textbook concept. Cite both locations in sourceLoc. A cross-source item must use the second source's concept in its key or options — never write "Using Chapter N" in a stem whose options contain no Chapter N concept. Never force it: if a framework's dimensions do not honestly apply to the case (a flat-fee subscription has no obvious "repurchase frequency"), leave the case and the framework in separate questions.`;
 
 // Class recordings are a different kind of source: what was actually said,
 // including improvised examples and student questions. Worth mining, with
@@ -261,6 +275,9 @@ console.log(`Output tokens used: ${message.usage.output_tokens}`);
 console.log(formatStats(stats));
 if (stats.longestCorrect > questions.length / 3) {
   console.warn(`Warning: the correct option is the longest option in ${stats.longestCorrect}/${questions.length} candidates — expect a length-balancing edit pass (chance level is ~25%).`);
+}
+if (stats.shortestCorrect > questions.length / 3) {
+  console.warn(`Warning: the correct option is the shortest option in ${stats.shortestCorrect}/${questions.length} candidates — the longest-option rule has been overcorrected into a different tell (chance level is ~25%).`);
 }
 console.log('Curate: set status to accepted / edited / "rejected: <reason>" (hallucination|leakage|trivia|ambiguous|duplicate),');
 console.log(`move accepted questions into content/questions/week-${ww}.yaml with sequential ids, then run: node scripts/eval-log.js ${week}`);
