@@ -1,0 +1,658 @@
+week: 4
+# Provenance: promptVersion gen-v4 · model claude-opus-5-5 · promoted 2026-09-26 (15 of 26 accepted candidates)
+published: true
+title: "The Cost of IT, the Value of IT, and Zara's Supply Chain"
+questions:
+  - id: w04-q01
+    week: 4
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 4 of The Adventures of an IT Leader, Gary Geisler explains that IVK's IT overhead
+      formula first came to IVK with former CFO Mark Lundy, but that he alone has reworked it every
+      year since, adding usage measures such as e-mail accounts, concurrent users, and new database
+      records. Barton asks him for a one-page summary. According to Barton's thinking later that
+      afternoon, what is wrong with the formula as it stands?
+    options:
+      - key: A
+        text: It tracks resource use too loosely to be fair
+      - key: B
+        text: It is too complex to guide managers' decisions
+      - key: C
+        text: It bills departments for their own handheld devices
+      - key: D
+        text: It still allocates overhead by telephone count
+    answer: B
+    feedback:
+      correct: >-
+        Barton reasons that a cost-to-service mapping too complex for managers to understand is a
+        poor input into decision making: useless, needless complexity to manage. He wants it
+        explained simply so his peers can understand it and later help check and change it.
+      A: >-
+        Geisler describes the formula as a much closer approximation of the real cost of resources
+        used, and Barton does not dispute its accuracy. His concern is that nobody but Geisler can
+        follow it.
+      C: >-
+        The personal digital assistant (PDA) services Geisler mentions are bought by departments
+        outside the IT budget, so they are not in the chargeback at all. They matter for counting
+        total IT spend, not for the formula.
+      D: >-
+        The number of telephones is still one input, but Geisler says the formula now also counts
+        e-mail accounts, concurrent users, and new database records. Telephones alone were the
+        original version.
+    selfExplainPrompt: >-
+      Barton wants the cost-to-service mapping simple enough that his peers can check and change it.
+      How would that help him answer the CEO's second question, how IT spending fuels growth, which
+      becomes the value problem of Chapter 5?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch04 The Cost of IT.md
+      loc: >-
+        Chapter Four, Thursday March 29 1:30 p.m. (Geisler on the chargeback formula) and 4:25 p.m.
+        (whiteboard triangle)
+  - id: w04-q02
+    week: 4
+    type: definitional
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      The projected IT budget exhibit at the end of Chapter 4 of The Adventures of an IT Leader
+      shows a grand total of about $29.2 million on a cash flow basis but about $18.5 million on an
+      accrual basis. What accounts for the gap between the two figures?
+    options:
+      - key: A
+        text: Handheld devices bought outside IT's budget are excluded
+      - key: B
+        text: Overhead chargebacks to business units are netted out
+      - key: C
+        text: Capital costs are amortized over several years instead
+      - key: D
+        text: Catch-up spending could not level off as fast as revenue growth
+    answer: C
+    feedback:
+      correct: >-
+        On a cash flow basis the year's $16.4 million of capital purchases counts in full. On an
+        accrual basis only $5.7 million of amortization from this and previous years' capital
+        counts, added to $12.8 million of project expenses. That is the accounting behind the
+        chapter's reflection question on whether IT applications are an asset or an expense.
+      A: >-
+        Geisler says his figures exclude personal digital assistant (PDA) and similar services
+        bought outside the IT budget. The exclusion applies to both totals, so it cannot explain the
+        difference between them.
+      B: >-
+        Chargebacks recover IT's costs from the business units. They redistribute spending rather
+        than change it, and no chargeback line separates the cash and accrual totals in the exhibit.
+      D: >-
+        Geisler does say catch-up IT spending couldn't level off as fast as revenue growth. That
+        explains why spending rose as a percentage of sales, not the gap between the two accounting
+        bases.
+    selfExplainPrompt: >-
+      Chapter 4's first reflection question asks whether IT applications are an asset or an expense.
+      How does the accrual treatment in the budget exhibit answer it, and why might the answer
+      change how the CEO views IT spending?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch04 The Cost of IT.md
+      loc: >-
+        Chapter Four, exhibit: Projected IT Budget Fiscal Year X (capital and expenses); Geisler's
+        $29 million / $18.5 million figures
+  - id: w04-q03
+    week: 4
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 4 of The Adventures of an IT Leader, Bernie Ruben's sketch shows IVK moving from
+      about 90 percent of IT investment on applications at its founding to about 40 percent today,
+      with the rest on infrastructure. Barton worries that IVK is losing its capacity to compete
+      using IT. How does Ruben account for the shift?
+    options:
+      - key: A
+        text: The founders outsourced payroll and avoided older technology investments
+      - key: B
+        text: Business units bought their own handhelds, leaving IT the e-mail support
+      - key: C
+        text: Service-oriented architecture moved application budget into infrastructure
+      - key: D
+        text: As IVK grew, shared databases, security, and middleware became worthwhile
+    answer: D
+    feedback:
+      correct: >-
+        Ruben says that as IT operations gained scale it made sense to invest in common services
+        everyone could use: a robust database, security systems common to all applications, and
+        middleware. A smaller share was left for new applications. He calls the shift partly
+        inevitable as a company accumulates IT assets that need care.
+      A: >-
+        Outsourcing payroll at first is part of Ruben's story of IVK's early days, when it helped
+        avoid some old technology investments. IVK later brought payroll in-house; this doesn't
+        explain the shift.
+      B: >-
+        Personal digital assistant (PDA) services come up in Geisler's discussion of counting IT
+        spending, not in Ruben's account of how IVK's portfolio evolved.
+      C: >-
+        Service-oriented architecture is where Ruben says IVK is heading. He hopes it might
+        eventually let IVK shift some infrastructure spending back to applications.
+    selfExplainPrompt: >-
+      Barton asks what the right long-term split between applications and infrastructure is, and
+      Ruben says there is no right answer. How would Chapter 5's 'Competes versus Qualifiers' idea
+      help Barton think about that split?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch04 The Cost of IT.md
+      loc: >-
+        Chapter Four, 4:25 p.m. (Ruben's evolution story); exhibit: Ruben's Explanation of the
+        Evolution of IVK's Applications Portfolio and Infrastructure
+  - id: w04-q04
+    week: 4
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 5 of The Adventures of an IT Leader, Barton considers answering the CEO's value
+      question by adding up the dollar benefits that business units projected in their approved IT
+      project proposals. Why does he doubt that figure would be credible with his executive peers?
+    options:
+      - key: A
+        text: IT is not a profit center, so it has no outside revenues to report on
+      - key: B
+        text: Most projects are Qualifiers, which provide no real competitive advantage
+      - key: C
+        text: Market value fell by more than half, so claimed benefits look hollow
+      - key: D
+        text: Units inflate claimed savings, and claiming them for IT double-counts
+    answer: D
+    feedback:
+      correct: >-
+        Barton notes that business units claim huge savings from anything they want approved
+        (everyone knows it's a game) and that some units may claim those savings as their own, so IT
+        claiming them too would be double counting. Even real savings raise the hard question of how
+        to split credit between the unit and IT.
+      A: >-
+        IT not being a profit center is why Barton needs a different kind of value answer in the
+        first place. It is not his objection to summing proposal benefits.
+      B: >-
+        Competes versus Qualifiers is Ruben's scheme from the next day's conversation, and Ruben
+        says Qualifiers still have value: they keep IVK in business.
+      C: >-
+        The fall from almost $4.8 billion to about $1.95 billion comes later in the chapter, when
+        Barton asks how IT might have diminished value. It isn't part of his doubts about proposal
+        benefits.
+    selfExplainPrompt: >-
+      Ruben and Barton later consider asking business units what lets them win deals and how fast
+      competitors are catching up. Why might that be more credible than summing proposal benefits,
+      and what attribution problem remains?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch05 The Value of IT.md
+      loc: Chapter Five, Thursday April 5 9:30 a.m. (adding up projected benefits)
+  - id: w04-q05
+    week: 4
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 5 of The Adventures of an IT Leader, Maggie summarizes Erik Brynjolfsson and Andrew
+      McAfee's research on industries where most firms have invested heavily in IT. A lender in such
+      an industry rolls out an IT-enabled loan process, and rivals copy it within months. What does
+      the research predict for heavy IT investors over time?
+    options:
+      - key: A
+        text: Returns converge to zero as IT becomes a commodity
+      - key: B
+        text: Value shows up mainly as cost savings, not share
+      - key: C
+        text: Market share trends up, with wider short-run swings
+      - key: D
+        text: Each copied process becomes a Qualifier with no value
+    answer: C
+    feedback:
+      correct: >-
+        Maggie says the research shows heavy IT investors in IT-intensive industries gain market
+        share and consolidate their position, even though the benefit of any one investment can be
+        fleeting as rivals copy it. The trend is upward, with greater volatility above and below it
+        in the short run.
+      A: >-
+        That IT is a commodity yielding no lasting edge is Carr's argument. Maggie offers
+        Brynjolfsson's research as the better answer to whether IT matters, and its punch line is
+        that IT does matter.
+      B: >-
+        Cost savings are one kind of return Ruben mentions for some investments. The research Maggie
+        cites is about deploying new business processes and gaining market share.
+      D: >-
+        Ruben says a copied Compete becomes a Qualifier, but insists Qualifiers aren't worthless;
+        they keep a firm in business. And the research still predicts share gains for heavy IT
+        investors.
+    selfExplainPrompt: >-
+      If individual IT-enabled advantages are fleeting in IT-intensive industries, what does a firm
+      need in order to keep gaining share? Relate your answer to Ruben's point about adding new
+      Competes faster than old ones become Qualifiers.
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch05 The Value of IT.md
+      loc: Chapter Five, Thursday April 5 9:30 a.m. (Maggie on Brynjolfsson and McAfee)
+  - id: w04-q06
+    week: 4
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      A finance director reviewing IVK's enterprise resource planning (ERP) system in its second
+      year calculates that it has not paid for itself and proposes halting the follow-on projects
+      planned for it. Drawing on Bernie Ruben's account in Chapter 5 of The Adventures of an IT
+      Leader, what is the director's mistake?
+    options:
+      - key: A
+        text: Counting savings the business units already claim as their own
+      - key: B
+        text: Treating a system that rivals already own as a source of edge
+      - key: C
+        text: Measuring it by return on investment (ROI), not total market value
+      - key: D
+        text: Judging a platform before the systems built on it earn returns
+    answer: D
+    feedback:
+      correct: >-
+        Ruben says an honest return on investment (ROI) calculation for IVK's initial ERP
+        implementation would show it didn't pay for itself by itself, but it let IVK build systems
+        on top of it that earned big returns. Calculated too early, before those systems were
+        finished, it would have looked like a lousy investment; eventually it was a huge success.
+      A: >-
+        Double counting savings that business units claim as their own is Barton's worry about
+        summing proposal benefits. It concerns how value is credited, not whether the ERP's value
+        has arrived yet.
+      B: >-
+        Barton raises this point (if competitors built the same systems on their ERP, IVK gains no
+        edge), but Ruben says competitors haven't matched those capabilities. The director's error
+        is about timing, not rivals.
+      C: >-
+        Market value is Barton's upper bound on IT's value for the company as a whole and can't
+        evaluate a single system. Ruben's point is that ROI must be judged over the right time
+        frame.
+    selfExplainPrompt: >-
+      Ruben says some investments show clear ROI while others position the firm for high-ROI
+      investments later. How does Chapter 4's discussion of infrastructure spending fit this second
+      category?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch05 The Value of IT.md
+      loc: Chapter Five, Friday April 6 4:20 p.m. (Ruben on ERP return on investment)
+  - id: w04-q07
+    week: 4
+    type: definitional
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      The consultants' report on CIO William Davies, excerpted at the end of Chapter 5 of The
+      Adventures of an IT Leader, describes three types of IT leadership and rates Davies Type 1,
+      struggling to reach Type 2. What does the move to Type 2 require of IVK's IT leader?
+    options:
+      - key: A
+        text: Setting strategy and managing information resources, not the portfolio
+      - key: B
+        text: Building control-oriented, can-do delivery of functional transaction systems
+      - key: C
+        text: Mapping IT costs to services so each business unit gets a clear chargeback
+      - key: D
+        text: Managing a portfolio of applications and infrastructure, not single systems
+    answer: D
+    feedback:
+      correct: >-
+        The report says moving to Type 2 means moving from managing individual functional
+        applications to applications portfolio and infrastructure management, with an enterprise
+        orientation and a senior-management-team focus. Type 2 leaders leave the details of
+        individual systems to others while remaining accountable for them.
+      A: >-
+        A strategy focus and information resources describe Type 3, the level the report says IVK
+        should design toward and that would be even harder for Davies to reach.
+      B: >-
+        Control-oriented, 'can-do' leadership of functional applications is Type 1, which is where
+        the report places Davies now.
+      C: >-
+        Mapping costs to services for chargeback is Barton's Chapter 4 whiteboard problem. The
+        report defines Type 2 by portfolio and infrastructure management, not cost allocation.
+    selfExplainPrompt: >-
+      The report says Davies was respected by his staff but retreated into the IT world when in
+      conflict with business executives. Why would that tendency block the senior-management-team
+      focus of Type 2 leadership?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch05 The Value of IT.md
+      loc: >-
+        Chapter Five, Tuesday April 10 11:54 a.m.; exhibit: Excerpts from the IT Leadership
+        Consulting Report (Type 1 to Type 2, Figure 2)
+  - id: w04-q08
+    week: 4
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      IVK's CEO asks each department how much it spends and how that spending fuels growth, and
+      IVK's IT spending runs about 8 percent of sales (Chapter 4 of The Adventures of an IT Leader).
+      In Chapter 5, Maggie points Barton to Zara, which spends only 0.5 percent of revenues on IT.
+      What lesson does she draw from Zara?
+    options:
+      - key: A
+        text: Heavy IT investors gain share, so spend more than rivals do
+      - key: B
+        text: Low IT spending shows that IT has now become a mere commodity
+      - key: C
+        text: A firm must first spend enough to keep IT assets robust
+      - key: D
+        text: Value comes from capability rivals cannot match, not spending
+    answer: D
+    feedback:
+      correct: >-
+        Maggie cites Zara because its modest IT spending supports a capability competitors couldn't
+        match: reading demand at the point of sale and filling new orders for hot items less than
+        three weeks later, which led directly to higher profits. Barton concludes that IT's value
+        lies in capabilities that separate a firm from its rivals.
+      A: >-
+        Brynjolfsson and McAfee link heavy IT investment to share gains in IT-intensive industries,
+        but Maggie's Zara point is that value comes from the capability IT creates, not from
+        outspending rivals.
+      B: >-
+        That IT is a commodity is Carr's argument. Maggie cites Zara as a direct contradiction of
+        it.
+      C: >-
+        Davies's view that 5 to 6 percent of sales wasn't enough to keep IT assets robust comes from
+        Chapter 4. Maggie's Zara example is about value, not maintenance spending.
+    selfExplainPrompt: >-
+      Chapter 4 asks what percentage of sales a company should spend on IT. Using Zara, explain why
+      that question can't be answered without first asking what capability the spending builds.
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch05 The Value of IT.md
+      loc: >-
+        Chapter Five, Thursday April 5 9:30 a.m. (Maggie on Zara and Carr); Chapter Four, Geisler on
+        IT spending as a percentage of sales
+  - id: w04-q09
+    week: 4
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Suppose Zara's rivals eventually match the store-to-designer information loop described in
+      'Rapid-Fire Fulfillment' (Harvard Business Review). Using the 'Competes versus Qualifiers'
+      scheme Bernie Ruben describes in Chapter 5 of The Adventures of an IT Leader, how should Zara
+      then manage the systems behind that loop?
+    options:
+      - key: A
+        text: Shift them into a cost-minimizing mode of management
+      - key: B
+        text: Measure what Zara can do with it versus without it
+      - key: C
+        text: Retire them, since copied systems no longer add value
+      - key: D
+        text: Charge their costs back to units as general overhead
+    answer: A
+    feedback:
+      correct: >-
+        Ruben says Competes become Qualifiers as competitors copy them. Barton concludes that as
+        they do, IT should change its philosophy and shift into cost-minimization mode, so that even
+        as Qualifiers multiply, total spending on them might fall.
+      B: >-
+        Comparing what a firm can do with the IT against what it could do without it is Ruben's idea
+        for sizing value when an advantage is sustainable. It is a way to measure value, not a way
+        to manage systems once rivals have matched them.
+      C: >-
+        Ruben insists Qualifiers aren't worthless: they keep a firm in business, and without them it
+        might not have a business at all.
+      D: >-
+        Charging costs back as overhead is IVK's Chapter 4 cost-allocation practice. It doesn't
+        change how a system should be managed once it stops conferring an edge.
+    selfExplainPrompt: >-
+      The Zara article argues that Zara's advantage comes from a self-reinforcing system. Why might
+      that system resist the Compete-to-Qualifier decay Ruben describes better than a single IT
+      application would?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch05 The Value of IT.md
+      loc: >-
+        Chapter Five, Friday April 6 4:20 p.m. (Competes versus Qualifiers); Rapid-Fire Fulfillment,
+        Close the Loop, p. 3
+  - id: w04-q10
+    week: 4
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      Nicholas Carr's 'IT Doesn't Matter', as discussed in Chapter 5 of The Adventures of an IT
+      Leader, holds that IT has become a commodity that rivals can also buy. 'Rapid-Fire
+      Fulfillment' (Harvard Business Review) reports that Zara's stores send orders, sales trends,
+      and customer reactions to headquarters on customized handheld computers. Where does the
+      article locate the advantage in that link?
+    options:
+      - key: A
+        text: In custom handheld devices that Zara's rivals could not obtain
+      - key: B
+        text: In data warehouses mined for trends in customer demand
+      - key: C
+        text: In a flat organization that keeps key conversations on track
+      - key: D
+        text: In computer-aided design linked straight to cutting machines
+    answer: C
+    feedback:
+      correct: >-
+        The article says any company can use handhelds to communicate; Zara's flat organization
+        ensures important conversations don't fall through the bureaucratic cracks. That fits
+        Maggie's account of Carr's concession in Chapter 5: the advantage comes from how IT is used
+        and adapted within the company, not from the technology itself.
+      A: >-
+        The article stresses that any company can use these devices to communicate. The devices
+        alone are the kind of commodity IT Carr describes.
+      B: >-
+        Data warehouses and business intelligence are Ruben's Chapter 4 topic at IVK. The Zara
+        article describes the store link as carrying orders and customer 'buzz', not mined warehouse
+        data.
+      D: >-
+        Computer-aided design feeding factory cutting machines is a separate link, from designers to
+        production. It doesn't explain the store-to-headquarters exchange.
+    selfExplainPrompt: >-
+      Maggie says Carr's argument fits word-processing software but not most IT. What makes Zara's
+      use of handhelds different from a commodity word-processing capability?
+    source:
+      doc: Rapid_Fire_Fulfillment.pdf
+      loc: >-
+        Rapid-Fire Fulfillment, Close the Loop (handhelds and flat organization), p. 3; Adventures
+        of an IT Leader ch. 5, Thursday April 5 (Maggie on Carr)
+  - id: w04-q11
+    week: 4
+    type: definitional
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      After three years of interviews with Inditex managers and a review of company documents, the
+      authors of 'Rapid-Fire Fulfillment' (Harvard Business Review) report what they found behind
+      Zara's supply chain performance. What was it?
+    options:
+      - key: A
+        text: Customized handheld computers linking stores to headquarters
+      - key: B
+        text: Familiar principles that together reinforce one another
+      - key: C
+        text: A proprietary production method developed with Toyota
+      - key: D
+        text: A franchise network that extends its reach into retail
+    answer: B
+    feedback:
+      correct: >-
+        The authors say they looked for groundbreaking innovations and didn't find any. They found a
+        self-reinforcing system built on three principles (close the communication loop, stick to a
+        rhythm, leverage capital assets), none new or radical on its own but powerful together
+        because each reinforces the others.
+      A: >-
+        Customized handheld computers do link stores to La Coruña, but the article says any company
+        can use them to communicate. What matters is Zara's flat organization and the system around
+        the devices.
+      C: >-
+        Zara's just-in-time systems were developed in cooperation with Toyota, but they are one
+        piece of the puzzle, not the authors' explanation for Zara's performance.
+      D: >-
+        A franchise network describes Benetton, whose franchised stores give it less control over
+        retail inventories and customers than Zara has by owning nearly all its shops.
+    selfExplainPrompt: >-
+      Why might a self-reinforcing system of familiar practices be harder for rivals to copy than a
+      single innovation? Connect this to Maggie's point in Chapter 5 of The Adventures of an IT
+      Leader about IT-enabled advantages competitors can't copy.
+    source:
+      doc: Rapid_Fire_Fulfillment.pdf
+      loc: Rapid-Fire Fulfillment, p. 2 (three principles) and Reinforcing Principles, p. 6
+  - id: w04-q12
+    week: 4
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      Once the season starts, most apparel makers let retailers change at most 20% of their orders.
+      According to 'Rapid-Fire Fulfillment' (Harvard Business Review), Zara lets its stores adjust
+      40% to 50%, backed by a constant flow of updated sales data. What does the article say this
+      flexibility lets Zara avoid?
+    options:
+      - key: A
+        text: Ad spending to pull customers into the stores
+      - key: B
+        text: Long waits caused by running factories near capacity
+      - key: C
+        text: Price tagging and ironing at each individual store
+      - key: D
+        text: Costly overproduction followed by markdown sales
+    answer: D
+    feedback:
+      correct: >-
+        The article says the constant flow of updated data mitigates the bullwhip effect, the
+        tendency of supply chains to amplify small disturbances. Letting retailers adjust 40% to 50%
+        of orders lets Zara avoid costly overproduction and the sales and discounting common in the
+        industry.
+      A: >-
+        Zara's low ad spend (0.3% of sales versus 3% to 4% for rivals) comes from frequent store
+        visits driven by limited, fast-changing stock, not from order flexibility.
+      B: >-
+        Waiting times that climb near full capacity are the queuing-theory reason Zara keeps spare
+        capacity in its factories and distribution centers, a separate practice.
+      C: >-
+        Pricing and tagging before shipment lets stores display goods as soon as they arrive. It
+        serves the delivery rhythm, not order adjustment.
+    selfExplainPrompt: >-
+      Explain how mitigating the bullwhip effect connects Zara's data flow to its low unsold stock:
+      under 10%, compared with the industry's 17% to 20%.
+    source:
+      doc: Rapid_Fire_Fulfillment.pdf
+      loc: Rapid-Fire Fulfillment, Close the Loop (bullwhip effect, order adjustment), p. 3
+  - id: w04-q13
+    week: 4
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A retail consultant tells Zara that its empty racks and frequent stock-outs are costing sales
+      and urges larger shipments to each store. According to 'Rapid-Fire Fulfillment' (Harvard
+      Business Review), what does Zara gain by accepting stock-outs?
+    options:
+      - key: A
+        text: Faster reaction to midseason changes in the colors customers want
+      - key: B
+        text: More frequent store visits, and one item's absence selling another
+      - key: C
+        text: Negative working capital, since goods sell within days of production
+      - key: D
+        text: Shipments that arrive pre-tagged and ready to hang on display
+    answer: B
+    feedback:
+      correct: >-
+        The article says empty racks don't drive Zara's shoppers away because there's always
+        something new, and being out of one item helps sell another. Limited quantities bring
+        customers back about 17 times a year, against four for the average central London store,
+        traffic that lets Zara spend just 0.3% of sales on ads.
+      A: >-
+        Reacting to midseason color changes comes from buying more than half its fabric undyed
+        ('postponement'). It is a production practice, not a benefit of stock-outs.
+      C: >-
+        Negative working capital comes from selling products just days after they're made, which
+        offsets the investment in spare capacity. The article doesn't tie it to stock-outs.
+      D: >-
+        Pre-tagging and shipping on hangers lets store managers display items the moment they
+        arrive. It is part of the delivery rhythm, not a reason to tolerate empty racks.
+    selfExplainPrompt: >-
+      How does tolerating stock-outs depend on the 'close the loop' principle? What would happen to
+      Zara's unsold stock if new designs stopped arriving quickly?
+    source:
+      doc: Rapid_Fire_Fulfillment.pdf
+      loc: Rapid-Fire Fulfillment, Close the Loop (stock-outs, store visits, advertising), pp. 3–4
+  - id: w04-q14
+    week: 4
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      Zara's distribution center in La Coruña has ample capacity for most of the year, yet in
+      October 2003 Zara opened a new €100 million logistics center in Zaragoza. According to
+      'Rapid-Fire Fulfillment' (Harvard Business Review), what reasoning lies behind Zara's
+      generosity with capacity?
+    options:
+      - key: A
+        text: Waiting times climb steeply near full use when demand varies
+      - key: B
+        text: Owning assets avoids depending on suppliers across the world
+      - key: C
+        text: Larger batches lower unit costs across the whole chain
+      - key: D
+        text: Selling within days frees cash to fund new facilities
+    answer: A
+    feedback:
+      correct: >-
+        The article says Zara's managers follow a basic rule of queuing models: waiting time shoots
+        up when capacity is tight and demand is variable, and the more variable the demand, the
+        lower the utilization at which the rise begins. Tolerating lower utilization lets Zara
+        respond to peak or unexpected demand faster than rivals.
+      B: >-
+        Control over schedules without dependence on distant suppliers is the article's argument for
+        owning production assets. Why Zara leaves those assets underused is answered by queuing.
+      C: >-
+        The article grants that larger batches would reduce costs, but Zara produces in small
+        batches anyway, trading unit cost for responsiveness.
+      D: >-
+        Negative working capital from quick sales helps offset the investment in extra capacity. It
+        pays for the capacity but isn't the reason Zara wants it.
+    selfExplainPrompt: >-
+      Why does the article say Zara's spare capacity doesn't 'burn up investment dollars'? Connect
+      queuing theory to negative working capital.
+    source:
+      doc: Rapid_Fire_Fulfillment.pdf
+      loc: >-
+        Rapid-Fire Fulfillment, Leverage Your Assets and exhibit 'For Fast Response, Have Extra
+        Capacity on Hand', pp. 5–6
+  - id: w04-q15
+    week: 4
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      A new operations executive at Zara wants to reward each factory and the La Coruña distribution
+      center for maximizing utilization and filling every truck before it leaves. According to
+      'Rapid-Fire Fulfillment' (Harvard Business Review), why have Zara's senior managers resisted
+      measures like these?
+    options:
+      - key: A
+        text: They put local efficiency ahead of the whole chain's response
+      - key: B
+        text: They add little, as quick sales already pay for idle capacity
+      - key: C
+        text: They add little, as shipments already arrive 98.9% accurate
+      - key: D
+        text: They clash with outsourcing simple garments to outside suppliers
+    answer: A
+    feedback:
+      correct: >-
+        The article calls Zara's deepest secret its ability to optimize the entire supply chain
+        rather than each step. Its senior managers deserve credit for resisting performance measures
+        that would make operating managers focus on local efficiency at the expense of global
+        responsiveness, accepting half-empty trucks and single-shift factories.
+      B: >-
+        Negative working capital from selling goods within days helps offset the investment in extra
+        capacity. That explains why spare capacity is affordable, not why managers reject
+        utilization targets.
+      C: >-
+        Shipment accuracy of 98.9% reduces the need for checking at the stores. It has nothing to do
+        with rewarding factories for utilization.
+      D: >-
+        Outsourcing simpler garments is part of Zara's asset strategy and sits alongside its own
+        factories. Utilization targets for those factories wouldn't clash with it, and it isn't the
+        managers' objection.
+    selfExplainPrompt: >-
+      Using the article's queuing exhibit, explain why rewarding each factory for high utilization
+      would slow Zara's response to demand.
+    source:
+      doc: Rapid_Fire_Fulfillment.pdf
+      loc: Rapid-Fire Fulfillment, Reinforcing Principles, p. 6

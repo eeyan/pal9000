@@ -14,6 +14,7 @@ export const KEYS = ['A', 'B', 'C', 'D'];
 const PLAIN_ACRONYMS = new Set([
   'IT', 'CEO', 'CIO', 'CFO', 'COO', 'CMO', 'CTO', 'PC', 'PCS', 'AI', 'US', 'USA', 'MBA', 'HR',
   'IPO', 'VP', 'GPT', 'API', 'URL', 'HBR', 'HBS', 'CNBC', 'NYU', 'CUNY', 'MIT', 'ASAP',
+  'IVK', // the company in The Adventures of an IT Leader — a name, not an acronym
 ]);
 
 // Words in a source filename that don't identify the source in a stem.

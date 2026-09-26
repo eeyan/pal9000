@@ -90,3 +90,24 @@ because…"), or describing the reverse of the distractor they belong to; feedba
 check as the stem; (5) reversal distractors survived in two items despite the gen-v3 rule — replace with
 true source claims that do not answer the question. Source prep: exhibits in the IT Leader ebook and
 several slide figures are images, invisible to text extraction; they were transcribed or viewed by hand.
+
+## gen-v4
+
+| Date | promptVersion | Model | Week | Generated | Accepted | Rejected | Accept rate | Reject reasons |
+|---|---|---|---|---|---|---|---|---|
+| 2026-09-26 | gen-v4 | claude-opus-5-5 | 4 | 30 | 26 | 4 | 87% | trivia ×4 |
+
+Week 4 notes (gen-v4, in-session on Opus 5.5): 26 of 30 kept by the curator, 15 promoted, split across
+*The Adventures of an IT Leader* chapters 4–5 and the Zara case ("Rapid-Fire Fulfillment", HBR 2004), with
+three cross-source items (Carr vs. Zara's handhelds, Competes→Qualifiers applied to Zara, IVK's 8% of sales
+vs. Zara's 0.5%). gen-v4 fixed the Week 3 lint-visible tells: zero lint warnings, the correct option never
+longest or shortest, keys 8/7/7/8. The fresh-context reviewer kept 29 of 30 but wanted edits on 9; the two
+reviews agreed on keep-vs-reject for 24 of 30 and exact status for 15 of 30. The curator's four rejects
+(all trivia) were items the reviewer accepted — two of them in its recommended 15 — so "trivia" is a
+curator-side call the reviewer under-weights. What remains for gen-v5: (1) **filler distractors** — the
+most common reviewer defect (5 items): wrong options whose feedback has to say "the source doesn't say",
+i.e. plausible-sounding but sourceless; every distractor needs a source location of its own; (2) **invented
+scenario facts for named cases** ("IVK's lending managers hope…"); hypotheticals must be framed as such;
+(3) **attribution precision** — one stem credited a formula to the person who reworked it rather than the
+CFO who brought it (curator catch). Source prep: chapter text now goes ebook → EPUB → pandoc by script;
+retyping a chapter through model output was blocked by the API content filter on the first attempt.
