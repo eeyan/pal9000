@@ -12,8 +12,9 @@ questions:
       A regional retailer's board reviews two proposals. Proposal one rebuilds the company around a
       data-driven marketplace model in which stores become fulfillment and showroom nodes and
       revenue shifts to subscriptions and third-party sellers. Proposal two adds a recommendation
-      engine to the existing web store. A director asks which proposal is digital transformation.
-      Which answer reflects Chapter 1's definitions?
+      engine to the existing web store. Chapter 1 (slide 2-8) separates digital transformation,
+      digital innovation, and digital entrepreneurship, all of which apply digital technology.
+      Under those definitions, which proposal is digital transformation?
     options:
       - key: A
         text: Only proposal one, because it rethinks the business and operating model itself.
@@ -33,8 +34,9 @@ questions:
         innovation: an existing organization improving a service. The distinction matters because
         the two carry very different risk, sponsorship, and organizational-change demands.
       B: >
-        Using digital technology is not the test. Every proposal in a modern firm uses digital
-        technology; transformation is about the depth of change to the model.
+        Applying digital technology is not the test: all three Chapter 1 definitions share it.
+        What sets transformation apart is radically rethinking the business and operating model;
+        a new feature on the existing web store is digital innovation.
       C: >
         Customer-facing visibility is not the criterion. A recommendation engine is a service
         improvement, however visible; the operating model behind it is untouched.
