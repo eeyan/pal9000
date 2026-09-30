@@ -1,0 +1,651 @@
+week: 5
+# Provenance: promptVersion gen-v4 · model claude-opus-5-5 · promoted 2026-09-30 (15 of 25 accepted candidates)
+published: true
+title: "Project Management, AWS, and the Power of Platforms"
+questions:
+  - id: w05-q01
+    week: 5
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 6 of The Adventures of an IT Leader, Jorge Huerta tells Barton that IVK's projects
+      run late because the team never pins down users' needs before building, and he prescribes more
+      up-front planning. Rebecca Calder says his diagnosis is flawed. What flaw does she see?
+    options:
+      - key: A
+        text: Padded estimates let work expand to fill the extra time
+      - key: B
+        text: Users find their real needs only once they use a system
+      - key: C
+        text: Function-point models don't fit IVK's integration projects
+      - key: D
+        text: Both departments report the same share of red and yellow
+    answer: B
+    feedback:
+      correct: >-
+        Calder argues that important requirements are discovered only as the team starts building,
+        because users see what is possible only when they interact with actual features. Needs are
+        not knowable in advance, so a process that treats changes as indiscipline is denying
+        reality.
+      A: >-
+        This is Barton's observation the next day about Davies's marked-up estimates and Parkinson's
+        Law. Calder never raises estimate padding in the meeting.
+      C: >-
+        Barton reaches this conclusion on his own while researching estimation: few IVK projects are
+        software development, so there is no obvious size to feed the models. It is not part of
+        Calder's argument.
+      D: >-
+        Barton notices the identical color proportions and later tells Calder and Huerta he doesn't
+        want a negotiated settlement. It is his concern about honest status reporting, not Calder's
+        critique of Huerta.
+    selfExplainPrompt: >-
+      Calder says requirements emerge as users interact with the system. How does Highsmith's naming
+      of the 'speculate' phase, excerpted at the end of Chapter 6, build that assumption into agile
+      project management?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch06 Project Management.md
+      loc: Chapter Six, Wednesday April 11 2:35 p.m. (Huerta vs. Calder debate)
+  - id: w05-q02
+    week: 5
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 6 of The Adventures of an IT Leader, Huerta objects that Calder's rapid prototypes
+      are impossible on most IVK projects. Calder concedes that a large vendor package can take nine
+      months just to install and configure. What does she propose for a project like that?
+    options:
+      - key: A
+        text: Detailed walkthroughs of how the package handles key processes
+      - key: B
+        text: A firm scope agreement signed off with users before installing
+      - key: C
+        text: Marking up the vendor's schedule by the estimate's confidence
+      - key: D
+        text: Sizing the package with function points to set cost and duration
+    answer: A
+    feedback:
+      correct: >-
+        Calder says you can approximate prototyping without a literal prototype: walk through in
+        detail how the purchased system handles certain processes, or simulate a prototype on paper
+        in a 'conference room pilot test.' The point is to get into the details early, and Barton
+        notes the two of them nearly agree.
+      B: >-
+        A firm up-front agreement on what the project will accomplish is Huerta's prescription, not
+        Calder's. Calder argues such agreements deny that users' needs change as they learn.
+      C: >-
+        Marking up estimates by confidence level is what Davies's old status review reveals he did.
+        It manages schedule risk but does nothing to surface requirements early.
+      D: >-
+        Function-point sizing is the estimation method Barton reads about and finds useless for IVK,
+        because its projects mostly fit purchased packages rather than develop software.
+    selfExplainPrompt: >-
+      Huerta says Calder's walkthrough sounds like the documents a disciplined process already
+      produces. What difference does Calder claim, and how does it connect to her 'fail forward'
+      argument?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch06 Project Management.md
+      loc: Chapter Six, Wednesday April 11 (Calder on vendor packages and paper prototyping)
+  - id: w05-q03
+    week: 5
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 6 of The Adventures of an IT Leader, Barton finds Davies's old project status
+      reviews, in which Davies marked up his staff's time estimates by 25 to 100 percent, more when
+      the estimate confidence was low. Barton sees why Davies did it but also sees a problem. What
+      is the problem?
+    options:
+      - key: A
+        text: Estimating models carry error ranges of plus or minus 50 percent
+      - key: B
+        text: Critical-path charts plan projects rather than help manage them
+      - key: C
+        text: Both departments reported identical shares of each status color
+      - key: D
+        text: Teams used all the added time, so projects rarely finished early
+    answer: D
+    feedback:
+      correct: >-
+        Barton notices that few if any projects finished ahead of the marked-up estimates. He offers
+        several reasons: sometimes the unexpected really happened, resources were shifted away from
+        projects running ahead, and Parkinson's Law, that work expands to fill the time available.
+      A: >-
+        The wide error ranges belong to the software estimation models Barton reads about later, not
+        to Davies's padded estimates.
+      B: >-
+        This is Barton's verdict on his old college textbook: more about planning projects than
+        managing them. It is a separate critique from the one he makes of Davies's markups.
+      C: >-
+        The identical color proportions come from the Wednesday status meeting with Calder and
+        Huerta, not from Davies's old documents.
+    selfExplainPrompt: >-
+      Barton notes that padding was Davies's main way of managing the unexpected. Compare it with
+      Calder's approach of surfacing problems early. Which one gives managers better information
+      during a project, and why?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch06 Project Management.md
+      loc: >-
+        Chapter Six, Thursday April 12 5:49 p.m. (Davies's project status review; Parkinson's Law);
+        Exhibit 2
+  - id: w05-q04
+    week: 5
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In the September 29 class on Chapter 6 of The Adventures of an IT Leader, the instructor
+      described Amazon's senior-leadership (S-Team) goal reviews: there are too many goals to
+      review, so only yellow and red ones get discussed, and owners of struggling goals are tempted
+      to mark them green to avoid questions. Which remedy from Chapter 6 targets this incentive most
+      directly?
+    options:
+      - key: A
+        text: Marking up each estimate according to its confidence rating
+      - key: B
+        text: More up-front planning and a firmer agreement on scope
+      - key: C
+        text: Critical-path scheduling of every dependent project task
+      - key: D
+        text: Managers who talk often with staff and welcome bad news
+    answer: D
+    feedback:
+      correct: >-
+        The kid tells Barton that the managers who get early warning are the ones who talk with him
+        a lot and want to understand his work. The S-Team incentive is the same death-march problem:
+        people learn what they're not supposed to tell their managers. The fix is to make bad news
+        safe and welcome.
+      A: >-
+        Davies's markups add slack to schedules. They don't change whether people report problems
+        honestly, and Barton finds that teams simply consume the slack.
+      B: >-
+        Huerta's prescription targets scope creep. A better plan doesn't stop someone from calling a
+        struggling goal green.
+      C: >-
+        Critical-path analysis in Barton's old textbook identifies which delays matter. It depends
+        on accurate status reports and does nothing to make them accurate.
+    selfExplainPrompt: >-
+      Barton sends Calder and Huerta back to make their reds, yellows, and greens 'accurate and
+      honest' and rejects a negotiated settlement. Why might an order like that fail on its own,
+      given the incentives described in class?
+    source:
+      doc: GMT20260929-220432_Recording.transcript.vtt
+      loc: >-
+        class discussion 2026-09-29, status reports and Amazon S-Team goal reviews; Chapter Six,
+        Friday April 13 (the kid on upward information flow)
+  - id: w05-q05
+    week: 5
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Closing the September 29 discussion of Chapter 6 of The Adventures of an IT Leader and Yegge's
+      'Google Platforms Rant,' the instructor said neither waterfall nor agile, and neither
+      monoliths nor service architectures, are better in general. The closing example was a $10
+      billion aircraft carrier; earlier, the example had been a factory that can't start work until
+      its designs are final. What principle did the instructor offer for choosing?
+    options:
+      - key: A
+        text: Match the approach to how much control leadership wants
+      - key: B
+        text: Match the approach to the cost of changing course later
+      - key: C
+        text: Match the approach to how firmly scope can be agreed
+      - key: D
+        text: Match the approach to each estimate's confidence rating
+    answer: B
+    feedback:
+      correct: >-
+        The instructor's rule was to match the decision to the cost of changing course. Waterfall
+        suits an aircraft carrier because changing direction halfway is so expensive that iterating
+        buys nothing. The same logic made Amazon's service mandate a top-down effort.
+      A: >-
+        The instructor did note that very agile teams leave leadership little control, but offered
+        it as a trade-off, not as the rule for choosing.
+      C: >-
+        Firm scope agreements are Huerta's prescription in Chapter 6. The class's closing principle
+        was about the cost of reversing course, not how well requirements can be pinned down.
+      D: >-
+        Using estimate confidence to pick between traditional and agile methods is Barton's idea
+        from Davies's documents, not the principle the instructor closed class with.
+    selfExplainPrompt: >-
+      The instructor noted that a purely software project has 'no excuse' not to be agile. Using the
+      cost-of-changing-course principle, explain why software and a factory land on opposite sides.
+    source:
+      doc: GMT20260929-220432_Recording.transcript.vtt
+      loc: >-
+        class discussion 2026-09-29, closing remarks on matching decisions to the cost of changing
+        course; waterfall vs. agile for hardware
+  - id: w05-q06
+    week: 5
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In 'The AWS IPO,' his 2015 article on Amazon Web Services (AWS), Thompson revisits Brad
+      Stone's account of why Jeff Bezos started Amazon with books. Which feature of the book
+      business let Amazon sell at a discount and still make money on every sale?
+    options:
+      - key: A
+        text: Two big distributors spared dealing with every publisher
+      - key: B
+        text: Three million titles in print exceeded any store's shelves
+      - key: C
+        text: Every copy of a book is identical wherever it is bought
+      - key: D
+        text: List prices built in a 50 percent markup for the retailer
+    answer: D
+    feedback:
+      correct: >-
+        Thompson adds the factor Stone mentions only in passing: books, though commodities, were
+        high-priced, with a 50 percent retailer markup built into the list price. That let Bezos
+        discount and still profit on each transaction, which Thompson ties to Bezos's later phrase,
+        'your margin is my opportunity.'
+      A: >-
+        Having just two primary distributors, Ingram and Baker and Taylor, is one of the reasons
+        Thompson quotes from Stone. It made books easy to source, but it doesn't explain profiting
+        at a discount.
+      B: >-
+        Selection beyond any Barnes & Noble or Borders superstore is Stone's 'most important'
+        reason, quoted in the article. It explains the appeal of selection, not how Amazon could
+        discount profitably.
+      C: >-
+        Books as pure commodities, so buyers know what they get, is Stone's first reason in the
+        quoted passage. It explains buyer confidence, not the room to discount.
+    selfExplainPrompt: >-
+      Thompson later says TVs lack exactly what made books profitable. Using the markup factor,
+      explain why selling TVs raises Amazon's revenue but not its profit.
+    source:
+      doc: Thompson - The AWS IPO (2015, Stratechery).md
+      loc: Why Amazon Started with Books (Stone quote and Thompson's added factor)
+  - id: w05-q07
+    week: 5
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In 'The AWS IPO,' his article on Amazon Web Services (AWS), Thompson notes that Amazon builds
+      data centers with capital leases instead of paying billions up front. In the September 29
+      class, the instructor explained the logic: a building lasts about 30 years and its hardware
+      five to ten, while customers pay by the second. What does the leasing approach achieve?
+    options:
+      - key: A
+        text: Lower per-customer costs than Microsoft or Google from scale
+      - key: B
+        text: A free stake in nearly every startup that builds on AWS
+      - key: C
+        text: Costs that arrive on the same timeline as the usage revenue
+      - key: D
+        text: Profit that can take over the role 'Media' used to play
+    answer: C
+    feedback:
+      correct: >-
+        Thompson says capital leases let Amazon pay for data centers as it uses them, approximating
+        the negative cash conversion cycle trick. In class the instructor framed it as matching the
+        timing of expenses to the timing of revenue, and noted that getting out of a lease is easier
+        than selling a data center if the business fails.
+      A: >-
+        Thompson does credit AWS's scale with lower per-customer costs, but that advantage comes
+        from size, not from how the data centers are financed.
+      B: >-
+        Thompson makes this point about startups choosing AWS over buying servers. It describes
+        AWS's customer base, not its financing.
+      D: >-
+        Thompson says AWS's profitability can replace 'Media' as the cash source for new businesses.
+        That comes from AWS's margins, not from leasing.
+    selfExplainPrompt: >-
+      Thompson calls capital leases a riskier strategy that 'presumes growth,' while the class
+      stressed lower risk if AWS failed. Explain how both can be true: which risk goes up and which
+      goes down?
+    source:
+      doc: Thompson - The AWS IPO (2015, Stratechery).md
+      loc: >-
+        A New Foundation for Amazon (capital leases); class discussion 2026-09-29, leasing vs.
+        building data centers
+  - id: w05-q08
+    week: 5
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Thompson's 'The Bill Gates Line' retells Chamath Palihapitiya's story of Bill Gates dismissing
+      Facebook Platform as not a real platform. By the definition in that story, what makes Windows
+      the ultimate platform?
+    options:
+      - key: A
+        text: It bills every buyer and owns each customer relationship
+      - key: B
+        text: It keeps old software running on every new version
+      - key: C
+        text: Its own teams use the same services that outside developers do
+      - key: D
+        text: Businesses built on it earn more than Microsoft does from it
+    answer: D
+    feedback:
+      correct: >-
+        In Chamath's telling, Gates defined a platform as something where the economic value of
+        everybody using it exceeds the value of the company that creates it. Thompson notes
+        Microsoft used to brag about capturing only a minority of the Windows ecosystem's value.
+        (The instructor doubts Gates ever said it but calls it a useful heuristic.)
+      A: >-
+        That describes Apple's App Store, which intermediates developers' relationships with
+        customers. Thompson says that control is what pushes the App Store under the line.
+      B: >-
+        In class, the instructor credited Windows's backward compatibility (and AWS's long support
+        for old services) for developer trust. It helps a platform keep builders, but it isn't the
+        Gates definition, which is about who earns more.
+      C: >-
+        Using your own services, 'eating your own dogfood,' is Yegge's Golden Rule of platforms. It
+        helps build a good platform, but it isn't the Gates definition of one.
+    selfExplainPrompt: >-
+      Thompson names Amazon Web Services and Microsoft Azure as Windows's successors. Using 'The AWS
+      IPO,' explain how AWS lets startups create more value than Amazon captures while still paying
+      Amazon handsomely.
+    source:
+      doc: Thompson - The Bill Gates Line (2018, Stratechery).md
+      loc: >-
+        The Bill Gates Line (Chamath anecdote; Windows, AWS, Azure); class discussion 2026-09-29 on
+        the definition
+  - id: w05-q09
+    week: 5
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In 'The Bill Gates Line,' Thompson says Apple's App Store 'has all of the trappings of a
+      platform' but falls under the line, because Apple captures most of the ecosystem's value
+      through iPhone profits and control of App Store economics. What consequence does Thompson
+      draw?
+    options:
+      - key: A
+        text: Developers ship new apps on Android before Apple's store
+      - key: B
+        text: Few strong, lasting businesses get built on the App Store
+      - key: C
+        text: Apple loses its hold once mobile gives way to a new shift
+      - key: D
+        text: Regulators end up forcing interoperability onto the iPhone
+    answer: B
+    feedback:
+      correct: >-
+        Thompson calls the scarcity of strong, durable businesses on the App Store a natural
+        outgrowth of Apple capturing the vast majority of the ecosystem's value. Once a platform
+        dips under the line, the long-term potential of businesses built on it declines.
+      A: >-
+        The instructor said the opposite happens: developers still release on the App Store first
+        despite Apple's treatment of them. Thompson doesn't discuss release order.
+      C: >-
+        In class, the instructor said platforms fall mainly in paradigm shifts, as Windows did with
+        mobile. That is how any platform loses power, not what Thompson says follows from being
+        under the line.
+      D: >-
+        Thompson ties enforced interoperability to the Microsoft antitrust battles of the 2000s and
+        argues regulators should now focus on companies that control end users. He doesn't predict
+        it for the App Store.
+    selfExplainPrompt: >-
+      Thompson says Apple's control comes from intermediating developers' relationships with
+      customers. In class, how did the instructor show the same thing by comparing buying software
+      for Windows with buying an app from the App Store?
+    source:
+      doc: Thompson - The Bill Gates Line (2018, Stratechery).md
+      loc: The Bill Gates Line (App Store under the line; figure caption on intermediation)
+  - id: w05-q10
+    week: 5
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Steve Yegge's 'Google Platforms Rant' lists the provisions of Jeff Bezos's service mandate at
+      Amazon from around 2002. Years later, the infrastructure built for selling books could be
+      turned into Amazon Web Services. Which provision of the mandate made that repurposing
+      possible?
+    options:
+      - key: A
+        text: No team may read another team's data store directly
+      - key: B
+        text: Interfaces designed from the ground up to be externalizable
+      - key: C
+        text: Teams may use any technology, from web protocols to pub/sub
+      - key: D
+        text: Anyone who does not follow the mandate will be fired
+    answer: B
+    feedback:
+      correct: >-
+        Provision 5 required every service interface to be designed from the ground up to be
+        externalizable, so the team could expose it to outside developers, no exceptions. In class
+        the instructor noted that a service-oriented architecture is therefore close to ready for
+        public use.
+      A: >-
+        Provision 3 bans back doors between teams and forces all communication through service
+        calls. That creates the interfaces, but provision 5 is what made them fit for outsiders.
+      C: >-
+        Provision 4 says Bezos doesn't care about the technology. That freedom lowered the cost of
+        compliance but didn't prepare services for outside use.
+      D: >-
+        Provision 6 is the enforcement clause, which Yegge says was quite real. It explains why
+        people complied, not what prepared the services for external customers.
+    selfExplainPrompt: >-
+      Yegge says Amazon's services taught teams not to trust each other 'in most of the same ways'
+      they shouldn't trust outside developers. Why does designing for that distrust make it cheaper
+      to externalize a service later?
+    source:
+      doc: Stevey's Google Platforms Rant.pdf
+      loc: lines 24–41 (Bezos's mandate); lines 79–84 (infrastructure repurposed as AWS)
+  - id: w05-q11
+    week: 5
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In the September 29 class, the instructor pointed out that an iPhone comes with a calculator
+      app, and anyone who dislikes it can pick from a thousand others. Yegge's 'Google Platforms
+      Rant' says platforms solve Accessibility, which he calls the most important thing in
+      computing. Why do platforms solve it?
+    options:
+      - key: A
+        text: Launching early and iterating quickly shows what users want
+      - key: B
+        text: No product suits everyone, so outside developers fill the gaps
+      - key: C
+        text: Internal teams use the same services that outsiders use
+      - key: D
+        text: Every interface is designed from the start to be externalizable
+    answer: B
+    feedback:
+      correct: >-
+        Yegge says Bezos realized he can't build one product that is right for everyone. He just
+        needed to enable third-party developers to build interfaces people like, and it would happen
+        automatically. In class: Apple won't build every calculator, but its platform lets others do
+        it.
+      A: >-
+        Yegge mentions Amazon's bias for launching early and iterating, and calls it arguable either
+        way. He says platforms work because nobody can reliably predict what users want.
+      C: >-
+        That is dogfooding, Yegge's Golden Rule for building a platform well. It isn't his
+        explanation of why platforms reach everyone.
+      D: >-
+        Externalizable interfaces are provision 5 of Bezos's mandate, the groundwork that makes a
+        platform possible. Yegge's point about Accessibility is what third parties then do with it.
+    selfExplainPrompt: >-
+      Yegge calls Security Accessibility's 'evil twin,' and in class the instructor compared perfect
+      security to a loan officer who makes no loans. Why does Yegge still rank Accessibility above
+      Security?
+    source:
+      doc: Stevey's Google Platforms Rant.pdf
+      loc: >-
+        lines 85–102, 122–133 (Accessibility; platforms solve accessibility); class discussion
+        2026-09-29, accessibility
+  - id: w05-q12
+    week: 5
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Yegge's 'Google Platforms Rant' calls Google+ a knee-jerk reaction and a study in short-term
+      thinking, and says that from executives down, Google doesn't 'get' platforms. What deeper
+      cause does he give for Google's blind spot?
+    options:
+      - key: A
+        text: Its founders micromanaged every pixel of its core product
+      - key: B
+        text: Its margins evaporated, leaving it cornered with no way out
+      - key: C
+        text: It began as a platform and never had to learn products
+      - key: D
+        text: Search's huge success made it purely a product company
+    answer: D
+    feedback:
+      correct: >-
+        Yegge says Google is a product company because it built one successful product with broad
+        appeal, search, and that success biased it. In class the instructor added that Google
+        'tripped and fell into a gold mine,' so it never had to learn to compete the way Facebook
+        did.
+      A: >-
+        Yegge says this about Jeff Bezos micromanaging Amazon's retail site, not about Google's
+        leaders.
+      B: >-
+        Evaporating margins are the out-of-band force Yegge says pushed Amazon, also a product
+        company, toward a platform. Google had the opposite problem.
+      C: >-
+        Yegge says Microsoft started out as a platform and so has had lots of practice. Google is
+        the reverse case.
+    selfExplainPrompt: >-
+      Yegge says you can't bolt a platform on later; delaying makes it ten times the work. How does
+      that explain why Amazon needed a company-wide mandate with a Chief Bulldog rather than a
+      gradual migration?
+    source:
+      doc: Stevey's Google Platforms Rant.pdf
+      loc: >-
+        lines 113–121, 163–172 (Google+; product company; Amazon's margins; Microsoft); class
+        discussion 2026-09-29
+  - id: w05-q13
+    week: 5
+    type: definitional
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In the September 29 class discussion of Yegge's 'Google Platforms Rant,' the instructor said
+      that on Facebook's desktop site, each item in the left-hand menu (Marketplace, Groups, and so
+      on) belongs to a different internal team, and would match the team structure whether or not
+      that made sense for users. What term describes a product whose structure mirrors how the
+      company is organized?
+    options:
+      - key: A
+        text: Eating your own dogfood
+      - key: B
+        text: Shipping the org chart
+      - key: C
+        text: A two-pizza team
+      - key: D
+        text: Working backwards
+    answer: B
+    feedback:
+      correct: >-
+        Shipping the org chart means users can tell how you are organized internally from your
+        product. The instructor tied it to service-oriented architecture: when every team owns a
+        service, the architecture and the org chart shape each other, so an architecture decision is
+        also an organizational and strategic one.
+      A: >-
+        Dogfooding means using your own products and services internally. It is about who uses the
+        product, not about how the product's structure reflects the organization.
+      C: >-
+        The two-pizza team is Amazon's mental model for team size, roughly as many people as two
+        pizzas can feed. It describes team size, not how a product reflects the company's structure.
+      D: >-
+        Working backwards is Amazon's practice of starting from the customer experience. If
+        anything, it is meant to prevent products that mirror internal structure.
+    selfExplainPrompt: >-
+      The instructor warned that because every service needs someone on call, a service architecture
+      sets a minimum team size and investment per service. How does that make the architecture
+      decision an IT strategy decision rather than a purely technical one?
+    source:
+      doc: GMT20260929-220432_Recording.transcript.vtt
+      loc: >-
+        class discussion 2026-09-29, closing remarks: architecture as strategy, shipping the org
+        chart
+  - id: w05-q14
+    week: 5
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In the September 29 news discussion, the instructor endorsed Ben Thompson's read of Meta
+      Connect: Meta's AI glasses and its new keychain device are best seen as delivery vehicles for
+      Muse, its personal AI agent. Later, discussing Yegge's 'Google Platforms Rant,' the instructor
+      explained what Mark Zuckerberg has spent 20 years pursuing, frustrated by Apple's App Store
+      policies. What does Meta lack?
+    options:
+      - key: A
+        text: Control of a platform others build on
+      - key: B
+        text: A consumer product with very broad appeal
+      - key: C
+        text: A data flywheel from heavy daily usage
+      - key: D
+        text: A habit of eating its own dogfood
+    answer: A
+    feedback:
+      correct: >-
+        The instructor said Zuckerberg realized he wasn't in control because Facebook didn't own a
+        platform, and that this explains the AI push and Reality Labs. Muse might become that
+        platform. Yegge's rant makes the same point: Facebook started as a product, and it is very
+        hard to bolt a platform on later.
+      B: >-
+        Yegge says Facebook started off as a product and rode that success pretty far. Broad
+        consumer appeal is what Meta already has.
+      C: >-
+        Data flywheels came up in class about OpenAI's free Dot agent. Meta's scale of usage isn't
+        what the instructor said it was missing.
+      D: >-
+        Dogfooding is Yegge's Golden Rule for building platforms well. The class story about
+        Zuckerberg was about not owning a platform at all.
+    selfExplainPrompt: >-
+      By the Bill Gates Line, what would have to be true of the businesses built on Muse for it to
+      count as a platform rather than a product with add-ons?
+    source:
+      doc: GMT20260929-220432_Recording.transcript.vtt
+      loc: >-
+        class discussion 2026-09-29, Facebook and platforms (Yegge rant discussion); News - Class
+        news-of-the-week discussion (2026-09-29), Meta Connect
+  - id: w05-q15
+    week: 5
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In the September 29 news discussion, the class covered OpenAI launching Dot, a personal agent
+      on its costliest model, free with unlimited use for two months, while halving usage limits on
+      its $200-a-month tier. What did the instructor call the main reason?
+    options:
+      - key: A
+        text: More competition among AI start-ups that use its models
+      - key: B
+        text: A free sample that builds the habit before charging
+      - key: C
+        text: Winning back users from Meta's Muse on the App Store
+      - key: D
+        text: User data that improves the product, drawing more use
+    answer: D
+    feedback:
+      correct: >-
+        The instructor said these companies live and die by data flywheels: more usage lets them
+        improve the product, which brings more usage. Giving Dot away buys the usage data, even
+        while compute is scarce elsewhere.
+      A: >-
+        Wanting more competition among AI companies is how the instructor explained NVIDIA's release
+        of safety software, since its business is supplying them. It doesn't explain OpenAI's
+        pricing.
+      B: >-
+        The instructor agreed this is 'definitely part of it' but named usage data as the main
+        thing: companies like OpenAI live and die by data flywheels.
+      C: >-
+        Muse overtaking ChatGPT on the App Store came up in the Meta Connect discussion. The
+        instructor didn't give it as the reason for Dot's free period.
+    selfExplainPrompt: >-
+      Thompson's 'The AWS IPO' opens with Bezos's napkin flywheel. Map OpenAI's data flywheel onto
+      Bezos's loop: which step does free usage feed, and what plays the role of 'lower prices'?
+    source:
+      doc: News - Class news-of-the-week discussion (2026-09-29, transcript notes).md
+      loc: 'OpenAI Dev Day: the ''Dot'' personal agent vs. cut usage limits; class discussion 2026-09-29'

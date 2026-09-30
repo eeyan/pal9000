@@ -96,6 +96,7 @@ several slide figures are images, invisible to text extraction; they were transc
 | Date | promptVersion | Model | Week | Generated | Accepted | Rejected | Accept rate | Reject reasons |
 |---|---|---|---|---|---|---|---|---|
 | 2026-09-26 | gen-v4 | claude-opus-5-5 | 4 | 30 | 26 | 4 | 87% | trivia ×4 |
+| 2026-09-30 | gen-v4 | claude-opus-5-5 | 5 | 30 | 25 | 5 | 83% | trivia ×4, ambiguous ×1 |
 
 Week 4 notes (gen-v4, in-session on Opus 5.5): 26 of 30 kept by the curator, 15 promoted, split across
 *The Adventures of an IT Leader* chapters 4–5 and the Zara case ("Rapid-Fire Fulfillment", HBR 2004), with
@@ -111,3 +112,19 @@ scenario facts for named cases** ("IVK's lending managers hope…"); hypothetica
 (3) **attribution precision** — one stem credited a formula to the person who reworked it rather than the
 CFO who brought it (curator catch). Source prep: chapter text now goes ebook → EPUB → pandoc by script;
 retyping a chapter through model output was blocked by the API content filter on the first attempt.
+
+Week 5 notes (gen-v4, in-session on Opus 5.5): first batch mined from a class transcript (9 of 30 items;
+the recording was the only record of what was actually covered). The syllabus also assigned textbook
+chapters 4–5, but class never discussed them and they weren't in the source folder, so none were
+generated; aggregators were skipped because the instructor said they won't be tested. 25 of 30 kept, 15
+promoted: *The Adventures of an IT Leader* ch. 6, Thompson's "The AWS IPO" and "The Bill Gates Line",
+Yegge's platforms rant (read in class), and class/news items, several of them cross-source (S-Team green
+statuses → the kid's remedy; Meta/Muse → Yegge on platforms; OpenAI's free Dot → the data flywheel).
+The first draft still had correct-is-longest on 18 of 30; rebalanced to 0 before review, so gen-v4's
+mid-length rule is not yet self-enforcing when authoring in-session. The fresh-context reviewer
+accepted 20 and edited 10, with no rejects; the two reviews agreed on keep-vs-reject for 24 of 30. The
+curator's five rejects were all items the reviewer kept (four trivia: the Highsmith phase-name item,
+the AWS price-war question, the disclosure-rules item, the PR/FAQ format; one awkward framing), so
+"trivia" remains the curator-side call the reviewer under-weights. Reviewer defects: stem-to-key echo
+(2), filler distractors (2), a form tell, feedback overreach past the source's hedges (3), and
+aggregator vocabulary leaking into distractors.
