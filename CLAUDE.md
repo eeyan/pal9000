@@ -52,5 +52,5 @@ Practice-quiz site for CIS 9000 (IT Strategy, Baruch) with a spaced review queue
 # Repository Conventions
 
 - Production deploys are opt-in: Netlify builds only when the commit subject contains `[deploy]` (`netlify.toml`)
-- Don't push or amend unless asked; commit messages short, focused on "why"
+- Push finished work to `main` without asking (GLOBAL.md → Git); don't amend unless asked; commit messages short, focused on "why"
 - After each curation batch, add a row to `docs/EVAL-LOG.md` (date, promptVersion, generated/accepted/rejected, reject-reason breakdown)
