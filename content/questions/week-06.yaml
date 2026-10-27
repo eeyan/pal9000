@@ -1,6 +1,6 @@
 week: 6
 # Provenance: promptVersion gen-v4 · model claude-opus-5-5 · promoted 2026-10-27 (10 of 24 accepted candidates)
-published: false
+published: true
 title: "Technical Debt, Runaway Projects, and Tech as Differentiator"
 questions:
   - id: w06-q01
