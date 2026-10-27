@@ -97,6 +97,7 @@ several slide figures are images, invisible to text extraction; they were transc
 |---|---|---|---|---|---|---|---|---|
 | 2026-09-26 | gen-v4 | claude-opus-5-5 | 4 | 30 | 26 | 4 | 87% | trivia ×4 |
 | 2026-09-30 | gen-v4 | claude-opus-5-5 | 5 | 30 | 25 | 5 | 83% | trivia ×4, ambiguous ×1 |
+| 2026-10-27 | gen-v4 | claude-opus-5-5 | 6 | 30 | 24 | 6 | 80% | trivia ×6 |
 
 Week 4 notes (gen-v4, in-session on Opus 5.5): 26 of 30 kept by the curator, 15 promoted, split across
 *The Adventures of an IT Leader* chapters 4–5 and the Zara case ("Rapid-Fire Fulfillment", HBR 2004), with
@@ -128,3 +129,19 @@ the AWS price-war question, the disclosure-rules item, the PR/FAQ format; one aw
 "trivia" remains the curator-side call the reviewer under-weights. Reviewer defects: stem-to-key echo
 (2), filler distractors (2), a form tell, feedback overreach past the source's hedges (3), and
 aggregator vocabulary leaking into distractors.
+
+Week 6 notes (gen-v4, in-session on Opus 5.5): three sources — the Southwest Airlines Winter Meltdown
+teaching case (ISEDJ 2024), Thompson's Stratechery interview with United CEO Scott Kirby (2026), and
+*The Adventures of an IT Leader* ch. 7; textbook ch. 9 was covered briefly without slides and skipped, and
+there was no class recording. 24 of 30 kept, and only 10 promoted (the instructor cut the weekly target
+from 15): three case, three Kirby, four ch. 7, two of them cross-source (SkySolver customization vs. the
+Cisco ERP success factors; IVK's kludges as technical debt). The first draft had correct-is-longest on 7
+and shortest on 6 of 30, rebalanced to 0/0 before review — the in-session mid-length rule still needs a
+measured pass. The fresh-context reviewer accepted 24 and edited 6, with no rejects; keep-vs-reject
+agreement 24 of 30, exact status 19 of 30. All six curator rejects were trivia calls the reviewer kept
+(the risk-vs-impact definition, the Burbank crew-phone scenario, signaling theory, delay codes, Starlink
+timing, the NetiFects India pitch), the third week running that trivia is the curator-side call.
+Reviewer defects: one stem-to-key cue, an inverted distractor, a reversal distractor, one set of
+distortion distractors, and feedback that put words in Kirby's mouth ("customers come back"). One
+reviewer note was overruled: it flagged a ch. 6 term (scope creep) as ungrounded because it saw only
+this week's sources; prior-week concepts are fair distractors.

@@ -1,0 +1,429 @@
+week: 6
+# Provenance: promptVersion gen-v4 · model claude-opus-5-5 · promoted 2026-10-27 (10 of 24 accepted candidates)
+published: false
+title: "Technical Debt, Runaway Projects, and Tech as Differentiator"
+questions:
+  - id: w06-q01
+    week: 6
+    type: definitional
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      The Southwest Airlines Winter Meltdown teaching case argues that Southwest's
+      technology-investment choices left pilots and cabin crews stuck away from home without work,
+      and passengers stranded without their luggage. Many of those parties say they never agreed to
+      carry that exposure and were not fairly compensated. What does the case call this?
+    options:
+      - key: A
+        text: Externalizing risk
+      - key: B
+        text: Accepting residual risk
+      - key: C
+        text: Reducing the risk
+      - key: D
+        text: Avoiding the activity
+    answer: A
+    feedback:
+      correct: >-
+        The case describes externalizing as a firm transferring part of its risk, deliberately or
+        inadvertently, to outside parties such as customers, vendors and employees. Some of those
+        parties may be compensated, but the case notes that many perceive the compensation as
+        inadequate and say they never agreed to take the risk on.
+      B: >-
+        Residual risk is what remains after avoidance, transfer or reduction steps have been taken
+        and the firm accepts the rest. The case's point is that the impact landed on others, not
+        that Southwest carried it.
+      C: >-
+        Risk reduction lowers a risk that cannot be avoided or transferred to an acceptable level.
+        The scenario describes the impact moving to crews and passengers, not shrinking.
+      D: >-
+        Avoidance means not doing the activity that creates a risk judged too high. Southwest kept
+        flying on the same systems; nothing was avoided.
+    selfExplainPrompt: >-
+      Transfer is one of the case's four standard approaches to risk. What separates an agreed
+      transfer of risk from the externalizing the case describes, and why does that difference
+      matter for Southwest's brand?
+    source:
+      doc: southwest case.pdf
+      loc: Section 2, Risk Management (pp. 61–62)
+  - id: w06-q02
+    week: 6
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Scenario 3 of the Southwest Airlines Winter Meltdown teaching case covers April 18, 2023, when
+      a failed vendor-supplied firewall blocked access to operational data and grounded every
+      Southwest flight. Southwest's published analysis named that single third-party component as
+      the cause. What should an analyst applying the case's root cause analysis conclude?
+    options:
+      - key: A
+        text: It names a partial cause; ask why one part could stop everything
+      - key: B
+        text: It moves responsibility to the vendor, so the risk is transferred
+      - key: C
+        text: It matches 'cancellation waves' from the March action plan
+      - key: D
+        text: It fits the Justice Department's probe of flight scheduling
+    answer: A
+    feedback:
+      correct: >-
+        Root cause analysis keeps asking why until it reaches the most fundamental cause, so the fix
+        targets that rather than a symptom. A single component that can ground an entire airline
+        points to a deeper question about how the systems were designed and funded, and the case
+        notes that many blamed both the April failure and the winter breakdown on technical debt.
+      B: >-
+        Blaming a vendor's part does not move the impact anywhere: Southwest's flights and
+        passengers were the ones grounded. In the case's terms, transfer means another party carries
+        the risk, and here no one else did.
+      C: >-
+        Southwest's March 30 action plan named winter operations, cancellation waves and cross-team
+        collaboration as root causes, but the case says it does not address the technology issues to
+        any substantive level. Matching the plan's own list doesn't end the why chain.
+      D: >-
+        The Justice Department joined the investigation on April 21 to look at unrealistic flight
+        scheduling and whether refunds were timely. That probe doesn't explain why one firewall
+        could ground the airline.
+    selfExplainPrompt: >-
+      The case's own root cause example ends at a lack of investment in mission-critical IT. What
+      evidence from Scenario 2's capital spending and staffing figures would you use to connect the
+      April firewall failure to that conclusion?
+    source:
+      doc: southwest case.pdf
+      loc: Scenario 3 (p. 65); Section 2, Root Cause Analysis (p. 61)
+  - id: w06-q03
+    week: 6
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      The Southwest Airlines Winter Meltdown teaching case reports that Southwest got its SkySolver
+      crew-scheduling software from GE's Aviation Services unit and then heavily modified it.
+      Chapter 7 of The Adventures of an IT Leader lists success factors from Cisco's enterprise
+      resource planning (ERP) implementation. Which of those factors does Southwest's approach run
+      against?
+    options:
+      - key: A
+        text: Assigning the best people to the project
+      - key: B
+        text: Strong relationships with vendors
+      - key: C
+        text: Business people involved, not just IT
+      - key: D
+        text: Minimizing changes to purchased packages
+    answer: D
+    feedback:
+      correct: >-
+        The Cisco success factors, which IVK's consultants urge IVK to adopt, include minimizing
+        changes to purchased packages. Heavy customization pulls a bought product toward a one-off
+        system, and the Southwest case raises exactly that trade-off: the risks of buying or
+        licensing software from someone else and then customizing it.
+      A: >-
+        The case gives no information about who staffed SkySolver's customization. The documented
+        fact is how heavily the package was modified.
+      B: >-
+        Nothing in the case describes Southwest's relationship with GE. The issue it raises is what
+        Southwest did to the software after acquiring it.
+      C: >-
+        The case does not say business staff were left out. The Cisco factor that heavy modification
+        contradicts is the one about changing packages.
+    selfExplainPrompt: >-
+      The Southwest case asks why an airline wouldn't just build its own scheduling system for full
+      control. How does Tyra Gordon's expectation in Chapter 7, that IVK would mostly configure
+      packages rather than write custom code, reflect the same build-versus-buy reasoning?
+    source:
+      doc: southwest case.pdf
+      loc: >-
+        Section 4, Outsourcing, Customizing Software, and Technical Debt (p. 68); Chapter 7,
+        Exhibit: Excerpt from Consultant's Report (Cisco success factors)
+  - id: w06-q04
+    week: 6
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Ben Thompson's Stratechery interview, United CEO Scott Kirby says United spent several
+      hundred million dollars moving off SHARES, a Fortran-based mainframe system written in the
+      1960s, and that he knows of no other airline that has done the same. Why does he think rivals
+      haven't followed?
+    options:
+      - key: A
+        text: Air traffic regulators can't ingest modern data yet
+      - key: B
+        text: Short-term finance cultures want a provable return
+      - key: C
+        text: Union contracts tie them to legacy crew procedures
+      - key: D
+        text: They signed connectivity deals with other providers
+    answer: B
+    feedback:
+      correct: >-
+        Kirby says a legacy rewrite has no calculable return (the only pitch is that future work
+        will be easier) and that short-term, finance-driven cultures won't approve what they can't
+        prove has an ROI. He calls the rewrite a key unlock that United's later customer features
+        depended on.
+      A: >-
+        Kirby does say the FAA can't ingest United's airspace data, but that limits one AI project.
+        It isn't his explanation for why rivals stay on old systems.
+      C: >-
+        Union contract terms came up in Kirby's story about phoning reassigned crews, which United
+        replaced with robocalls. He doesn't offer them as why other airlines keep their mainframes.
+      D: >-
+        Kirby waited for rivals to lock in with other in-flight connectivity providers before
+        signing with Starlink. That concerns Wi-Fi, not core systems.
+    selfExplainPrompt: >-
+      Kirby says the rewrite wasn't about cost but about being able to tell every delayed customer
+      what the operations center knows. How does that link a back-end investment with no ROI to
+      United's strategy for brand-loyal customers?
+    source:
+      doc: >-
+        Thompson - An Interview with United CEO Scott Kirby About Tech Transformation (2026,
+        Stratechery).md
+      loc: United's Tech Advantage; Competing Internationally (closing exchange on ROI)
+  - id: w06-q05
+    week: 6
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In Ben Thompson's Stratechery interview, Scott Kirby says AI could do almost everything in
+      United's network operations center better than humans, even though he doubts today's models
+      will reach general intelligence. What makes the operations center a good fit, in his view?
+    options:
+      - key: A
+        text: Massive datasets and an objective easy to define
+      - key: B
+        text: Models trained to tell users what they want to hear
+      - key: C
+        text: Starlink connectivity rivals haven't matched yet
+      - key: D
+        text: Text that explains delays in a friendly, human tone
+    answer: A
+    feedback:
+      correct: >-
+        Kirby says the operations center has massive data sets and an objective function that is
+        easy to define, which is where he thinks these models do well. His skepticism is about the
+        large class of problems without those properties, especially consumer uses.
+      B: >-
+        Telling users what they want to hear is Kirby's main complaint about consumer AI,
+        illustrated by his mother's back injury. It's a weakness, not a fit.
+      C: >-
+        Starlink is Kirby's bet on in-flight connectivity and customer loyalty. It has nothing to do
+        with why the operations center suits AI.
+      D: >-
+        AI-written delay explanations are a United use that Thompson mentions, but Kirby's case for
+        AI in operations rests on the data and the objective, not the tone of the output.
+    selfExplainPrompt: >-
+      Kirby credits the mainframe rewrite with giving United the data architecture that makes AI
+      useful. How does that connect a no-ROI infrastructure decision to the operations-center
+      opportunity he describes?
+    source:
+      doc: >-
+        Thompson - An Interview with United CEO Scott Kirby About Tech Transformation (2026,
+        Stratechery).md
+      loc: AI & Starlink
+  - id: w06-q06
+    week: 6
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Ben Thompson's Stratechery interview, Scott Kirby describes ending each budget cycle by
+      adding money purely for customers, including an extra $100 million on wine, the opposite of
+      the usual order to cut. How does he justify spending that lowers this year's profit?
+    options:
+      - key: A
+        text: The tech rewrite lowered United's marginal costs
+      - key: B
+        text: Loyal frequent flyers move their business to it
+      - key: C
+        text: Credit card fees fund the onboard upgrades
+      - key: D
+        text: Onboard ads will soon pay for the product
+    answer: B
+    feedback:
+      correct: >-
+        Kirby believes air travel is not a commodity and that customers care: if United gets better
+        every year, brand-loyal customers who fly a lot will move to it. He says United has won
+        market share in every hub since it began, and frames the spending as a long-term investment
+        rather than maximizing this year's profit.
+      A: >-
+        Thompson asks whether the rewrite was meant to lower marginal costs; Kirby says it wasn't
+        about cost at all but about doing more for customers.
+      C: >-
+        Thompson suggests United might really be a credit card company. Kirby calls that a misnomer:
+        United is a loyalty company, with cards as one part.
+      D: >-
+        Kirby expects advertising to matter financially someday but calls it the icing on the cake.
+        Loyalty is the payoff he says he's focused on.
+    selfExplainPrompt: >-
+      Kirby says no one is copying the things that matter. How does a customer budget that
+      short-term, finance-driven rivals won't approve help make United's advantage sustainable?
+    source:
+      doc: >-
+        Thompson - An Interview with United CEO Scott Kirby About Tech Transformation (2026,
+        Stratechery).md
+      loc: The Customer Experience (end-of-year customer budget, wine)
+  - id: w06-q07
+    week: 6
+    type: definitional
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 7 of The Adventures of an IT Leader, IVK's consultants find middle and back-end
+      systems patched with a growing number of kludges, poorly integrated, and unable to support
+      flexible pricing, and they recommend a replacement costing 3% of revenues. In the terms of the
+      Southwest Airlines Winter Meltdown teaching case, what has IVK accumulated?
+    options:
+      - key: A
+        text: Residual risk
+      - key: B
+        text: Technical debt
+      - key: C
+        text: Scope creep
+      - key: D
+        text: Analysis paralysis
+    answer: B
+    feedback:
+      correct: >-
+        The Southwest case calls deferred maintenance in computer systems technical debt and lists
+        the forms it takes, including capacity, integration and process-mismatch limitations. IVK's
+        kludges and poor integration fit that list, and the replacement project is the cost of
+        paying it down.
+      A: >-
+        Residual risk is the risk a firm knowingly accepts after mitigation. IVK's problem is years
+        of patches and gaps, not a deliberate decision to accept a risk.
+      C: >-
+        Scope creep, from Chapter 6, is delivering more than was originally agreed because
+        requirements weren't pinned down. It describes a project, not the state of IVK's systems.
+      D: >-
+        Gordon uses analysis paralysis for the project team's stalled planning. It is a symptom of
+        how hard the replacement is, not the condition that made it necessary.
+    selfExplainPrompt: >-
+      The consultant's report says the project is difficult now but may be impossible later. How
+      does the Southwest case's account of technical debt explain why waiting makes it worse?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch07 The Runaway Project.md
+      loc: >-
+        Exhibit: Excerpt from Consultant's Report; Southwest case, Section 2, Technical Debt (pp.
+        60–61)
+  - id: w06-q08
+    week: 6
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 7 of The Adventures of an IT Leader, Barton asks Tyra Gordon whether IVK's stalled
+      infrastructure replacement project could simply be split into smaller chunks. What does she
+      say makes that so hard?
+    options:
+      - key: A
+        text: The consultants' documents were too detailed to act on
+      - key: B
+        text: The systems are too intertwined to cut apart cleanly
+      - key: C
+        text: The project leader's focus shifted to the BtJ deal
+      - key: D
+        text: The integrator bills extra for each new piece of work
+    answer: B
+    feedback:
+      correct: >-
+        Gordon says IVK's infrastructure is an immense tangle: places that look like logical cut
+        points turn out to have vital nerves and blood vessels running through them. Cutting it
+        apart without killing the patient is hard work that no one has done yet.
+      A: >-
+        The process consultants' huge document helped stall the project, since nobody knew what to
+        do next, but Gordon cites it to explain the analysis paralysis, not why chunking is hard.
+      C: >-
+        Jay Palmer did lose focus after landing the BtJ deal, but that explains a leadership gap,
+        not the technical difficulty of dividing the work.
+      D: >-
+        Barton complains about NetiFects's retainer and extra billable items, but cost isn't what
+        Gordon says makes the infrastructure hard to divide.
+    selfExplainPrompt: >-
+      How does the tangle Gordon describes relate to the kludges the consultant's report blamed for
+      rising outage risk, and why would more kludges make the eventual cut even harder?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch07 The Runaway Project.md
+      loc: Friday, April 20 (Gordon on chunking)
+  - id: w06-q09
+    week: 6
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 7 of The Adventures of an IT Leader, Tyra Gordon explains that soon after IVK hired
+      the systems integrator NetiFects, it pushed IVK to move its next-generation back office from
+      Microsoft technologies to Java and Oracle. What does she think is mainly behind the push?
+    options:
+      - key: A
+        text: Java and Oracle are better than IVK's Microsoft stack
+      - key: B
+        text: Its developers in India focus on custom software
+      - key: C
+        text: Software vendors prefer installing all at once
+      - key: D
+        text: It wants work that fits its own staff's expertise
+    answer: D
+    feedback:
+      correct: >-
+        Gordon says NetiFects has plenty of Java- and Oracle-qualified people and few dotNet or
+        SQLServer experts. Knowing the project is hard, it is trying to tilt the playing field
+        toward its strengths to lower its own risk of failure, which is a weak reason for IVK to
+        retrain everyone on a new platform.
+      A: >-
+        Gordon calls Java and Oracle good, solid technologies but says IVK's are pretty good too.
+        Merit isn't what she thinks is driving the push.
+      B: >-
+        Gordon's India objection is a separate one: she doubted how much custom development the
+        project needed, since most of it would be configuring packages.
+      C: >-
+        Ruben, not Gordon, raises the all-at-once preference, and he attributes it to software
+        package vendors, not the systems integrator.
+    selfExplainPrompt: >-
+      Gordon says IVK might have done better with an equally qualified vendor experienced in its own
+      technologies. What should have been weighted more heavily at vendor selection, and why did a
+      mostly non-IT team miss it?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch07 The Runaway Project.md
+      loc: Friday, April 20 (Barton and Gordon)
+  - id: w06-q10
+    week: 6
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 7 of The Adventures of an IT Leader, Barton asks Tyra Gordon whether the IT
+      department should be in charge of IVK's infrastructure replacement project, which the
+      consultants had put under a business leader. What trade-off does she describe?
+    options:
+      - key: A
+        text: A switch to Java retrains staff but suits the vendor
+      - key: B
+        text: IT control is decisive but risks perceived failure
+      - key: C
+        text: Detailed plans clarify scope but swamp the team
+      - key: D
+        text: Business owners decide processes but lack tech depth
+    answer: D
+    feedback:
+      correct: >-
+        Gordon says it has been a joy to watch the non-IT team members take responsibility for
+        business process decisions that are too often left, inappropriately, to IT, but the lack of
+        technical expertise in most of the team has landed IVK some serious problems. She says she
+        doesn't know which way to go.
+      A: >-
+        Gordon's platform concern is about NetiFects's push to Java and Oracle, which she thinks
+        serves the vendor's staffing. It isn't her answer on who should lead.
+      B: >-
+        Ruben makes this point a week later, when Barton proposes that IT take over: decisive
+        action, but a good chance of failure or perceived failure.
+      C: >-
+        Gordon does describe the detailed current-versus-desired-state work as overwhelming, part of
+        the analysis paralysis, but that answers what stalled the project, not who should lead it.
+    selfExplainPrompt: >-
+      The consultant's report wanted business and IT staff to take on each other's tasks so each
+      side learned the other's. How might that design have addressed the weakness Gordon describes?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch07 The Runaway Project.md
+      loc: 'Friday, April 20 (Gordon on who should lead); Exhibit: Excerpt from Consultant''s Report'
