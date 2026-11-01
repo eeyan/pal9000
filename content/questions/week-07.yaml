@@ -1,0 +1,430 @@
+week: 7
+# Provenance: promptVersion gen-v4 · model claude-opus-5-5 · promoted 2026-11-01 (10 of 26 accepted candidates)
+published: false
+title: "IT Priorities, Governance, and Anthropic's IT Strategy"
+questions:
+  - id: w07-q01
+    week: 7
+    type: definitional
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Ross and Weill’s “Six IT Decisions Your IT People Shouldn’t Make” (Harvard Business Review,
+      2002) describes Hershey Foods’ 1999 decision to bring customer relationship management,
+      enterprise resource planning, and supply chain management systems live at the same time,
+      leaving IT to deliver them all. Which of the six decisions did Hershey’s senior managers
+      mishandle?
+    options:
+      - key: A
+        text: How good the company's IT services need to be
+      - key: B
+        text: Which business processes should get IT dollars
+      - key: C
+        text: Which IT capabilities should be made companywide
+      - key: D
+        text: Who is accountable if an IT initiative fails
+    answer: B
+    feedback:
+      correct: >-
+        Ross and Weill use Hershey's 1999 decision to implement CRM, ERP, and supply chain
+        management at once — which left it unable to ship candy for Halloween — to show what happens
+        when senior managers won't choose a manageable set of IT priorities. The IT unit then tries
+        to deliver everything and is overwhelmed.
+      A: >-
+        That decision covers features such as reliability and response time weighed against cost.
+        The scenario's problem is too many simultaneous projects, not service levels.
+      C: >-
+        That decision weighs centralization and standards against business unit flexibility. Nothing
+        in the scenario is about standards.
+      D: >-
+        Accountability for business results is the sixth decision. It matters here too, but the
+        failure the scenario isolates is approving more projects than can be delivered at once.
+    selfExplainPrompt: >-
+      Ross and Weill say an IT unit handed a list of approved projects will do its best to carry
+      them all out. How does that connect to the 'thrashing' Barton complains about in Chapter 8 of
+      The Adventures of an IT Leader?
+    source:
+      doc: Six IT Decsions Your IT People Should Not Make.pdf
+      loc: 'Decision 2: Which business processes should receive our IT dollars? (Hershey, p. 4)'
+  - id: w07-q02
+    week: 7
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      At a diversified manufacturer, the CIO (chief information officer) keeps approving exceptions
+      to the corporate software standards for any division head who complains loudly enough.
+      According to Ross and Weill's “Six IT Decisions Your IT People Shouldn’t Make” (Harvard
+      Business Review, 2002), what does this pattern typically cost the company?
+    options:
+      - key: A
+        text: Divisions lose the flexibility that they need
+      - key: B
+        text: Higher costs and lost synergies across units
+      - key: C
+        text: A backlog that overwhelms the IT unit
+      - key: D
+        text: Systems built to gold-plated service levels
+    answer: B
+    feedback:
+      correct: >-
+        When IT executives decide centralization on their own, they tend either to standardize
+        everything or to grant exceptions to anyone who objects. The exceptions route is expensive
+        and limits business synergies; systems on different standards can even work against one
+        another, so the whole infrastructure is worth less than its parts.
+      A: >-
+        Lost flexibility is the cost of the other extreme: standardizing everything to keep costs
+        low. Exceptions give divisions more flexibility, not less.
+      C: >-
+        A backlog and a demoralized IT department come from senior managers failing to choose
+        priorities (decision 2), not from exceptions to standards.
+      D: >-
+        Gold-plated service is what IT units choose when left to set service levels (decision 4), a
+        different decision from standardization.
+    selfExplainPrompt: >-
+      Johnson & Johnson centralized only a limited set of data definitions. How does that show
+      senior managers drawing the line between companywide and business unit capabilities, rather
+      than leaving it to IT?
+    source:
+      doc: Six IT Decsions Your IT People Should Not Make.pdf
+      loc: 'Decision 3: Which IT capabilities need to be companywide? (p. 5)'
+  - id: w07-q03
+    week: 7
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Ross and Weill's “Six IT Decisions Your IT People Shouldn’t Make” (Harvard Business Review,
+      2002) describes a midsize manufacturer whose expensive enterprise resource planning (ERP)
+      system sat unused until a new CEO arrived; the company then turned its first profit in five
+      years. What did the new CEO change?
+    options:
+      - key: A
+        text: The IT staff who had installed the system
+      - key: B
+        text: The vendor's configuration of the software
+      - key: C
+        text: The business processes around the system
+      - key: D
+        text: The metrics IT reported to the board
+    answer: C
+    feedback:
+      correct: >-
+        The new CEO reorganized the company's business processes to take advantage of the ERP's
+        capabilities. Ross and Weill's point is that new systems alone have no value; value comes
+        from new or redesigned processes, which only business executives can deliver.
+      A: >-
+        The article doesn't mention replacing IT staff. It argues that blaming the IT department
+        reflects a misunderstanding of what IT can deliver.
+      B: >-
+        The article puts ERP and CRM failures down to managers assuming IT or consultants could
+        implement systems alone. It doesn't blame configuration.
+      D: >-
+        Clear metrics are something sponsors should set up with IT, but the article credits the
+        turnaround to reorganized processes, not to new reporting.
+    selfExplainPrompt: >-
+      In Chapter 7 of The Adventures of an IT Leader, the consultants' report says IVK's
+      infrastructure replacement must not be delegated to the IT department. How does Ross and
+      Weill's sixth decision (whom to blame when an IT initiative fails) support that advice?
+    source:
+      doc: Six IT Decsions Your IT People Should Not Make.pdf
+      loc: 'Decision 6: Whom do we blame if an IT initiative fails? (p. 7)'
+  - id: w07-q04
+    week: 7
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 8 of The Adventures of an IT Leader, Barton tells Maggie he plans to ask the CEO
+      for control of IVK's entire IT budget. What is Maggie's “one neck in the noose” objection?
+    options:
+      - key: A
+        text: He alone would take the blame when trade-offs fail
+      - key: B
+        text: IT staff would keep getting shuffled between projects
+      - key: C
+        text: The CEO would come to see him as a rival
+      - key: D
+        text: He couldn't represent the business units' view
+    answer: A
+    feedback:
+      correct: >-
+        When business units help make the trade-off decisions, a bad outcome hurts everyone together
+        because everyone chose. If Barton takes over the budget, the others take their necks out,
+        and when something goes wrong they are likely to tighten the noose around his alone.
+      B: >-
+        Weekly reprioritization is the problem Barton hopes budget control will fix, not Maggie's
+        objection to it.
+      C: >-
+        Williams does start treating Barton as a potential rival, but that happens in Chapter 9 and
+        is not Maggie's argument.
+      D: >-
+        Barton argues he can represent both sides; Maggie's concern isn't his ability but who bears
+        the consequences.
+    selfExplainPrompt: >-
+      Ross and Weill end by saying the six decisions shouldn't be made unilaterally in the executive
+      suite. How does Maggie's noose argument support the same conclusion?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch08 IT Priorities.md
+      loc: Friday, May 4, 7:35 p.m. (Barton and Maggie at dinner)
+  - id: w07-q05
+    week: 7
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      IVK's board slides in Chapter 9 of The Adventures of an IT Leader argue for more IT investment
+      by noting that IVK spent less, sometimes much less, than the industry benchmark of 9% of
+      revenue. According to Ross and Weill's “Six IT Decisions Your IT People Shouldn’t Make”
+      (Harvard Business Review, 2002), how should IVK's leadership set the right level?
+    options:
+      - key: A
+        text: By matching the 9% industry benchmark
+      - key: B
+        text: From a menu of service levels priced by IT
+      - key: C
+        text: By letting IT leaders set it on their own
+      - key: D
+        text: From the role IT should play in strategy
+    answer: D
+    feedback:
+      correct: >-
+        Ross and Weill say successful companies first define IT's strategic role and then fund that
+        role; UPS and FedEx both succeed by matching spending to strategy, not to industry
+        benchmarks. Barton's slides already sketch a role — IT helping lock in clients and close
+        deals — that could anchor the number.
+      A: >-
+        Benchmarking is the approach Ross and Weill say executives reach for when they haven't
+        defined IT's role, and it is what the slide leans on.
+      B: >-
+        A priced menu of service options is Ross and Weill’s advice for the fourth decision (how
+        good IT services need to be). It sets service levels for particular systems, not the overall
+        spending level.
+      C: >-
+        Ross and Weill say these decisions belong to senior managers with input from IT, not to IT
+        alone; Maggie raises the same concern in Chapter 8.
+    selfExplainPrompt: >-
+      The slides also mention many 'care and feeding' investments with no direct customer impact.
+      How should the strategic role IT plays at IVK be used to justify spending that customers never
+      see?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch09 IT and the Board of Directors.md
+      loc: 'End exhibit: Board presentation, Historical Background; Ross and Weill, Decision 1 (pp. 2–3)'
+  - id: w07-q06
+    week: 7
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 8 of The Adventures of an IT Leader, Barton learns that he, then head of Loan
+      Operations, mocked the network consolidation proposal from IVK’s IT group (“Habla inglés?”)
+      until it was killed. In terms of Ross and Weill's “Six IT Decisions Your IT People Shouldn’t
+      Make” (Harvard Business Review, 2002), which senior-management decision went wrong?
+    options:
+      - key: A
+        text: How much the company should spend on IT
+      - key: B
+        text: Which IT capabilities should be made companywide
+      - key: C
+        text: How good the company's IT services must be
+      - key: D
+        text: What security and privacy risks to accept
+    answer: D
+    feedback:
+      correct: >-
+        Ross and Weill say senior business managers must lead trade-offs between security and cost
+        or convenience. At IVK a business leader dismissed the case without doing the work to
+        understand it, as Maggie later puts it, so a risk was accepted by default rather than by an
+        informed decision.
+      A: >-
+        Overall spending is the first decision. The scenario is about one risk-reduction project
+        losing out to a customer-facing one.
+      B: >-
+        The network consolidation does touch standards, but the funding fight was over whether to
+        accept a security risk, not over centralization.
+      C: >-
+        Service levels such as reliability and response time are the fourth decision. The project's
+        purpose was closing a security hole.
+    selfExplainPrompt: >-
+      Barton concludes that IT needs to get better at presenting its cases. Using Ross and Weill,
+      argue that the fix belongs at least as much to business executives as to IT.
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch08 IT Priorities.md
+      loc: Wednesday, May 2, 1:30 p.m.; Ross and Weill, Decision 5 (pp. 6–7)
+  - id: w07-q07
+    week: 7
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 9 of The Adventures of an IT Leader, board member Sally Lee asks Barton to say more
+      about IVK's IT risks. Where does Barton say the risk in IVK's infrastructure comes from?
+    options:
+      - key: A
+        text: Thin staffing in network and security teams
+      - key: B
+        text: Hackers targeting the firm's customer data
+      - key: C
+        text: Many small shortcuts that add up over time
+      - key: D
+        text: Vendors that failed to deliver on time
+    answer: C
+    feedback:
+      correct: >-
+        Barton says the risk is not a single factor but the emergent result of countless
+        incremental, individually harmless decisions — a database shortcut to speed response time,
+        gluing two networks together as a kludge. Carraro adds that such 'housekeeping' investments
+        are hard to justify by customer benefit, and Barton notes the risk stays invisible until
+        something fails.
+      A: >-
+        The board slides do list network management and information security as under-resourced, but
+        Barton’s answer to Lee is about complexity built up from many small decisions, not staffing.
+      B: >-
+        Security threats are part of the risk slide, but Barton's answer to Lee is about complexity
+        built up from many decisions, not an outside attacker.
+      D: >-
+        IVK did fire a nonperforming IT vendor, but Barton doesn't name vendors as the source of
+        infrastructure risk.
+    selfExplainPrompt: >-
+      The Southwest Airlines case (Week 6) calls this kind of accumulation technical debt. Why is it
+      so hard to get board or management attention before a meltdown, and what in Ross and Weill's
+      six decisions could change that?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch09 IT and the Board of Directors.md
+      loc: Thursday, June 14, 4:47 p.m. (Barton on IT risk)
+  - id: w07-q08
+    week: 7
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Anthropic’s Form S-1 registration statement for its initial public offering (October 2026)
+      says it draws compute from several strategic partners and runs on Amazon Web Services Trainium
+      chips, Google tensor processing units (TPUs), and NVIDIA and AMD graphics processors, shifting
+      workloads among them for price and performance. Using Porter’s five forces framework from
+      Chapter 8 of Piccoli and Pigni’s textbook (Week 3), which force does this multi-chip approach
+      most directly work against?
+    options:
+      - key: A
+        text: The threat of new entrants
+      - key: B
+        text: The bargaining power of buyers
+      - key: C
+        text: The bargaining power of suppliers
+      - key: D
+        text: The rivalry among existing competitors
+    answer: C
+    feedback:
+      correct: >-
+        Chapter 8 asks whether a firm can use IT to decrease suppliers’ bargaining power. Chips and
+        cloud capacity are Anthropic’s key inputs; because its multi-chip architecture lets it move
+        workloads across four chip families to optimize price and performance, no single chip
+        supplier controls its access to compute.
+      A: >-
+        Chapter 8’s barrier-to-entry question is about IT investments that keep rivals out of an
+        industry (its examples are PlayStation and AWS). Spreading compute across chip makers
+        concerns Anthropic’s inputs, not deterring entrants.
+      B: >-
+        Buyers are Anthropic’s customers. The S-1’s direct customer contracts and pricing control
+        relate to that force, but chips are inputs Anthropic buys, so the multi-chip approach acts
+        on the selling side.
+      D: >-
+        Rivalry is competition among existing AI developers. Cheaper, more flexible compute may help
+        Anthropic compete, but the force the multi-chip approach acts on directly is the power of
+        the firms that sell it compute.
+    selfExplainPrompt: >-
+      The S-1’s risk factors say some of Anthropic’s cloud and chip suppliers also invest in it and
+      buy from it. How does that double relationship complicate a simple supplier-power analysis,
+      and what does a multi-vendor compute pool leave unsolved?
+    source:
+      doc: Anthropic - Form S-1 Registration Statement pp1-30 (2026-10-26, SEC).md
+      loc: >-
+        Prospectus Summary — Our Approach to Compute (pp. 6–7); Risk Factors Summary (p. 17);
+        Piccoli and Pigni ch. 8 slides 5–6 (five forces, IT and supplier power)
+  - id: w07-q09
+    week: 7
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Anthropic's Form S-1 registration statement for its initial public offering (October 2026)
+      says Claude is sold through Amazon Web Services, Google Cloud, and Microsoft Azure under a
+      joint go-to-market arrangement with each cloud provider. Why does Anthropic hold the customer
+      contract itself rather than let each cloud resell Claude?
+    options:
+      - key: A
+        text: To secure long-term compute commitments
+      - key: B
+        text: To gather production feedback for its models
+      - key: C
+        text: To place Claude in customers’ existing stacks
+      - key: D
+        text: To set pricing and avoid channel conflict
+    answer: D
+    feedback:
+      correct: >-
+        The S-1 says direct customer contracts, with a fee paid to each cloud provider, foster
+        commercial alignment with the providers, avoid channel conflict, let Anthropic set pricing,
+        and let it keep the financial benefits of ongoing compute efficiency gains.
+      A: >-
+        Compute commitments are the purchase and lease agreements described under Anthropic’s
+        approach to compute. The S-1 doesn’t tie them to who holds the customer contract.
+      B: >-
+        Production feedback drives the S-1’s improvement loop, which comes from enterprise
+        deployment, not from the contracting structure.
+      C: >-
+        Meeting customers inside their existing technology stacks is why Anthropic distributes
+        through clouds and partners at all; it doesn’t explain why Anthropic keeps the contract.
+    selfExplainPrompt: >-
+      The S-1 also names systems integrators and data platforms as distribution partners. Why might
+      a firm whose product depends on trust want direct contracts even when partners make the sale?
+    source:
+      doc: Anthropic - Form S-1 Registration Statement pp1-30 (2026-10-26, SEC).md
+      loc: Prospectus Summary — Enterprise Adoption of Claude (p. 10)
+  - id: w07-q10
+    week: 7
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Anthropic's Form S-1 registration statement for its initial public offering (October 2026)
+      says the building blocks (“primitives”) the Claude Platform offers customers “are the same
+      ones we use to build our own applications,” such as Claude Code and Claude Cowork. Which
+      argument from Steve Yegge's Google Platforms Rant (Week 5) does that decision echo?
+    options:
+      - key: A
+        text: Accessibility is the most important thing
+      - key: B
+        text: 'The Golden Rule: eat your own dogfood'
+      - key: C
+        text: A product is useless without a platform
+      - key: D
+        text: A platform can’t be bolted on later
+    answer: B
+    feedback:
+      correct: >-
+        Yegge’s Golden Rule of platforms is “Eat Your Own Dogfood”: start with a platform and then
+        use it for everything, as Jeff Bezos’s mandate forced Amazon teams to do by exposing their
+        functionality through interfaces designed to be externalizable. Building your own
+        applications on the primitives you sell forces the platform to be good enough for outsiders,
+        which Yegge says Google failed to do.
+      A: >-
+        Yegge does call accessibility the most important thing in computing, meaning a product built
+        so many kinds of users can reach it. That explains why platforms matter, not the specific
+        choice to build your own products on them.
+      C: >-
+        Yegge says a platform-less product will always be replaced by a platform-ized one. That
+        argues for having a platform at all; the S-1 claim goes further, to using the same
+        primitives internally.
+      D: >-
+        Yegge warns that a platform bolted on later costs ten times the work. That is about timing;
+        the S-1 claim is about whether your own products run on the platform.
+    selfExplainPrompt: >-
+      Ben Thompson's 'Bill Gates Line' (Week 5) says a platform creates more value for its ecosystem
+      than it captures. Does the S-1's description of Claude Platform plus its own applications sit
+      on the platform or the aggregator side of that line?
+    source:
+      doc: Anthropic - Form S-1 Registration Statement pp1-30 (2026-10-26, SEC).md
+      loc: >-
+        Prospectus Summary — Enterprise Adoption of Claude (pp. 9–10); Week 5, Stevey's Google
+        Platforms Rant

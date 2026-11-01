@@ -98,6 +98,7 @@ several slide figures are images, invisible to text extraction; they were transc
 | 2026-09-26 | gen-v4 | claude-opus-5-5 | 4 | 30 | 26 | 4 | 87% | trivia ×4 |
 | 2026-09-30 | gen-v4 | claude-opus-5-5 | 5 | 30 | 25 | 5 | 83% | trivia ×4, ambiguous ×1 |
 | 2026-10-27 | gen-v4 | claude-opus-5-5 | 6 | 30 | 24 | 6 | 80% | trivia ×6 |
+| 2026-11-01 | gen-v4 | claude-opus-5-5 | 7 | 31 | 26 | 5 | 84% | trivia ×4, ambiguous ×1 |
 
 Week 4 notes (gen-v4, in-session on Opus 5.5): 26 of 30 kept by the curator, 15 promoted, split across
 *The Adventures of an IT Leader* chapters 4–5 and the Zara case ("Rapid-Fire Fulfillment", HBR 2004), with
@@ -145,3 +146,16 @@ Reviewer defects: one stem-to-key cue, an inverted distractor, a reversal distra
 distortion distractors, and feedback that put words in Kirby's mouth ("customers come back"). One
 reviewer note was overruled: it flagged a ch. 6 term (scope creep) as ungrounded because it saw only
 this week's sources; prior-week concepts are fair distractors.
+
+Week 7 notes (gen-v4, in-session on Opus 5.5): three sources — Ross and Weill's "Six IT Decisions Your
+IT People Shouldn't Make" (HBR 2002), *The Adventures of an IT Leader* ch. 8–9, and the first ~30 pages
+of Anthropic's S-1, used per the instructor as a worked example of IT-strategy decisions rather than a
+source of detail questions; textbook ch. 6 and 10 were not covered and there was no class recording.
+26 of 31 kept, 10 promoted: five Ross and Weill (five of the six decisions), three IVK (ch. 8–9), and
+three Anthropic, all cross-source (multi-chip compute as a counter to supplier power from the ch. 8
+five-forces slides, holding the customer contract to avoid channel conflict, the platform decision vs.
+Yegge's dogfooding rule). The curator's c25 note re-keyed a compute-sourcing item to Porter's supplier
+power. The fresh-context reviewer edited 22, rejected 4; it flagged reversal or invented distractors on
+eight items, stem-to-key echo or self-eliminating stems on six, an anonymized named case (Hershey), and
+one misattributed feedback line — all applied. Curator rejects were trivia again (four) plus one
+ambiguous. Gap noted: no item covers the S-1's governance (PBC, Long-Term Benefit Trust).
