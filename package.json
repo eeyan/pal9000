@@ -1,7 +1,7 @@
 {
   "name": "pal9000",
   "version": "0.1.0",
-  "description": "PAL 9000 \u2014 Practice And Learn. Practice-quiz site for CIS 9000 (IT Strategy), built on the Groundwork generation/curation pipeline.",
+  "description": "PAL 9000 — Practice And Learn. Practice-quiz site for CIS 9000 (IT Strategy), built on the Groundwork generation/curation pipeline.",
   "type": "module",
   "engines": {
     "node": ">=22"
@@ -24,7 +24,7 @@
     "@anthropic-ai/sdk": "^0.115.0",
     "cheerio": "^1.0.0",
     "jsdom": "^29.1.1",
-    "vitest": "^3.0.0"
+    "vitest": "^4.1.12"
   },
   "dependencies": {
     "js-yaml": "^4.1.0"
