@@ -1,6 +1,6 @@
 week: 7
 # Provenance: promptVersion gen-v4 · model claude-opus-5-5 · promoted 2026-11-01 (10 of 26 accepted candidates)
-published: false
+published: true
 title: "IT Priorities, Governance, and Anthropic's IT Strategy"
 questions:
   - id: w07-q01
