@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import { loadBank, WEEK_FILE_RE } from '../../src/lib/bank.js';
 import { longQuote, MAX_QUOTED_WORDS } from '../../src/lib/candidates.js';
 
