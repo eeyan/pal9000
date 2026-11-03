@@ -16,7 +16,7 @@
 
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import { fromStructured, buildCandidatesDoc, batchStats, formatStats, lintCandidate } from '../src/lib/candidates.js';
 
 function die(msg) {

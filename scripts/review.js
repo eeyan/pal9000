@@ -13,7 +13,7 @@
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import { lintCandidate, batchStats, formatStats } from '../src/lib/candidates.js';
 
 const week = Number(process.argv[2]);

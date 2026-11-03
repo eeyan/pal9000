@@ -3,7 +3,7 @@ import { execSync } from 'node:child_process';
 import { readFileSync, readdirSync, existsSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import * as cheerio from 'cheerio';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import { loadBank, WEEK_FILE_RE } from '../../src/lib/bank.js';
 import { SETS, setHeading } from '../../src/assets/js/sets.js';
 

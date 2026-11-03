@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 
 const QUESTIONS_DIR = join(dirname(fileURLToPath(import.meta.url)), '../../content/questions');
 const LIVE_STATUSES = new Set(['accepted', 'edited']);

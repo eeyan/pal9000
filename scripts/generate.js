@@ -23,7 +23,7 @@
 import { readFileSync, readdirSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import Anthropic from '@anthropic-ai/sdk';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import { TRANSCRIPT_FILE_RE, transcriptToText, dateFromFilename } from '../src/lib/transcript.js';
 import { buildCandidatesDoc, batchStats, formatStats } from '../src/lib/candidates.js';
 
