@@ -1,0 +1,651 @@
+week: 8
+# Provenance: promptVersion gen-v4 · model claude-opus-5-5 · promoted 2026-11-06 (15 of 25 accepted candidates)
+published: false
+title: "Crisis, Disclosure, and Capital One's Digital Bank"
+questions:
+  - id: w08-q01
+    week: 8
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 10 of The Adventures of an IT Leader, IVK's customer database starts returning
+      errors after someone, or something, renamed a database index file. Ellen Ripley says that
+      rolling the production systems back to a backup copy might not end the problem. What is her
+      reason?
+    options:
+      - key: A
+        text: Any harmful code left by intruders is likely in the backups too
+      - key: B
+        text: Reverting would lose the data entered the previous afternoon
+      - key: C
+        text: The procedures for restoring the systems were badly out of date
+      - key: D
+        text: Cho's fast-track security upgrade had never been carried out
+    answer: A
+    feedback:
+      correct: >-
+        Ripley's point is that a backup copies whatever was on the machines, including anything an
+        intruder planted, so restoring could simply restore the problem. That is why she later
+        proposes rebuilding production from the developers' files instead.
+      B: >-
+        Ripley does mention this, but it is a cost of restoring, not a reason the restore might fail
+        to fix the problem.
+      C: >-
+        Ruben says IVK's emergency procedures were out of date, and Chapter 11 says the rebuild
+        documentation was stale. Neither is Ripley's reason that a backup might carry the problem
+        forward.
+      D: >-
+        The unfunded upgrade explains why a security hole may have existed. It does not explain why
+        restoring from backup might leave harmful code in place.
+    selfExplainPrompt: >-
+      Ripley says closing known security holes 'doesn't help with anything bad that's already on the
+      inside.' How does that change what IVK should spend on after the incident?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch10 Crisis.md
+      loc: >-
+        Chapter Ten, Thursday June 28 10:15 a.m. call (Ripley on reverting to a backup) and 11:21
+        a.m. (rebuild from development files)
+  - id: w08-q02
+    week: 8
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 10 of The Adventures of an IT Leader, John Cho cannot tell which files belong on
+      IVK's production computers. IVK has a documented change-control procedure that requires a
+      record of every file put into production, but in practice teams routinely move changes in
+      without following it. Using the four components of an information system from Chapter 2 of
+      Piccoli and Pigni's textbook (Week 1), where does this weakness sit?
+    options:
+      - key: A
+        text: Technology
+      - key: B
+        text: People
+      - key: C
+        text: Process
+      - key: D
+        text: Structure
+    answer: C
+    feedback:
+      correct: >-
+        Chapter 2 separates the process as designed from the process as enacted. IVK had a careful
+        change-control procedure on paper, but in practice people routinely skipped it, so the gap
+        is in process, not in the machines or the people's skills.
+      A: >-
+        This treats the incident as a hardware or software failure. Nothing in the chapter suggests
+        the record-keeping tools were missing; the records were not kept because the steps were
+        bypassed.
+      B: >-
+        This blames the staff's skills. Cho and Ripley know exactly what records should exist; the
+        problem is that the agreed steps were not followed, which Chapter 2 treats as a process gap.
+      D: >-
+        Structure covers reporting lines, incentives and rewards. The weakness Cho describes is a
+        documented procedure that people did not follow, the designed-versus-enacted gap that
+        Chapter 2 places in process.
+    selfExplainPrompt: >-
+      Fenton calls rushing changes into production 'a business trade-off.' Which of Ross and Weill's
+      six decisions (Week 7) should cover that trade-off, and who should own it?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch10 Crisis.md
+      loc: >-
+        Chapter Ten, Thursday June 28 10:15 a.m. call (Cho, Gordon and Fenton on circumvented change
+        control); CIS 9000 Chapter 2 slides 2-9 and 2-12 (process; IS failure: designed vs. enacted
+        process)
+  - id: w08-q03
+    week: 8
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 11 of The Adventures of an IT Leader, Barton's team weighs three ways to secure
+      IVK's systems after the attack. One choice would cost money and take a couple of weeks to
+      assemble facilities and equipment, leave the systems exposed in the meantime, but spare IVK
+      from closing the business or explaining a closure. Which option is that?
+    options:
+      - key: A
+        text: Do nothing and assume the worst is over
+      - key: B
+        text: Close down and rebuild from development files
+      - key: C
+        text: Restore production from the latest backups
+      - key: D
+        text: Build a duplicate site, then switch over
+    answer: D
+    feedback:
+      correct: >-
+        Building a duplicate site means rebuilding a parallel production environment from development files while the
+        old one keeps running, then switches. It avoids a visible shutdown but would probably take a
+        couple of weeks, during which more harm could occur.
+      A: >-
+        Doing nothing costs no money or time, but it does nothing to remove harmful code an intruder
+        may have left behind.
+      B: >-
+        This is the team's preferred 'play it safe' option, and it is the one that would require a
+        noticeable shutdown that IVK would have to explain.
+      C: >-
+        Ripley considered restoring from backup in Chapter 10 and set it aside, because harmful code
+        could be in the backups too. It is not one of the three options in Chapter 11.
+    selfExplainPrompt: >-
+      Each option fits a different guess about whether intruders were ever inside IVK. Match each
+      option to the scenario it suits best.
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch11 Damage.md
+      loc: Chapter Eleven, Friday June 29 3:47 p.m. (the three options for dealing with the attack)
+  - id: w08-q04
+    week: 8
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 11 of The Adventures of an IT Leader, Barton phones Maggie and explains that his
+      team favors a shutdown and a limited disclosure to customers. She urges him to be practical
+      about what Williams will accept. What is the core of her argument?
+    options:
+      - key: A
+        text: There is no evidence of an intrusion, only suspicious circumstances
+      - key: B
+        text: Being underprepared means not assuming the convenient explanation
+      - key: C
+        text: Disclosing now means sure harm; silence means only possible harm
+      - key: D
+        text: Professional ethics require some disclosure, whatever it costs
+    answer: C
+    feedback:
+      correct: >-
+        Maggie frames disclosure as trading an uncertain risk for a certain one: announcing a
+        possible breach puts IVK in trouble immediately, while not disclosing might cause problems
+        but is less than certain to. She recommends a moderate middle option and a night's sleep.
+      A: This is Tyra Gordon's repeated point to the team, not Maggie's argument to Barton.
+      B: >-
+        This is the 'come totally clean' argument some team members made for full disclosure.
+        Maggie's advice runs the other way.
+      D: >-
+        This is Graham Wells's position at the Saturday meeting, which gets him fired. Maggie never
+        argues from professional duty.
+    selfExplainPrompt: >-
+      Maggie's argument weighs certain against uncertain harm. How would you add the possibility of
+      the attack becoming public anyway, which Williams himself raises on Saturday?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch11 Damage.md
+      loc: Chapter Eleven, Friday June 29 3:47 p.m. (disclosure positions; Barton's call with Maggie)
+  - id: w08-q05
+    week: 8
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Peter High's 2016 Forbes interview 'How Capital One Became a Leading Digital Bank,' CIO Rob
+      Alexander says that around 2010 Capital One concluded its technology model would not serve a
+      digital future, and it started on two fronts at once. What were they?
+    options:
+      - key: A
+        text: Integrating acquired banks and their infrastructure
+      - key: B
+        text: Automated delivery pipelines and DevOps ownership
+      - key: C
+        text: Agile delivery plus an in-house engineering staff
+      - key: D
+        text: A move to the public cloud and open-source software
+    answer: C
+    feedback:
+      correct: >-
+        Alexander says waterfall would not serve the future and that a model relying on outsourced
+        development and operations was wrong, so Capital One adopted agile (scrum from late 2011)
+        and built its own engineering talent at the same time.
+      A: >-
+        This was Capital One's focus in Alexander's early years as CIO, before 2010. It is what the
+        company was good at, not the change it decided to make.
+      B: >-
+        Alexander calls DevOps 'the next phase past agile.' It came later, on the heels of the agile
+        transformation, not as one of the two starting fronts.
+      D: >-
+        These came as Capital One built its engineering staff and looked at how to deliver
+        infrastructure. They were not the two fronts it started on.
+    selfExplainPrompt: >-
+      Why would agile delivery and in-house engineers need to come together? What would go wrong if
+      Capital One adopted agile while still outsourcing development?
+    source:
+      doc: How Capital One Became A Leading Digital Bank.pdf
+      loc: >-
+        Forbes interview, pp. 2–3 (answer to the first question: the 2010 conclusion and the two
+        fronts)
+  - id: w08-q06
+    week: 8
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In Peter High's Forbes interview, Capital One CIO Rob Alexander explains moving to the public
+      cloud: 'we do not want to be in the business of building infrastructure,' because others do it
+      at tremendous scale, and Capital One would rather build great applications for customers.
+      Using Bernie Ruben's competes-versus-qualifiers scheme from Chapter 5 of The Adventures of an
+      IT Leader (Week 4), how is Capital One treating its infrastructure?
+    options:
+      - key: A
+        text: A qualifier
+      - key: B
+        text: A competes investment
+      - key: C
+        text: A mandatory investment
+      - key: D
+        text: A breakthrough investment
+    answer: A
+    feedback:
+      correct: >-
+        In Ruben's scheme, qualifiers are capabilities a firm needs to compete but that do not set
+        it apart, so they are managed to minimize cost. Alexander treats infrastructure that way and
+        puts his own effort into applications, where Capital One wants to compete.
+      B: >-
+        In Ruben's scheme, competes are where a firm seeks an edge and invests to stand out.
+        Alexander places Capital One's edge in the applications it builds for customers, not in the
+        infrastructure underneath them.
+      C: >-
+        'Mandatory (i.e., security)' is one of the spending categories on Barton's whiteboard.
+        Alexander's reasoning is about where Capital One should and should not differentiate, not
+        about a required expense.
+      D: >-
+        Breakthrough (option-creating) investments are another whiteboard category. Moving to the
+        cloud is presented as a way to stop doing undifferentiated work, not as a speculative bet.
+    selfExplainPrompt: >-
+      How does Carr's 'IT Doesn't Matter' (Week 2) support Alexander's decision, and where would
+      Carr and Alexander part ways?
+    source:
+      doc: How Capital One Became A Leading Digital Bank.pdf
+      loc: >-
+        Forbes interview, pp. 3–4 (public cloud decision); Adventures of an IT Leader ch. 5, Friday
+        April 6 (Competes versus Qualifiers) and ch. 11 whiteboard
+  - id: w08-q07
+    week: 8
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Before its changes, a bank's software is written by one group and then handed to another group
+      that deploys it and keeps it running. When releases fail once they are live, each group blames
+      the other. In Peter High's Forbes interview, Capital One CIO Rob Alexander describes a
+      practice in which the people who write the code also own it once it is live, supported by an
+      automated pipeline from writing code to deploying it. What is that practice called?
+    options:
+      - key: A
+        text: Scrum
+      - key: B
+        text: DevOps
+      - key: C
+        text: Scaled agile framework
+      - key: D
+        text: Open source first
+    answer: B
+    feedback:
+      correct: >-
+        Alexander describes DevOps as automating the delivery pipeline plus a culture of developers
+        owning their code in production, bringing development and operations together. In class, the
+        instructor added that this gives one team clear responsibility for both writing and running
+        the code.
+      A: >-
+        Scrum is the agile team structure Capital One adopted in 2011, with a product owner and
+        engineers working together. It does not by itself merge development and operations.
+      C: >-
+        Alexander uses the scaled agile framework to coordinate many agile teams on larger products.
+        It is about working across teams, not developers running their own code.
+      D: >-
+        Open source first is Capital One's policy for building on and contributing to open-source
+        software. It is unrelated to who runs code in production.
+    selfExplainPrompt: >-
+      In class, the instructor said DevOps once made sense as a separate team but no longer does
+      once infrastructure lives in the cloud and is configured with code. Why does the cloud change
+      that?
+    source:
+      doc: How Capital One Became A Leading Digital Bank.pdf
+      loc: >-
+        Forbes interview, pp. 4–5 (DevOps answer); class discussion 2026-11-03 (waterfall hand-offs
+        vs. DevOps)
+  - id: w08-q08
+    week: 8
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Peter High's Forbes interview, Capital One CIO Rob Alexander says every agile scrum team
+      includes one role he calls 'critical' and 'essential' to its success, even though most team
+      members are technologists. Who fills that role, and what do they hold?
+    options:
+      - key: A
+        text: An engineering lead who runs the team's code in production
+      - key: B
+        text: A designer brought in through the Adaptive Path purchase
+      - key: C
+        text: A business product manager holding the vision and backlog
+      - key: D
+        text: A venture liaison who tracks startup pilots for the bank
+    answer: C
+    feedback:
+      correct: >-
+        Each scrum team has a product owner from a line-of-business product management team. That
+        person holds the vision for what is being built and the backlog of features to get the
+        product to market. In class, the instructor stressed that product owner is a role on a team,
+        not a job title.
+      A: >-
+        Developers owning code in production is part of DevOps. Alexander does not describe it as
+        the critical role he names on each scrum team.
+      B: >-
+        Capital One did acquire the design firm Adaptive Path to build design skills, but Alexander
+        does not place a designer as the essential role on each scrum team.
+      D: >-
+        Capital One has a San Francisco team that follows startups and venture firms, but that group
+        is not part of each scrum team.
+    selfExplainPrompt: >-
+      How does putting a business product owner on every technical team respond to the
+      business-versus-IT gap that Ross and Weill describe (Week 7)?
+    source:
+      doc: How Capital One Became A Leading Digital Bank.pdf
+      loc: >-
+        Forbes interview, p. 6 (co-location and the product owner on each scrum team); class
+        discussion 2026-11-03 (product owner is a role, not a job)
+  - id: w08-q09
+    week: 8
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 11 of The Adventures of an IT Leader, Barton brings CEO Carl Williams a single
+      recommendation: shut down major systems, call the outage a service upgrade, and contact
+      affected customers. Williams rejects it and fires two executives. In the November 3 class, the
+      instructor called Barton's presentation a big failure. What did he say Barton should have
+      done?
+    options:
+      - key: A
+        text: Recommend one course and show the options rejected and why
+      - key: B
+        text: Lay out all three options and let the CEO pick with no view
+      - key: C
+        text: Choose a moderate middle option to avoid an extreme choice
+      - key: D
+        text: Wait to recommend anything until Cho had proof of an intrusion
+    answer: A
+    feedback:
+      correct: >-
+        The instructor's point: always come with a recommendation, but also show the other options
+        you considered and why you don't recommend them. That strengthens the case and gives the
+        decision-maker an easy way to choose differently, which matters because the decision
+        belonged to Williams.
+      B: >-
+        The instructor rejected this too: a leader asking for a recommendation needs one. Options
+        alone are not enough; they should come with your view.
+      C: >-
+        This is Maggie's advice in the chapter. The instructor's critique was about how the
+        recommendation was presented, not which option was chosen.
+      D: >-
+        Cho said such evidence might never be found, and the instructor stressed that leaders
+        usually have to recommend without full information.
+    selfExplainPrompt: >-
+      The instructor said it was Williams's decision, not Barton's. How does that connect to Ross
+      and Weill's argument (Week 7) that business leaders, not IT, must decide which risks to
+      accept?
+    source:
+      doc: Class transcript (2026-11-03).vtt
+      loc: >-
+        class discussion 2026-11-03, Chapter 11 discussion (presenting a recommendation with the
+        options considered)
+  - id: w08-q10
+    week: 8
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 11 of The Adventures of an IT Leader, CEO Carl Williams refuses both the shutdown
+      and any disclosure, saying he was hired to turn IVK around. In the November 3 class, the
+      instructor said that looking at the decision from Williams's own position makes his choice
+      predictable. Why?
+    options:
+      - key: A
+        text: Disclosing would have broken the executives' nondisclosure agreements
+      - key: B
+        text: Disclosing would have contradicted Barton's remarks to the analysts
+      - key: C
+        text: Disclosing would have required a vote of the full leadership team
+      - key: D
+        text: Disclosing would mean admitting he hadn't gotten the firm in order
+    answer: D
+    feedback:
+      correct: >-
+        Williams took a high-risk turnaround job and has staked his reputation on it. Disclosing a
+        possible breach would amount to admitting failure, so his personal interest points away from
+        disclosure. The instructor tied this to an earlier theme: what is best for an individual
+        often differs from what is best for the company.
+      A: >-
+        Williams uses the nondisclosure agreements to threaten Wells and Hansen after firing them.
+        The agreements do not stop the company itself from disclosing.
+      B: >-
+        Barton told analysts the company was in good shape and might take a maintenance outage.
+        Williams never cites this, and the instructor's explanation was about Williams's own stake.
+      C: >-
+        Williams calls for a show of hands, and the team votes for Barton's plan. He overrules the
+        vote, so a vote requirement was not what drove his decision.
+    selfExplainPrompt: >-
+      The instructor said firms must work to align what is best for an individual with what is best
+      for the company. What could IVK's board have done to align Williams's incentives on security
+      disclosure?
+    source:
+      doc: Class transcript (2026-11-03).vtt
+      loc: >-
+        class discussion 2026-11-03, Chapter 11 discussion (did Williams do the right thing;
+        turnaround CEO's incentives)
+  - id: w08-q11
+    week: 8
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Peter High's Forbes interview, the interviewer asks Capital One CIO Rob Alexander how he
+      measures whether DevOps is working. In the November 3 class, the instructor pointed to
+      Alexander's answer as the interview's main weakness. What did the answer leave out?
+    options:
+      - key: A
+        text: Any metric tying the changes to business results
+      - key: B
+        text: Any mention of open-source or cloud partners
+      - key: C
+        text: Any description of how agile teams are organized
+      - key: D
+        text: Any account of how the company recruits engineers
+    answer: A
+    feedback:
+      correct: >-
+        Alexander lists productivity, quality and employee-satisfaction benefits and describes teams
+        at different stages of the journey, but gives no metric. The instructor said the hard part
+        of the CIO's job is connecting IT decisions to business impact, and even this softball
+        interview did not do it.
+      B: >-
+        Alexander discusses both at length: an 'open source first' philosophy and Amazon Web
+        Services as Capital One's main cloud partner.
+      C: >-
+        He describes scrum teams, product owners, co-location and the scaled agile framework in
+        detail.
+      D: >-
+        He spends a full answer on building the engineering team, which the class read as the
+        interview's real purpose.
+    selfExplainPrompt: >-
+      Propose one business metric Alexander could have cited for DevOps, and explain how it would
+      connect to Chapter 7's idea of value creation (Week 3).
+    source:
+      doc: Class transcript (2026-11-03).vtt
+      loc: >-
+        class discussion 2026-11-03, Capital One discussion (critique: no examples of business
+        impact or metrics); Forbes interview pp. 4–5
+  - id: w08-q12
+    week: 8
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In the November 3 class discussion of Chapter 10 of The Adventures of an IT Leader, the
+      instructor gave several reasons IT security can never be perfect. He described Log4j, a free
+      open-source logging library used by companies around the world, whose flaw forced firms
+      everywhere into weeks of emergency fixes. Which reason does that example illustrate?
+    options:
+      - key: A
+        text: Someone inside the company must hold the keys to make changes
+      - key: B
+        text: Attackers find it easier to trick staff than to break the code
+      - key: C
+        text: Every firm implicitly trusts code that it did not write
+      - key: D
+        text: New attack methods keep appearing faster than defenses do
+    answer: C
+    feedback:
+      correct: >-
+        Modern software is built on dependencies, so every company is trusting code written and
+        maintained by people it has never met. One compromised library can expose thousands of firms
+        at once, however good each firm's own defenses are.
+      A: >-
+        This is a real reason the class gave (insiders and administrators need access, and someone
+        has to watch the watchers), but the Log4j case is about outside code, not inside access.
+      B: >-
+        Social engineering came up in class as a common route in, but Log4j was a flaw in widely
+        shared software, not a trick played on employees.
+      D: >-
+        A student made this point and the class agreed, but the Log4j example illustrates the
+        dependency problem specifically: one shared component, used everywhere.
+    selfExplainPrompt: >-
+      Capital One's CIO describes an 'open source first' philosophy. What does the Log4j example add
+      to the cost-benefit case for that choice?
+    source:
+      doc: Class transcript (2026-11-03).vtt
+      loc: >-
+        class discussion 2026-11-03, Chapter 10 discussion: why security can't be perfect (insiders,
+        social engineering, Log4j dependencies)
+  - id: w08-q13
+    week: 8
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      Apple's first earnings report under CEO John Ternus, in November 2026, set a September-quarter
+      revenue record, but management called memory pricing 'unprecedented' and guided its gross
+      margin down. Contract prices for dynamic random-access memory (DRAM) chips had risen more than
+      fivefold in a year as AI data centers absorbed supply. Using Porter's five forces, which force
+      is squeezing Apple's margin?
+    options:
+      - key: A
+        text: Bargaining power of buyers
+      - key: B
+        text: Bargaining power of suppliers
+      - key: C
+        text: Threat of substitutes
+      - key: D
+        text: Threat of new entrants
+    answer: B
+    feedback:
+      correct: >-
+        When an input becomes scarce, its suppliers can raise prices and capture more of the value.
+        AI data-center demand has made memory scarce, so memory makers can charge Apple more,
+        cutting into its margin even in a record quarter.
+      A: >-
+        Buyer power would mean customers forcing Apple's prices down. Revenue was a record; the
+        pressure is on Apple's costs, from the companies it buys from.
+      C: >-
+        Substitutes would be other products meeting customers' needs instead of Apple's. Nothing in
+        the report suggests customers switching away.
+      D: >-
+        New entrants would be new competitors in Apple's markets. The margin pressure comes from
+        rising input costs, not new rivals.
+    selfExplainPrompt: >-
+      Anthropic's S-1 (Week 7) says it spreads its compute across several chip families. How is that
+      a response to the same force that is squeezing Apple?
+    source:
+      doc: News - Big tech earnings and AI capex funding (2026-10-29, CNBC).md
+      loc: >-
+        Key facts (Apple Q4 FY2026; Altman/RAM and DDR5 contract prices); CIS 9000 Chapter 8 slides
+        5–6 (five forces, Week 3)
+  - id: w08-q14
+    week: 8
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      Canva, the online design company, said in November 2026 that a restructure would affect 22% of
+      its staff after its growth slowed for the first time in a decade. Chief executive Melanie
+      Perkins did not name AI, but an outside analyst quoted in the coverage called AI 'an
+      existential threat to Canva's core business model.' Suppose the threat is that people simply
+      ask a general-purpose chatbot to make the graphic instead of opening a design app. Using
+      Porter's five forces, which force is that?
+    options:
+      - key: A
+        text: Threat of substitutes
+      - key: B
+        text: Threat of new entrants
+      - key: C
+        text: Rivalry among existing competitors
+      - key: D
+        text: Bargaining power of buyers
+    answer: A
+    feedback:
+      correct: >-
+        A substitute is a different product that meets the same need. A chatbot that produces a
+        graphic on request is not another design app competing for the same users; it replaces the
+        need to use one. Note that this reading is an outside view: Canva itself cited slowing
+        growth and changing expectations, and said the cuts are not AI replacing staff.
+      B: >-
+        New entrants would be new design apps entering Canva's market. The analyst's point is that a
+        different kind of product can do the job, which Porter calls a substitute.
+      C: >-
+        Rivalry is about Canva's existing competitors in design software fighting for the same
+        customers. The threat described comes from outside the industry.
+      D: >-
+        Buyer power is customers pushing prices down. The concern here is customers no longer
+        needing the product at all.
+    selfExplainPrompt: >-
+      TechCrunch reported that chatbot referrals already send Canva a double-digit share of its
+      traffic. How can the same AI tools be both a substitute and a channel, and what should Canva
+      do about it?
+    source:
+      doc: News - Canva restructure affects 22 percent of staff (2026-11-04, Fox Business).md
+      loc: >-
+        Key facts (scope, stated reason, AI framing); CIS 9000 Chapter 8 slides 5–6 (five forces,
+        Week 3)
+  - id: w08-q15
+    week: 8
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In the November 2026 midterm elections, voters sided against data centers in 40 of 41 local
+      ballot measures, and governors who pledged to block or put conditions on data-center permits
+      won in Texas, Ohio and Wisconsin. Opponents pointed to higher electricity bills for other
+      customers, heavy water use near ranches and towns, and tax breaks residents never voted for.
+      Which concept from the Southwest Airlines Winter Meltdown teaching case (Week 6) describes
+      what they objected to?
+    options:
+      - key: A
+        text: Technical debt
+      - key: B
+        text: Root cause analysis
+      - key: C
+        text: Externalizing risk
+      - key: D
+        text: Competitive convergence
+    answer: C
+    feedback:
+      correct: >-
+        The Southwest case calls it externalizing risk when a company's choices push costs onto
+        parties who never agreed to carry them and are not fairly compensated, as crews and
+        passengers were in the meltdown. Data-center opponents make the same argument about
+        ratepayers and neighbors, and the vote is those parties pricing the cost back in.
+      A: >-
+        Technical debt is the accumulated cost of shortcuts in a firm's own systems. The voters'
+        complaint is about costs landing on outsiders, not about the quality of anyone's systems.
+      B: >-
+        Root cause analysis is the Southwest case's method for asking why a failure happened. It is
+        a diagnostic tool, not a description of who bears a cost.
+      D: >-
+        Competitive convergence is Porter's term (Week 2) for rivals adopting the same practices
+        until no one has an edge. It has nothing to do with costs shifted onto communities.
+    selfExplainPrompt: >-
+      If communities can now refuse permits or make data centers pay their full utility costs, how
+      does that change the business case for building AI capacity?
+    source:
+      doc: News - Data centers lose at the ballot box in the 2026 midterms (2026-11-04, CNBC).md
+      loc: >-
+        Key facts (local measures; governor races; utility costs and tax exemptions); southwest
+        case.pdf Section 2, Risk Management (Week 6)

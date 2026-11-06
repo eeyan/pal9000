@@ -99,6 +99,7 @@ several slide figures are images, invisible to text extraction; they were transc
 | 2026-09-30 | gen-v4 | claude-opus-5-5 | 5 | 30 | 25 | 5 | 83% | trivia ×4, ambiguous ×1 |
 | 2026-10-27 | gen-v4 | claude-opus-5-5 | 6 | 30 | 24 | 6 | 80% | trivia ×6 |
 | 2026-11-01 | gen-v4 | claude-opus-5-5 | 7 | 31 | 26 | 5 | 84% | trivia ×4, ambiguous ×1 |
+| 2026-11-06 | gen-v4 | claude-opus-5-5 | 8 | 28 | 25 | 3 | 89% | trivia ×3 |
 
 Week 4 notes (gen-v4, in-session on Opus 5.5): 26 of 30 kept by the curator, 15 promoted, split across
 *The Adventures of an IT Leader* chapters 4–5 and the Zara case ("Rapid-Fire Fulfillment", HBR 2004), with
@@ -159,3 +160,18 @@ power. The fresh-context reviewer edited 22, rejected 4; it flagged reversal or 
 eight items, stem-to-key echo or self-eliminating stems on six, an anonymized named case (Hershey), and
 one misattributed feedback line — all applied. Curator rejects were trivia again (four) plus one
 ambiguous. Gap noted: no item covers the S-1's governance (PBC, Long-Term Benefit Trust).
+
+Week 8 notes (gen-v4, in-session on Opus 5.5): four sources — *The Adventures of an IT Leader* ch. 10–11
+(the security incident and the disclosure decision), Peter High's 2016 Forbes interview with Capital One
+CIO Rob Alexander, the 2026-11-03 class transcript, and three news files (big tech earnings and AI capex
+funding, Canva's restructure, the midterm data-center ballot results). The class opened with the
+mid-semester review deck, which was deliberately not used as a source — its content is already in Weeks 1–7.
+The news files record where in-class claims were wrong (Canva did not cite AI substitution; the "$2T, 5.8%"
+Nasdaq figures were the Nasdaq 100 mid-month), and no item relies on them. 25 of 28 kept, 15 promoted:
+four IT Leader, four Capital One (three cross-source: Ruben's competes vs. qualifiers, Chapter 2's
+four components, Ross and Weill), four from class discussion, three news (all five-forces or Southwest-case
+cross-source). Curator rejects were trivia ×3. The fresh-context reviewer rejected nothing but edited 14,
+including three transcript-rule breaks (a student's point credited to the instructor, a student credited with
+the instructor's example, and a self-explain prompt describing a student's family member), three stem-to-key
+echoes, and five unhedged or overstated source details; all applied. The bank lint caught a positional
+reference ("the third option") in one promoted feedback line.
