@@ -20,5 +20,6 @@ PLAN.md
 .netlify
 
 # local tool state
-.claude/
+.claude/*
+!.claude/skills/
 .playwright-cli/
