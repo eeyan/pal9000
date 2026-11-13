@@ -100,6 +100,7 @@ several slide figures are images, invisible to text extraction; they were transc
 | 2026-10-27 | gen-v4 | claude-opus-5-5 | 6 | 30 | 24 | 6 | 80% | trivia ×6 |
 | 2026-11-01 | gen-v4 | claude-opus-5-5 | 7 | 31 | 26 | 5 | 84% | trivia ×4, ambiguous ×1 |
 | 2026-11-06 | gen-v4 | claude-opus-5-5 | 8 | 28 | 25 | 3 | 89% | trivia ×3 |
+| 2026-11-13 | gen-v4 | claude-fable-5-2 | 9 | 31 | 26 | 5 | 84% | unspecified ×3, trivia ×2 |
 
 Week 4 notes (gen-v4, in-session on Opus 5.5): 26 of 30 kept by the curator, 15 promoted, split across
 *The Adventures of an IT Leader* chapters 4–5 and the Zara case ("Rapid-Fire Fulfillment", HBR 2004), with
@@ -175,3 +176,15 @@ including three transcript-rule breaks (a student's point credited to the instru
 the instructor's example, and a self-explain prompt describing a student's family member), three stem-to-key
 echoes, and five unhedged or overstated source details; all applied. The bank lint caught a positional
 reference ("the third option") in one promoted feedback line.
+
+Week 9 notes (gen-v4, in-session on Fable 5.2): five sources — the Chapter 11 deck (class slides, the
+Palisade Dental Partners class case, and the textbook reference slides), *The Adventures of an IT Leader*
+ch. 12–13, Wayner's "10 Reasons Software Projects Are Slower Than We Expect" (2019), and Thompson's "Mythos,
+Muse, and the Opportunity Cost of Compute" (2026). There was no class recording, so no class-discussion
+items. 26 of 31 kept, 15 promoted: nine deck (three on the Palisade case), two Wayner, two Thompson (one
+cross-source with the deck's "AI just made everyone a builder" questions), one each from ch. 12 and ch. 13.
+Curator rejects were trivia ×2 and three with no reason given (logged as "unspecified": the review page
+used to drop a reasonless reject from the export; fixed this week). The fresh-context reviewer rejected
+nothing and edited 8: three feedback lines that went past the slides, a wrong-week reference in a
+self-explain prompt, a five-year cost compared against an up-front price, one trivia framing, and two
+stem-to-key cues; the four that touched promoted items were applied. Keep-vs-reject agreement 26 of 31.

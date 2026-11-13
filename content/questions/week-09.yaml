@@ -1,0 +1,642 @@
+week: 9
+# Provenance: promptVersion gen-v4 · model claude-fable-5-2 · promoted 2026-11-13 (15 of 26 accepted candidates)
+published: true
+title: "Build, Buy, or Rent, and Why Software Projects Run Late"
+questions:
+  - id: w09-q01
+    week: 9
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      The Chapter 11 slides note that Netflix writes its own recommendation engine, yet even Amazon
+      uses an outside payroll provider. Amazon has the developers, the money and the time to write a
+      payroll system. Which point from the slides explains why it does not?
+    options:
+      - key: A
+        text: Renting is the quickest way to a working system
+      - key: B
+        text: Skills matter after launch as well as before it
+      - key: C
+        text: A package's price hides its five-year running cost
+      - key: D
+        text: Payroll is not the reason customers pick Amazon
+    answer: D
+    feedback:
+      correct: >-
+        The first of the deck's five questions asks whether the process is why customers choose you.
+        For Netflix, recommendations are the product, so it builds. Payroll sets no firm apart, so
+        even a company full of engineers buys or rents it.
+      A: >-
+        True on the slides, but speed is not Amazon's constraint in this scenario; it has the time.
+        The deciding test is whether the process sets the firm apart.
+      B: >-
+        The slides do say skills matter after launch, but Amazon has people who can build and run
+        software. Having the skills is not a reason to spend them on a process no customer chooses
+        you for.
+      C: >-
+        The slides do say to look past the purchase price. That is a caution for comparing options,
+        not the reason payroll is bought. The reason is that payroll gives no edge.
+    selfExplainPrompt: >-
+      Carr's 'IT Doesn't Matter' (Week 2) argues that technology every firm can obtain stops being a
+      source of advantage. Is payroll software an example? Is Netflix's recommendation engine a
+      counterexample?
+    source:
+      doc: CIS 9000 Chapter 11.pdf
+      loc: >-
+        slide 8 (Build when the software is your edge: Netflix, payroll); slide 17 (Five questions
+        that drive the choice, question 1)
+  - id: w09-q02
+    week: 9
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A retailer's team is adding a feature to its shopping app. Needs are unclear, so the team
+      ships a small piece every two weeks and adjusts to shopper feedback. According to the 'Two
+      ways to run a build' slide in the Chapter 11 deck, what is the main risk of running the work
+      this way?
+    options:
+      - key: A
+        text: The business changes before anything is delivered
+      - key: B
+        text: Scope keeps growing and documentation stays thin
+      - key: C
+        text: Everyone switches on one day in the busy season
+      - key: D
+        text: Prices jump when the contract comes up for renewal
+    answer: B
+    feedback:
+      correct: >-
+        This is agile delivery, and the slide names its main risk as scope that keeps growing with
+        thin documentation. The reference slides agree: limited planning and specification can leave
+        project scope uncontrolled. Short cycles handle changing needs well, but someone still has
+        to say no.
+      A: >-
+        That is the slide's main risk for the plan-first approach, where everything is defined up
+        front and delivery comes at the end. Shipping every two weeks is the defense against it.
+      C: >-
+        That describes a direct go-live, one of the four ways to switch from an old system. It is a
+        rollout choice, not the risk the slide attaches to a way of running a build.
+      D: >-
+        That is a cost of renting a cloud service on the slides. The retailer is building its own
+        feature, so no subscription renewal is involved.
+    selfExplainPrompt: >-
+      Wayner's '10 Reasons Software Projects Are Slower Than We Expect' has sections on scope creep
+      and on stakeholders changing their minds. How could short agile cycles make each of those
+      better, and how could they make each worse?
+    source:
+      doc: CIS 9000 Chapter 11.pdf
+      loc: slide 9 (Two ways to run a build); slide 45 (Agile methods benefits and challenges)
+  - id: w09-q03
+    week: 9
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      A hospital group with nine clinics is replacing its patient-records system. It moves three
+      clinics in March, three in June and three in September, and each clinic drops the old system
+      on its switch date. Which of the four go-live approaches on the Chapter 11 slides is this?
+    options:
+      - key: A
+        text: Parallel
+      - key: B
+        text: Direct
+      - key: C
+        text: Phased
+      - key: D
+        text: Pilot
+    answer: C
+    feedback:
+      correct: >-
+        A phased go-live moves one group at a time; the slides' example is CUNY moving its colleges
+        to Brightspace in waves from 2023 to 2025. The slide's trade-off applies: the safer the
+        switch, the more time and money it takes.
+      A: >-
+        In a parallel go-live the old and new systems run side by side, as MetroCard and OMNY did
+        for more than six years. Here each clinic drops the old system on the day it switches.
+      B: >-
+        In a direct go-live everyone switches on one day, as Healthcare.gov and Hershey did. This
+        group spreads the move across three dates.
+      D: >-
+        A pilot sends a single location first as a test, and the rest follow once it works. Here
+        there is no test site; every wave is a full move of three clinics.
+    selfExplainPrompt: >-
+      The slide says Hershey and Healthcare.gov both switched directly. What would a phased or pilot
+      go-live have cost Hershey in time and money, and what would it have protected?
+    source:
+      doc: CIS 9000 Chapter 11.pdf
+      loc: 'slide 10 (Going live: four ways to switch)'
+  - id: w09-q04
+    week: 9
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In the Palisade Dental Partners class case from the Chapter 11 slides, the Rent option
+      includes online booking and is ready in four months. The deck's 80/20 rule of thumb favors a
+      product that covers most requirements, but the same slide warns of a trap. Which fact in the
+      case springs that trap?
+    options:
+      - key: A
+        text: The vendor will end support in twelve months
+      - key: B
+        text: Three managers made booking pages with AI tools
+      - key: C
+        text: The whole IT team consists of only six people
+      - key: D
+        text: Emergency booking brings in 30% of new patients
+    answer: D
+    feedback:
+      correct: >-
+        The rule says buying usually beats building once a product covers about 80% of requirements.
+        The trap is the slide's next question: what if the missing 20% is the reason customers
+        choose you? Cross-office emergency booking is that piece for Palisade, and the Rent option
+        has no cross-office search.
+      A: >-
+        The deadline makes speed matter, which is a reason to prefer the fast option, not a warning
+        against it. The trap concerns what the product leaves out.
+      B: >-
+        The home-made booking pages are an end-user development risk: nobody has checked where
+        patient data goes. They are a problem to manage, but they are not the 80/20 trap.
+      C: >-
+        A six-person team limits what Palisade can build and keep running, which pushes toward
+        buying or renting. The trap is about whether the piece a product does not cover is
+        strategic.
+    selfExplainPrompt: >-
+      The 80/20 slide offers three responses to the gap: configure, customize, or build that piece.
+      Which would you pick for Palisade's emergency booking, and what does each one cost when the
+      vendor ships an upgrade?
+    source:
+      doc: CIS 9000 Chapter 11.pdf
+      loc: >-
+        slide 12 (The 80/20 rule, and its trap); slides 18-19 (Palisade Dental Partners case and
+        options); slide 37
+  - id: w09-q05
+    week: 9
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      A sales-operations analyst built the database her team uses to calculate commissions. When she
+      resigns, the tool still runs, but no one can change it for the new commission plan, and the
+      next quarter's payouts are late. Which risk of end-user development, as listed on the Chapter
+      11 slides, has the team run into?
+    options:
+      - key: A
+        text: Unreliable quality standards
+      - key: B
+        text: High incidence of errors
+      - key: C
+        text: Continuity risks
+      - key: D
+        text: Increased pressure on the IS function
+    answer: C
+    feedback:
+      correct: >-
+        The class slide puts this risk plainly: only one person understands the tool. Something made
+        outside IT often has no backup person, so it cannot be maintained once
+        its creator leaves. The slides' second question about AI-built tools asks the same thing:
+        who keeps it running when its creator leaves?
+      A: >-
+        This risk is about tools built without the testing and standards IT would apply. The
+        database worked while its creator was there; the failure came from her leaving.
+      B: >-
+        Errors nobody checks are a real end-user risk; the slides cite the Excel file that dropped
+        15,841 Covid cases in England. Here nothing was miscalculated. The team cannot update the
+        tool.
+      D: >-
+        This risk is the support load that lands on the information systems (IS) function as
+        user-made tools spread. It may follow if IT is asked to rescue the database, but the event
+        itself is the loss of the one person who understood it.
+    selfExplainPrompt: >-
+      Technical debt (Week 6) builds up from shortcuts that someone must pay for later. Is an
+      undocumented, single-owner tool a form of technical debt? Who ends up paying it?
+    source:
+      doc: CIS 9000 Chapter 11.pdf
+      loc: >-
+        slide 62 (End-user development: benefits and risks); slide 15 (You have already done this);
+        slide 16 (question 2)
+  - id: w09-q06
+    week: 9
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In the Palisade Dental Partners class case from the Chapter 11 slides, the Rent option costs
+      $450 per office each month for 42 offices. The deck's fifth question asks what a choice will
+      cost over five years. About how much is that for Rent?
+    options:
+      - key: A
+        text: About $19,000
+      - key: B
+        text: About $227,000
+      - key: C
+        text: About $1.1 million
+      - key: D
+        text: About $2.2 million
+    answer: C
+    feedback:
+      correct: >-
+        $450 times 42 offices is $18,900 a month, about $227,000 a year, and about $1.13 million
+        over five years. Over the same five years, Buy runs roughly $2.0 to $2.2 million ($1.2
+        million, then $200,000 a year), so Rent costs about half as much. That is why the slide says
+        to look past the purchase price before comparing options.
+      A: >-
+        That is one month for all 42 offices. A monthly figure makes renting look trivial next to a
+        $1.2 million purchase; the five-year view is 60 of those months.
+      B: >-
+        That is one year. The slide's question asks about five years, because a subscription fee
+        recurs every month while a purchase is mostly paid up front.
+      D: >-
+        That is roughly the Buy option over five years: $1.2 million plus $200,000 a year. Rent's
+        fee is per office per month, so multiply $450 by 42 offices and 60 months.
+    selfExplainPrompt: >-
+      The Rent slide says prices can jump at renewal and leaving gets harder every year. How would a
+      30% price rise in year three change the comparison, and which step of the five-step buying
+      process could limit that risk?
+    source:
+      doc: CIS 9000 Chapter 11.pdf
+      loc: >-
+        slide 19 (Four options: Rent at $450 per office each month); slide 17 (Five questions,
+        question 5)
+  - id: w09-q07
+    week: 9
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In the Palisade Dental Partners class case from the Chapter 11 slides, one group decides to
+      mix options. It wants to apply the third response on the 80/20 slide: keep a product for
+      everything standard and write only the missing piece itself. Which plan does that?
+    options:
+      - key: A
+        text: Buy the package and pay the vendor to customize booking
+      - key: B
+        text: Rent the service and build emergency search to plug in
+      - key: C
+        text: Build the entire system so booking stays exactly as is
+      - key: D
+        text: Let the office managers extend their own AI booking pages
+    answer: B
+    feedback:
+      correct: >-
+        The third response on the 80/20 slide is to build that piece and keep the package for
+        everything else. The Rent option includes online booking in four months and lacks
+        cross-office search, but add-ons can plug in. Building only the emergency search keeps the
+        feature behind 30% of new patients without owning a whole scheduling system.
+      A: >-
+        That is the slide's second response, customize: pay to change the product, and upgrades get
+        harder. Palisade's current system is a heavily customized package whose vendor is ending
+        support.
+      C: >-
+        That is the Build option: $3.0 million and 18 months, against a support deadline of 12
+        months. It protects emergency booking by rewriting everything products already do.
+      D: >-
+        That is end-user development. Nobody has checked where patient data goes, and the case gives
+        no sign that three separate pages can find an open chair across offices.
+    selfExplainPrompt: >-
+      If Palisade builds the add-on, which go-live approach from the slides (parallel, direct,
+      phased or pilot) would you use across 42 offices, and why?
+    source:
+      doc: CIS 9000 Chapter 11.pdf
+      loc: >-
+        slide 12 (80/20: configure, customize, build that piece); slides 18-19 (Palisade Dental
+        Partners case and options)
+  - id: w09-q08
+    week: 9
+    type: definitional
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A marketing vice president sponsoring a custom system tells the project lead, 'Call me when
+      it's built.' According to the Chapter 11 slide on the three phases of the systems development
+      life cycle (SDLC), in which phases do managers carry the most weight?
+    options:
+      - key: A
+        text: Definition and build
+      - key: B
+        text: Build and implementation
+      - key: C
+        text: Feasibility analysis and programming
+      - key: D
+        text: Definition and implementation
+    answer: D
+    feedback:
+      correct: >-
+        The slide says managers carry the most weight in the first and last phases. Definition is
+        led by managers and users and produces the requirements document. Implementation includes
+        training and change management. Build is the developers' phase.
+      A: >-
+        Definition is right, but Build is the technical phase led by developers: system design,
+        programming and testing.
+      B: >-
+        Implementation is right, but Build is led by developers. The phase this vice president is
+        skipping is the first one, where the requirements are set.
+      C: >-
+        Feasibility analysis is a step in Definition, where managers do matter, but programming is a
+        Build step led by developers. The slide's answer is two whole phases.
+    selfExplainPrompt: >-
+      Ross and Weill's 'Six IT Decisions Your IT People Should Not Make' (Week 7) also assigns
+      decisions to business managers. Which of the six is this vice president handing to IT by
+      staying away until the system is built?
+    source:
+      doc: CIS 9000 Chapter 11.pdf
+      loc: 'slide 24 (Plan first, up close: three SDLC phases); slides 39 and 42'
+  - id: w09-q09
+    week: 9
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A chief executive reads that AI tools now write code several times faster and concludes that
+      large software projects will stop running late or failing. Which point from the Chapter 11
+      slide 'It is rarely the code' answers him best?
+    options:
+      - key: A
+        text: Renting is the quickest path, and building is slowest
+      - key: B
+        text: A proven package has had most of its bugs found
+      - key: C
+        text: The usual causes of failure are management decisions
+      - key: D
+        text: Agile ships a small piece every one to four weeks
+    answer: C
+    feedback:
+      correct: >-
+        The slide's three causes are unclear or shifting requirements, testing squeezed by a fixed
+        deadline, and a risky go-live, and it calls each one a management decision. Writing code
+        faster changes none of them. The slide ties Wayner's scope creep and changing minds to the
+        first cause and his 'slower is better' to the second.
+      A: >-
+        True on the five-questions slide, but that slide compares ways of getting software. It does
+        not explain why big projects fail.
+      B: >-
+        That is a reason to buy rather than build. SPAR bought an established product and still
+        broke down in implementation, so fewer bugs does not settle the executive's claim.
+      D: >-
+        True of agile on the slides. But shorter cycles do not stop requirements from shifting or a
+        fixed launch date from squeezing testing.
+    selfExplainPrompt: >-
+      The slides ask which of Wayner's ten reasons AI fixes. Pick two of his reasons, one that
+      faster code-writing helps and one it leaves untouched, and say why.
+    source:
+      doc: CIS 9000 Chapter 11.pdf
+      loc: slide 6 (It is rarely the code); slide 16 (discussion prompt on Wayner's ten reasons)
+  - id: w09-q10
+    week: 9
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A bank's customer-portal project is 14 months past its original date. Along the way the
+      architecture was changed enough that most of the work was redone, and the deliverables no
+      longer match the launch plan. How does Wayner's '10 Reasons Software Projects Are Slower Than
+      We Expect' suggest accounting for those months?
+    options:
+      - key: A
+        text: As rework that the ticket system counted as progress
+      - key: B
+        text: As several projects run under one unchanged name
+      - key: C
+        text: As debate about design that took the place of work
+      - key: D
+        text: As data models rebuilt after each new exception
+    answer: B
+    feedback:
+      correct: >-
+        Wayner's point about scope creep is that when scope and deliverables change this much, the
+        first project in effect ended and a new one began without the usual launch. An accurate
+        accounting would show developers spending those months on several projects that share a
+        name, not one project running late.
+      A: >-
+        That is Wayner's caution about agile: opening a new ticket to fix earlier work can look like
+        twice the accomplishment. The scenario is about changed architecture and deliverables, not
+        ticket counts.
+      C: >-
+        Wayner's section on deliberations says design talk takes time because each project builds
+        something fairly new. Here the delay came from redoing work after the target changed.
+      D: >-
+        Wayner does say rigid data structures take time to iterate on. The scenario's cause is
+        broader: the whole architecture and the deliverables changed.
+    selfExplainPrompt: >-
+      The Chapter 11 slide 'It is rarely the code' files scope creep under unclear or shifting
+      requirements and calls it a management decision. Which phase of the systems development life
+      cycle is supposed to prevent it, and who leads that phase?
+    source:
+      doc: Wayner - 10 Reasons Software Projects Are Slower Than We Expect (2019, CIO).md
+      loc: section 'Scope creep'
+  - id: w09-q11
+    week: 9
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      At a startup, developers pick whichever tickets they like each sprint.
+      Features collide and the release slips. Which remedy follows from the section on
+      agile in Wayner's '10 Reasons Software Projects Are Slower Than We Expect'?
+    options:
+      - key: A
+        text: A guiding hand that sets direction for the team
+      - key: B
+        text: A full specification agreed before coding starts
+      - key: C
+        text: More design reviews with business stakeholders
+      - key: D
+        text: Stricter data models fixed early in the project
+    answer: A
+    feedback:
+      correct: >-
+        Wayner says developers like agile because it lets them pick where to contribute, but that it
+        can lead to chaos without a guiding hand. Frameworks are merely guidelines, and someone
+        still has to steer. The Chapter 11 slides repeat the point: agile can slide into chaos
+        without firm direction.
+      B: >-
+        That is the plan-first approach from the slides. Wayner does not prescribe it; he says every
+        methodology has limitations and work in action differs from work in theory.
+      C: >-
+        Wayner calls design review essential but warns that it invites feature requests. More
+        reviews would add scope, not direction.
+      D: >-
+        Wayner describes a standing tension between strict and flexible data models and says
+        iterating on them takes time. Fixing them early is not his remedy for an undirected team.
+    selfExplainPrompt: >-
+      Capital One's chief information officer (Week 8) paired agile delivery with a business product
+      manager who holds the vision and the backlog. How does that role supply what Wayner says agile
+      needs?
+    source:
+      doc: Wayner - 10 Reasons Software Projects Are Slower Than We Expect (2019, CIO).md
+      loc: section 'Agile has limitations'; CIS 9000 Chapter 11 slide 9 (Two ways to run a build)
+  - id: w09-q12
+    week: 9
+    type: definitional
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In his Stratechery article on the Mythos and Muse models, Thompson describes Microsoft missing
+      analysts' growth expectations for its Azure cloud business. Demand was there, but Microsoft
+      sent newly available graphics processing units (GPUs) to its own Copilot products first. Which
+      kind of cost was Microsoft weighing?
+    options:
+      - key: A
+        text: Fixed cost
+      - key: B
+        text: Marginal cost
+      - key: C
+        text: Opportunity cost
+      - key: D
+        text: Transaction cost
+    answer: C
+    feedback:
+      correct: >-
+        Compute used in one place cannot be used in another, so the cost of giving GPUs to Copilot
+        is the Azure revenue given up. Thompson says this, not marginal cost, is the challenge
+        facing hyperscalers: how much capacity goes to customers and how much to internal workloads.
+        Microsoft favored its own products for their higher margins and lifetime value.
+      A: >-
+        Chips and data centers are fixed costs, paid whether or not they are used. The choice
+        Microsoft faced came after that spending: which use of the capacity to favor.
+      B: >-
+        Marginal cost is what one more unit costs to make. Thompson argues it is almost immaterial
+        here: nobody with AI chips is deciding whether to run them, only what to run on them.
+      D: >-
+        Thompson mentions free distribution and transaction costs as the two preconditions for
+        Aggregators. They concern reaching customers, not allocating scarce capacity.
+    selfExplainPrompt: >-
+      In Chapter 13 of The Adventures of an IT Leader, Barton moves security upgrades ahead of other
+      IT projects. What did IVK give up as a result, and who complained about it?
+    source:
+      doc: Thompson - Mythos, Muse, and the Opportunity Cost of Compute (2026, Stratechery).md
+      loc: sections 'Marginal Costs' and 'Opportunity Costs' (Microsoft's capacity allocation)
+  - id: w09-q13
+    week: 9
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      An operations manager's team now depends on a scheduling tool she made with an AI coding
+      assistant; it calls the AI provider's model every time it runs. Thompson's Stratechery article
+      on the Mythos and Muse models argues that AI labs cannot serve everyone, because compute given
+      to one customer is unavailable to another. Which check from the Chapter 11 slide 'AI just made
+      everyone a builder' does his argument make most urgent?
+    options:
+      - key: A
+        text: Whether anyone has verified that the tool works
+      - key: B
+        text: Whether the provider may reprice or ration access
+      - key: C
+        text: Whether IT knows that the tool exists at all
+      - key: D
+        text: Whether someone can run it after its maker leaves
+    answer: B
+    feedback:
+      correct: >-
+        The slide's fifth question asks what happens if the AI provider raises prices or limits
+        access. Thompson expects both: he says Anthropic is already short on compute for its current
+        models, will need to charge more, and limited its newest model to a finite number of
+        companies. A tool that calls a provider's model inherits that risk.
+      A: >-
+        Who checked that it works is the slide's first question, and the Replit example on that
+        slide shows why it matters. Thompson's article is about the supply and price of compute, not
+        software quality.
+      C: >-
+        Whether IT knows it exists is the fourth question. It matters for any user-made tool, but
+        nothing in Thompson's argument bears on it.
+      D: >-
+        Who keeps it running when its creator leaves is the continuity question. It concerns people
+        inside the firm; Thompson's point concerns the outside supplier.
+    selfExplainPrompt: >-
+      The Rent slide lists 'prices can jump at renewal' and 'their outage becomes your outage.' In
+      what sense is a tool that calls an AI provider's model rented, even though your colleague made
+      it?
+    source:
+      doc: Thompson - Mythos, Muse, and the Opportunity Cost of Compute (2026, Stratechery).md
+      loc: >-
+        sections 'Opportunity Costs' and 'Mythos'; CIS 9000 Chapter 11 slide 16 (AI just made
+        everyone a builder, question 5)
+  - id: w09-q14
+    week: 9
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      An IT director learns that a key vendor contract may expose her firm to a large penalty. She
+      decides to handle it the way Bill Davies recommends in Chapter 12 of The Adventures of an IT
+      Leader, following the Doctrine of Completed Staff Work. What does she bring to her chief
+      executive?
+    options:
+      - key: A
+        text: An early warning, given the day the risk first appears
+      - key: B
+        text: A weekly briefing that invites the boss's input
+      - key: C
+        text: One fully worked-out action, ready for a signature
+      - key: D
+        text: A list of open questions for the boss to settle
+    answer: C
+    feedback:
+      correct: >-
+        Completed staff work means studying a problem and presenting a solution in such finished
+        form that the boss only has to approve or disapprove. Davies describes it as taking
+        solutions, not problems, to the CEO, and only once you understand everything. The sidebar's
+        final test is whether you would sign the paper yourself and stake your reputation on it.
+      A: >-
+        That is the rule on Barton's own whiteboard: tell your boss bad news first, as soon as the
+        possibility is known. Davies would wait until the solution is ready.
+      B: >-
+        Frequent meetings with a chance for input are what Barton proposes and Maggie endorses.
+        Davies says the continuous explaining would be horrible for both sides.
+      D: >-
+        The doctrine says the boss needs answers, not questions. Asking the boss what to do is the
+        impulse it tells staff to resist.
+    selfExplainPrompt: >-
+      The chapter's reflection asks how effective this doctrine is when information travels in real
+      time. After the blog discovery in Chapter 13, what is the risk of waiting until a solution is
+      complete before telling the boss?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch12 Communication.md
+      loc: >-
+        Chapter Twelve, Thursday July 12 (lunch with Davies); sidebar 'The Doctrine of Completed
+        Staff Work'; whiteboard (Communication)
+  - id: w09-q15
+    week: 9
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 13 of The Adventures of an IT Leader, Barton's peers second-guess the way he
+      reordered IT projects, and he wonders whether to bring back the committee Davies used to set
+      IT priorities. According to the chapter, what was wrong with that committee besides its
+      slowness?
+    options:
+      - key: A
+        text: It left one person to take the blame for trade-offs
+      - key: B
+        text: It drew no feedback on proposed priorities
+      - key: C
+        text: It put security upgrades ahead of business projects
+      - key: D
+        text: It let business units set aside technical risks
+    answer: D
+    feedback:
+      correct: >-
+        The chapter says the committee operated very slowly and, worse, allowed business units to
+        set aside concerns related to technical risks. Barton traces the June event to that problem:
+        as a business manager he had pushed his own project through, displacing the security project
+        that would have prevented the intrusion, if there was one.
+      A: >-
+        That is the weakness of the arrangement that replaced the committee. With Barton controlling
+        the IT budget, it is his neck alone in the noose.
+      B: >-
+        That is what happened under Barton's own approach: he sent the proposed reordering to his
+        peers, heard nothing back, and was second-guessed afterward.
+      C: >-
+        That describes Barton's reprioritization after the incident, which everyone had agreed to.
+        It was not a feature of Davies's committee.
+    selfExplainPrompt: >-
+      Ross and Weill (Week 7) say business leaders should decide which security risks to accept.
+      Does Davies's committee or Barton's sole control of the budget come closer to their advice,
+      and what would a third way look like?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch13 Emerging Technology.md
+      loc: Chapter Thirteen, Wednesday August 8 (Barton on returning to a committee structure)
