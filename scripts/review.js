@@ -192,7 +192,7 @@ const html = `<!doctype html>
     if (decisions[q.id]) continue;
     const m = /^rejected:\\s*(.+)$/.exec(q.status || '');
     if (q.status === 'accepted' || q.status === 'edited') decisions[q.id] = { status: q.status, note: q.note || '' };
-    else if (m) decisions[q.id] = { status: 'rejected', reason: m[1], note: q.note || '' };
+    else if (m) decisions[q.id] = { status: 'rejected', ...(data.reasons.includes(m[1]) ? { reason: m[1] } : {}), note: q.note || '' };
   }
   let idx = Math.max(0, data.questions.findIndex((q) => !decisions[q.id]));
 
@@ -200,7 +200,9 @@ const html = `<!doctype html>
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(decisions)); } catch {} };
   const toast = (msg) => { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove('show'), 1600); };
-  const decided = (q) => decisions[q.id] && decisions[q.id].status && (decisions[q.id].status !== 'rejected' || decisions[q.id].reason);
+  // A reject counts as soon as R is pressed; the reason is optional (curate.js
+  // records a reasonless reject as "rejected: unspecified").
+  const decided = (q) => decisions[q.id] && decisions[q.id].status;
 
   $('model').textContent = [data.promptVersion, data.model].filter(Boolean).join(' · ');
   const warned = data.questions.filter((q) => q.lint && q.lint.length).length;
@@ -291,7 +293,7 @@ const html = `<!doctype html>
     ta.value = d.note || '';
     ta.addEventListener('input', () => { decisions[q.id] = { ...(decisions[q.id] || {}), note: ta.value }; save(); });
     decide.append(ta);
-    decide.append(el('div', 'hint', 'Keys: ↓/↑ or J/K move · A accept · E edit · R reject · 1–5 reason · N note · ⌘/Ctrl+Enter next · Esc leave note'));
+    decide.append(el('div', 'hint', 'Keys: ↓/↑ or J/K move · A accept · E edit · R reject · 1–5 reason (optional) · N note · ⌘/Ctrl+Enter next · Esc leave note'));
     host.append(decide);
     card.scrollTop = 0;
   }
@@ -309,7 +311,7 @@ const html = `<!doctype html>
     render();
     if (s === 'accepted') nextOpen();
     else if (s === 'edited') $('note').focus();
-    // rejected: leave focus on the page so 1–5 picks the reason; setReason then focuses the note
+    // rejected: already recorded; focus stays on the page so 1–5 can add a reason (setReason then focuses the note)
   }
   function setReason(r) {
     const q = data.questions[idx];

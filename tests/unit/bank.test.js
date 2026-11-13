@@ -6,7 +6,7 @@ import { loadBank, WEEK_FILE_RE } from '../../src/lib/bank.js';
 import { longQuote, MAX_QUOTED_WORDS } from '../../src/lib/candidates.js';
 
 const QUESTIONS_DIR = join(import.meta.dirname, '../../content/questions');
-const REJECT_REASONS = ['hallucination', 'leakage', 'trivia', 'ambiguous', 'duplicate', 'malformed'];
+const REJECT_REASONS = ['hallucination', 'leakage', 'trivia', 'ambiguous', 'duplicate', 'malformed', 'unspecified'];
 
 // Same regex the loader uses — lint coverage and site coverage cannot diverge.
 const weekFiles = readdirSync(QUESTIONS_DIR).filter((f) => WEEK_FILE_RE.test(f));

@@ -6,7 +6,7 @@
 // Reads:  content/questions/week-NN.candidates.yaml + the decisions JSON
 //         { week, decisions: { "wNN-cNN": { status, reason?, note? } } }
 // Writes: the same candidates file — status becomes accepted | edited |
-//         "rejected: <reason>", and `note` carries the curator's guidance for a
+//         "rejected: <reason>" ("rejected: unspecified" when no reason was given), and `note` carries the curator's guidance for a
 //         better version (kept on the question so an edit pass can act on it).
 //         Questions with no decision stay `candidate`.
 
@@ -15,6 +15,7 @@ import { join } from 'node:path';
 import * as yaml from 'js-yaml';
 
 const REJECT_REASONS = ['hallucination', 'leakage', 'trivia', 'ambiguous', 'duplicate'];
+const NO_REASON = 'unspecified';
 
 function die(msg) {
   console.error(msg);
@@ -50,8 +51,10 @@ for (const [id, d] of Object.entries(decisions)) {
   const q = byId.get(id);
   if (!q) { unknown.push(id); continue; }
   if (d.status === 'rejected') {
-    if (!REJECT_REASONS.includes(d.reason)) die(`${id}: rejected without a valid reason (got "${d.reason ?? ''}"; need one of ${REJECT_REASONS.join('|')}).`);
-    q.status = `rejected: ${d.reason}`;
+    // The reason is optional on the review page; a reject without one is still a reject.
+    const reason = d.reason == null || d.reason === '' ? NO_REASON : d.reason;
+    if (reason !== NO_REASON && !REJECT_REASONS.includes(reason)) die(`${id}: unknown reject reason "${reason}" (use one of ${REJECT_REASONS.join('|')}, or leave it out).`);
+    q.status = `rejected: ${reason}`;
   } else if (d.status === 'accepted' || d.status === 'edited') {
     q.status = d.status;
   } else {
