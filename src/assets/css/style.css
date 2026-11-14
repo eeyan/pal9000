@@ -504,6 +504,32 @@ h1 {
 .stamp-note { display: inline-block; color: var(--dim); font-size: 0.85rem; margin-top: 0.4rem; }
 .stamp-banner .stamp-note { margin: 0.4rem 0 0; }
 
+/* Finish-screen "save a copy" nudge (week-page.js) and its SYSTEMS twin. */
+.save-copy {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  background: var(--panel);
+  padding: 1rem 1.1rem;
+  margin: 0 auto 1.5rem;
+  max-width: 52ch;
+  text-align: left;
+}
+.save-copy-note { font-size: 0.9rem; margin: 0 0 0.9rem; }
+.save-copy-note strong, .keep-copy strong, .inapp-notice strong { color: var(--text); font-weight: 600; }
+.save-copy .status-msg { margin-top: 0.7rem; }
+
+/* Shown only inside another app's embedded browser (browser-check.js). */
+.inapp-notice {
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--dim);
+  font-size: 0.9rem;
+  padding: 0.9rem 1.1rem;
+  margin: 0 0 1.5rem;
+}
+
 /* Install prompt on the home page — shown by home.js once there's progress
    worth protecting, dismissed for good with GOT IT. */
 .install-hint {

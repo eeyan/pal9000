@@ -3,7 +3,7 @@
 // gate shows when no name is stored, stores the name, starts the quiz, and
 // onComplete writes a signed record that verifies against that name.
 import { describe, it, expect, vi, beforeAll, beforeEach, afterEach } from 'vitest';
-import { verifyCompletion } from '../../src/assets/js/completion.js';
+import { verifyCompletion, parseLog, LOG_HEADER } from '../../src/assets/js/completion.js';
 
 beforeAll(() => {
   Element.prototype.scrollIntoView = () => {};
@@ -124,5 +124,64 @@ describe('week page name gate', () => {
     expect(JSON.parse(localStorage.getItem('pal9000.progress.v1'))[1]).toEqual(prev);
     expect(document.querySelector('.done-stamp .stamp-code').textContent).toContain('0WDNEA-KZ1F20');
     expect(document.querySelector('.done-stamp .stamp-note').textContent).toContain('Your earlier 2/2 stays on file');
+  });
+});
+
+describe('finish screen: save a copy', () => {
+  async function finishWeek() {
+    vi.useFakeTimers();
+    localStorage.setItem('pal9000.name.v1', 'Ian Anderson');
+    await loadPage();
+    for (let i = 0; i < QS.length; i += 1) {
+      settle();
+      click('.option[data-key="A"]');
+      click('.btn-next');
+    }
+    vi.useRealTimers();
+    await signed();
+    await vi.waitFor(() => expect(document.querySelector('.save-copy')).not.toBeNull());
+  }
+
+  afterEach(() => {
+    delete navigator.share;
+  });
+
+  it('offers to copy the completion log, including the week just finished', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true });
+    await finishWeek();
+
+    expect(document.querySelector('.save-copy-note').textContent).toContain('Save a copy now.');
+    // No share sheet on this browser → only the copy button.
+    expect(document.querySelector('[data-save="share"]')).toBeNull();
+    // The block sits above the way out, not after it.
+    const kids = [...document.querySelector('.done-panel').children];
+    expect(kids.indexOf(document.querySelector('.save-copy'))).toBeLessThan(kids.findIndex((c) => c.querySelector('a.btn-next')));
+
+    click('[data-save="copy"]');
+    await vi.waitFor(() => expect(writeText).toHaveBeenCalledTimes(1));
+    const copied = writeText.mock.calls[0][0];
+    const parsed = parseLog(copied);
+    expect(copied.startsWith(LOG_HEADER)).toBe(true);
+    expect(parsed.name).toBe('Ian Anderson');
+    const rec = JSON.parse(localStorage.getItem('pal9000.progress.v1'))[1];
+    expect(parsed.records).toEqual([{ week: 1, score: 2, total: 2, code: rec.code, name: null }]);
+    await vi.waitFor(() => expect(document.querySelector('[data-save="copy"]').textContent).toBe('COPIED ✓'));
+  });
+
+  it('points at SYSTEMS when the clipboard is unavailable', async () => {
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText: vi.fn().mockRejectedValue(new Error('denied')) }, configurable: true });
+    await finishWeek();
+    click('[data-save="copy"]');
+    await vi.waitFor(() => expect(document.querySelector('.save-copy .status-msg').textContent).toContain('copy it from SYSTEMS'));
+  });
+
+  it('adds a share-sheet button where the browser has one', async () => {
+    const share = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'share', { value: share, configurable: true, writable: true });
+    await finishWeek();
+    click('[data-save="share"]');
+    await vi.waitFor(() => expect(share).toHaveBeenCalledTimes(1));
+    expect(share.mock.calls[0][0].text.startsWith(LOG_HEADER)).toBe(true);
   });
 });

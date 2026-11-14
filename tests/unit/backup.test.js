@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { BACKUP_FORMAT, makeBackup, parseBackup } from '../../src/assets/js/backup.js';
+import { BACKUP_FORMAT, makeBackup, parseBackup, recordsFromLog, mergeProgress } from '../../src/assets/js/backup.js';
+import { buildLog, logText, signCompletion } from '../../src/assets/js/completion.js';
+import { SETS, setHeading } from '../../src/assets/js/sets.js';
 
 const review = { items: { 'w01-q01': { idx: 2, due: 1_700_000_000_000 } } };
 const progress = { 1: { score: 9, total: 10, at: 1_690_000_000_000 } };
@@ -77,5 +79,68 @@ describe('v2: name + completion codes', () => {
   it('writes the v2 stamp', () => {
     expect(makeBackup(review, {}, 1, 'x').format).toBe('pal9000-backup-v2');
     expect(BACKUP_FORMAT).toBe('pal9000-backup-v2');
+  });
+});
+
+describe('restore from a saved completion log', () => {
+  const AT = Date.parse('2026-10-20T23:05:00Z'); // on the minute — codes carry minute precision
+  const WEEKS = SETS.flatMap((s) => s.weeks);
+
+  async function signedProgress(name, entries) {
+    const progress = {};
+    for (const [week, score, total] of entries) {
+      progress[week] = { score, total, at: AT, name, code: await signCompletion({ week, at: AT, score, total, name }) };
+    }
+    return progress;
+  }
+  const textOf = (progress, name) => logText(buildLog(SETS, progress, name, setHeading));
+
+  it('rebuilds exactly the records a copied log was made from', async () => {
+    const progress = await signedProgress('Jordan Rivera', [[6, 13, 15], [7, 15, 15]]);
+    const out = await recordsFromLog(textOf(progress, 'Jordan Rivera'), WEEKS);
+    expect(out.progress).toEqual(progress);
+    expect(out.name).toBe('Jordan Rivera');
+    expect(out.skipped).toBe(0);
+  });
+
+  it('leaves out lines that do not verify: edited score, unsigned, wrong name', async () => {
+    const progress = await signedProgress('Jordan Rivera', [[6, 13, 15], [7, 15, 15]]);
+    progress[8] = { score: 9, total: 15, at: AT }; // unsigned
+    const text = textOf(progress, 'Jordan Rivera').replace('13/15', '15/15');
+    const out = await recordsFromLog(text, WEEKS);
+    expect(Object.keys(out.progress)).toEqual(['7']);
+    expect(out.skipped).toBe(2);
+
+    const stolen = textOf(await signedProgress('Jordan Rivera', [[6, 13, 15]]), 'Jordan Rivera')
+      .replace('NAME · Jordan Rivera', 'NAME · Someone Else');
+    expect((await recordsFromLog(stolen, WEEKS)).progress).toEqual({});
+  });
+
+  it('keeps the better score when two saved logs are pasted together', async () => {
+    const a = textOf(await signedProgress('Jordan Rivera', [[6, 11, 15]]), 'Jordan Rivera');
+    const b = textOf(await signedProgress('Jordan Rivera', [[6, 14, 15], [9, 12, 15]]), 'Jordan Rivera');
+    const out = await recordsFromLog(`${a}\n\n${b}`, WEEKS);
+    expect(out.progress[6].score).toBe(14);
+    expect(out.progress[9].score).toBe(12);
+  });
+
+  it('mergeProgress adds and upgrades but never removes or lowers', () => {
+    const have = {
+      6: { score: 14, total: 15, at: 1, name: 'J', code: 'AAAAAA-AAAAAA' },
+      7: { score: 9, total: 15, at: 1 }, // unsigned
+      10: { score: 15, total: 15, at: 1, name: 'J', code: 'BBBBBB-BBBBBB' },
+    };
+    const incoming = {
+      6: { score: 12, total: 15, at: 2, name: 'J', code: 'CCCCCC-CCCCCC' },
+      7: { score: 8, total: 15, at: 2, name: 'J', code: 'DDDDDD-DDDDDD' },
+      8: { score: 13, total: 15, at: 2, name: 'J', code: 'EEEEEE-EEEEEE' },
+    };
+    const { progress, added } = mergeProgress(have, incoming);
+    expect(added).toEqual([7, 8]);
+    expect(progress[6]).toEqual(have[6]);
+    expect(progress[7]).toEqual(incoming[7]);
+    expect(progress[8]).toEqual(incoming[8]);
+    expect(progress[10]).toEqual(have[10]);
+    expect(have[7].code).toBeUndefined(); // input not mutated
   });
 });

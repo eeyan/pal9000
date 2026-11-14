@@ -303,7 +303,7 @@ describe('session persistence (localStorage resume)', () => {
     expect(readout()).toBe('Q 01/01');
   });
 
-  it('discards a stored session older than 24 hours and starts fresh at Q1', () => {
+  it('still resumes a session picked up days later (students finish a set across the week)', () => {
     const questions = [makeQ('q1'), makeQ('q2')];
     runQuiz(container, questions, {});
     settle();
@@ -311,8 +311,23 @@ describe('session persistence (localStorage resume)', () => {
     click(nextBtn()); // session stored at q2
 
     reload();
-    // Fake timers mock Date.now — jump the clock just past the 24h expiry.
-    vi.setSystemTime(Date.now() + 24 * 60 * 60 * 1000 + 1);
+    vi.setSystemTime(Date.now() + 5 * 24 * 60 * 60 * 1000);
+    runQuiz(container, questions, {});
+
+    expect(readout()).toBe('Q 02/02');
+    expect(container.querySelector('.stem').textContent).toBe('Stem for q2');
+  });
+
+  it('discards a stored session older than 7 days and starts fresh at Q1', () => {
+    const questions = [makeQ('q1'), makeQ('q2')];
+    runQuiz(container, questions, {});
+    settle();
+    click(option('B'));
+    click(nextBtn()); // session stored at q2
+
+    reload();
+    // Fake timers mock Date.now — jump the clock just past the 7-day expiry.
+    vi.setSystemTime(Date.now() + 7 * 24 * 60 * 60 * 1000 + 1);
     runQuiz(container, questions, {});
 
     expect(readout()).toBe('Q 01/02');

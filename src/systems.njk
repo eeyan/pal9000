@@ -28,6 +28,7 @@ permalink: /systems/
 <section class="sys-block" aria-labelledby="log-h">
   <h2 id="log-h" class="panel-label mono">COMPLETION LOG</h2>
   <p class="sys-note">Hand this in twice: before Test 1 (weeks 1–5) and before the final (weeks 6–12). Tap COPY AS TEXT and paste it into the checkpoint assignment on Brightspace; a screenshot also works. Practice on more than one device? Restore your latest backup here first so one log has every week.</p>
+  <p class="sys-note keep-copy"><strong>Keep your own copy.</strong> Browsers sometimes clear saved data — a week away from the site, a cleared history, or a new phone can do it. Each time you finish a week, tap COPY AS TEXT and paste the log into a note or an email to yourself. A saved log can be handed in exactly as it is, and pasting it into PASTE BACKUP below puts those weeks back on this device.</p>
   <div class="term">
     <div class="term-head"><span>COMPLETION RECORDS · THIS DEVICE</span><button class="term-copy mono" type="button" id="copy-log">COPY AS TEXT</button></div>
     <div class="term-body" id="log-body">CONNECTING…</div>
@@ -37,7 +38,7 @@ permalink: /systems/
 
 <section class="sys-block" aria-labelledby="backup-h">
   <h2 id="backup-h" class="panel-label mono">BACKUP &amp; RESTORE</h2>
-  <p class="sys-note">Backup holds your name, completion records, and review schedule — download it as a small file, or copy it as text if downloads don’t work on your phone. Restoring replaces what’s on this device, which is how you move between phone, laptop, and the installed app.</p>
+  <p class="sys-note">Backup holds your name, completion records, and review schedule — download it as a small file, or copy it as text if downloads don’t work on your phone. Restoring a backup replaces what’s on this device, which is how you move between phone, laptop, and the installed app. PASTE BACKUP also accepts a completion log you saved: that adds its finished weeks back without removing anything.</p>
   <div class="act">
     <button class="btn-next" type="button" id="export-btn">DOWNLOAD BACKUP</button>
     <button class="btn-ghost" type="button" id="copy-backup-btn">COPY BACKUP</button>
@@ -46,7 +47,7 @@ permalink: /systems/
     <input type="file" id="import-file" accept="application/json,.json" hidden>
   </div>
   <div class="paste-form" id="paste-form" hidden>
-    <label class="paste-label" for="paste-text">Paste the backup text you copied, then choose IMPORT.</label>
+    <label class="paste-label" for="paste-text">Paste the backup text you copied — or a completion log you saved — then choose IMPORT.</label>
     <textarea class="paste-text mono" id="paste-text" rows="4" spellcheck="false" autocapitalize="off" autocorrect="off"></textarea>
     <div class="act">
       <button class="btn-next" type="button" id="paste-import">IMPORT</button>

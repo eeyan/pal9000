@@ -4,7 +4,7 @@
 // and FULL RESET. Markup mirrors src/systems.njk (front matter/layout aside).
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { SETS, setHeading } from '../../src/assets/js/sets.js';
-import { LOG_HEADER, pendingLine } from '../../src/assets/js/completion.js';
+import { LOG_HEADER, pendingLine, buildLog, logText, signCompletion } from '../../src/assets/js/completion.js';
 import { makeBackup } from '../../src/assets/js/backup.js';
 
 const ALL_WEEKS = SETS.flatMap((s) => s.weeks);
@@ -376,5 +376,86 @@ describe('sign an unsigned record', () => {
     expect(el('log-msg').classList.contains('err')).toBe(true);
     expect(JSON.parse(localStorage.getItem('pal9000.progress.v1'))[1].code).toBeUndefined();
     expect(signBtn()).not.toBeNull();
+  });
+});
+
+describe('restore from a pasted completion log', () => {
+  const NAME = 'Jordan Rivera';
+  const AT6 = Date.parse('2026-10-20T23:05:00Z');
+
+  async function savedLog(entries) {
+    const progress = {};
+    for (const [week, score, total] of entries) {
+      progress[week] = { score, total, at: AT6, name: NAME, code: await signCompletion({ week, at: AT6, score, total, name: NAME }) };
+    }
+    return { progress, text: logText(buildLog(SETS, progress, NAME, setHeading)) };
+  }
+
+  function paste(text) {
+    click('paste-btn');
+    el('paste-text').value = text;
+    click('paste-import');
+  }
+  const confirmShown = () => vi.waitFor(() => expect(el('import-confirm').hidden).toBe(false));
+
+  it('adds the saved weeks to a wiped device and fills in the name', async () => {
+    const saved = await savedLog([[6, 13, 15], [7, 15, 15]]);
+    await loadPage();
+
+    paste(saved.text);
+    await confirmShown();
+    expect(el('import-confirm-text').textContent).toContain('Add weeks 6, 7 from this saved log?');
+    expect(el('import-replace').textContent).toBe('ADD WEEKS');
+
+    click('import-replace');
+    expect(JSON.parse(localStorage.getItem('pal9000.progress.v1'))).toEqual(saved.progress);
+    expect(localStorage.getItem('pal9000.name.v1')).toBe(NAME);
+    expect(el('backup-msg').textContent).toBe('Restored weeks 6, 7 from your saved log.');
+    // The restored device prints the very same log it was restored from.
+    expect(rowTexts().join('\n')).toBe(saved.text);
+  });
+
+  it('keeps weeks finished since the wipe — a log restore never replaces the device', async () => {
+    const saved = await savedLog([[6, 13, 15]]);
+    const since = await savedLog([[9, 12, 15]]);
+    localStorage.setItem('pal9000.progress.v1', JSON.stringify(since.progress));
+    localStorage.setItem('pal9000.name.v1', NAME);
+    const review = { items: { 'w09-q02': { idx: 0, due: AT6 } } };
+    localStorage.setItem('pal9000.review.v1', JSON.stringify(review));
+    await loadPage();
+
+    paste(saved.text);
+    await confirmShown();
+    expect(el('import-replace').textContent).toBe('ADD WEEK');
+    click('import-replace');
+
+    const progress = JSON.parse(localStorage.getItem('pal9000.progress.v1'));
+    expect(Object.keys(progress)).toEqual(['6', '9']);
+    expect(JSON.parse(localStorage.getItem('pal9000.review.v1'))).toEqual(review);
+  });
+
+  it('refuses a log whose codes do not verify, and leaves the paste box open', async () => {
+    const saved = await savedLog([[6, 13, 15]]);
+    await loadPage();
+
+    paste(saved.text.replace('13/15', '15/15'));
+    await vi.waitFor(() => expect(el('backup-msg').textContent).toContain('could be verified'));
+    expect(el('backup-msg').classList.contains('err')).toBe(true);
+    expect(el('import-confirm').hidden).toBe(true);
+    expect(el('paste-form').hidden).toBe(false);
+    expect(localStorage.getItem('pal9000.progress.v1')).toBeNull();
+  });
+
+  it('the REPLACE DATA label comes back for a real backup afterwards', async () => {
+    const saved = await savedLog([[6, 13, 15]]);
+    await loadPage();
+    paste(saved.text);
+    await confirmShown();
+    click('import-cancel');
+
+    paste(JSON.stringify(makeBackup({ items: {} }, saved.progress, AT6, NAME)));
+    await confirmShown();
+    expect(el('import-replace').textContent).toBe('REPLACE DATA');
+    expect(el('import-confirm-text').textContent).toContain('Replace this device’s data with this backup?');
   });
 });

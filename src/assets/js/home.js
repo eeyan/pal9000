@@ -1,6 +1,9 @@
 import { load, loadReviewState, KEYS } from './storage.js';
 import { dueIds, queueSize } from './scheduler.js';
 import { SETS } from './sets.js';
+import { warnIfInAppBrowser } from './browser-check.js';
+
+warnIfInAppBrowser();
 
 const progress = load(KEYS.progress, {});
 document.querySelectorAll('[data-week-status]').forEach((el) => {

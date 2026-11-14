@@ -1,7 +1,7 @@
 import { load, save, loadReviewState, loadName, saveName, KEYS } from './storage.js';
 import { queueSize } from './scheduler.js';
-import { makeBackup, parseBackup } from './backup.js';
-import { buildLog, logText, cleanName, signRecord, CODE_RE } from './completion.js';
+import { makeBackup, parseBackup, recordsFromLog, mergeProgress } from './backup.js';
+import { buildLog, logText, cleanName, signRecord, CODE_RE, LOG_HEADER } from './completion.js';
 import { SETS, setHeading } from './sets.js';
 
 // theme.js is a classic (non-module) script, so its key is duplicated here.
@@ -216,9 +216,64 @@ function offerImport(text, returnFocusId) {
   p.append(`It contains ${nDone} completed ${nDone === 1 ? 'week' : 'weeks'} and ${nQueue} review ${nQueue === 1 ? 'item' : 'items'}${saved}`
     + (pendingImport.name ? `, under the name ${pendingImport.name}. ` : '. ')
     + 'What’s currently on this device will be overwritten.');
+  el('import-replace').textContent = 'REPLACE DATA';
   el('import-confirm').hidden = false;
   el('import-replace').focus();
   return true;
+}
+
+// A pasted completion log (the text students are told to keep a copy of)
+// instead of a backup: rebuild the finished weeks from its signed lines and
+// offer to ADD them. Unlike a backup restore this never replaces or removes
+// anything on the device. Returns true when the confirm panel is showing.
+function looksLikeLog(text) {
+  return text.includes(LOG_HEADER) || /^\s*W\d{1,2}\b.*\d\s*\/\s*\d/mu.test(text);
+}
+
+async function offerLogImport(text, returnFocusId) {
+  importReturnFocus = returnFocusId;
+  say(backupMsg, '');
+  el('import-confirm').hidden = true;
+  pendingImport = null;
+  let found;
+  try {
+    found = await recordsFromLog(text, SETS.flatMap((s) => s.weeks));
+  } catch {
+    say(backupMsg, 'Could not check that log on this connection — try again on a normal (https) connection.', true);
+    return false;
+  }
+  const weeks = Object.keys(found.progress).map(Number).sort((a, b) => a - b);
+  if (weeks.length === 0) {
+    say(backupMsg, 'No completed weeks in that log could be verified. Paste the whole log, including the NAME line, exactly as it was copied.', true);
+    return false;
+  }
+  const { added } = mergeProgress(load(KEYS.progress, {}), found.progress);
+  if (added.length === 0) {
+    say(backupMsg, `Nothing to add — this device already has ${weeks.length === 1 ? 'that week' : 'those weeks'} at the same score or better.`);
+    return false;
+  }
+  pendingImport = { kind: 'log', progress: found.progress, name: found.name };
+  const p = el('import-confirm-text');
+  p.replaceChildren();
+  const strong = document.createElement('span');
+  strong.className = 'strong';
+  strong.textContent = `Add ${added.length === 1 ? 'week' : 'weeks'} ${added.join(', ')} from this saved log?`;
+  p.append(strong, document.createElement('br'));
+  p.append('Nothing on this device is removed, and a week you already have is only replaced by a higher score. '
+    + 'A saved log brings back completed weeks, not the review queue.'
+    + (found.skipped ? ` ${found.skipped} ${found.skipped === 1 ? 'line' : 'lines'} could not be verified and ${found.skipped === 1 ? 'was' : 'were'} left out.` : ''));
+  el('import-replace').textContent = added.length === 1 ? 'ADD WEEK' : 'ADD WEEKS';
+  el('import-confirm').hidden = false;
+  el('import-replace').focus();
+  return true;
+}
+
+// One entry point for both transports: backup JSON first, saved log second.
+// A backup is checked synchronously (returns a boolean); a log has codes to
+// verify with Web Crypto (returns a promise of one).
+function offerAny(text, returnFocusId) {
+  if (!text.trimStart().startsWith('{') && looksLikeLog(text)) return offerLogImport(text, returnFocusId);
+  return offerImport(text, returnFocusId);
 }
 
 function closePasteForm() {
@@ -234,7 +289,7 @@ el('import-file').addEventListener('change', async () => {
   input.value = ''; // allow re-choosing the same file
   if (!file) return;
   closePasteForm();
-  offerImport(await file.text(), 'import-btn');
+  await offerAny(await file.text(), 'import-btn');
 });
 
 el('paste-btn').addEventListener('click', () => {
@@ -248,12 +303,14 @@ el('paste-btn').addEventListener('click', () => {
 el('paste-import').addEventListener('click', () => {
   const text = el('paste-text').value.trim();
   if (!text) {
-    say(backupMsg, 'Paste your backup text into the box first.', true);
+    say(backupMsg, 'Paste your backup or saved log text into the box first.', true);
     el('paste-text').focus();
     return;
   }
   // Leave the box open on failure so a partial paste can be fixed in place.
-  if (offerImport(text, 'paste-btn')) closePasteForm();
+  const offered = offerAny(text, 'paste-btn');
+  if (offered instanceof Promise) offered.then((ok) => { if (ok) closePasteForm(); });
+  else if (offered) closePasteForm();
 });
 
 el('paste-cancel').addEventListener('click', () => {
@@ -263,6 +320,18 @@ el('paste-cancel').addEventListener('click', () => {
 
 el('import-replace').addEventListener('click', () => {
   if (!pendingImport) return;
+  if (pendingImport.kind === 'log') {
+    // Re-merge against what's stored now, not what was there when the panel opened.
+    const { progress, added } = mergeProgress(load(KEYS.progress, {}), pendingImport.progress);
+    save(KEYS.progress, progress);
+    // Only fill in a missing name — a device that already has one keeps it.
+    if (!loadName() && pendingImport.name) saveName(pendingImport.name);
+    pendingImport = null;
+    el('import-confirm').hidden = true;
+    render();
+    say(backupMsg, `Restored ${added.length === 1 ? 'week' : 'weeks'} ${added.join(', ')} from your saved log.`);
+    return;
+  }
   save(KEYS.review, pendingImport.review);
   save(KEYS.progress, pendingImport.progress);
   // A v1 backup carries no name — keep the device's rather than wipe it.

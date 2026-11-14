@@ -1,7 +1,11 @@
 import { runQuiz, completionStamp } from './engine.js';
 import { load, save, loadReviewState, loadName, saveName, KEYS } from './storage.js';
 import { recordMiss, recordSuccess } from './scheduler.js';
-import { signCompletion, NAME_MAX } from './completion.js';
+import { signCompletion, NAME_MAX, buildLog, logText } from './completion.js';
+import { SETS, setHeading } from './sets.js';
+import { warnIfInAppBrowser } from './browser-check.js';
+
+warnIfInAppBrowser();
 
 const container = document.getElementById('quiz');
 const questions = JSON.parse(document.getElementById('question-data').textContent);
@@ -31,6 +35,60 @@ if (prev && !prev.code) {
     </div>`);
   document.querySelector('.stamp-banner .stamp-line').textContent = completionStamp(week, prev.at);
   document.querySelector('.stamp-banner .stamp-code').textContent = codeLine(prev);
+}
+
+// Finish-screen nudge: the record just written lives only in this browser,
+// and browsers do lose it (Safari clears a site's storage after a week away;
+// an in-app browser or a different device never had it). The completion log
+// is self-verifying text, so a copy kept anywhere else is a full safety net
+// for the hand-in — make saving one a single tap, right when it's fresh.
+function offerSaveCopy() {
+  const panel = container.querySelector('.done-panel');
+  if (!panel || panel.querySelector('.save-copy')) return;
+  const text = () => logText(buildLog(SETS, load(KEYS.progress, {}), loadName(), setHeading));
+
+  const box = document.createElement('div');
+  box.className = 'save-copy';
+  box.innerHTML = `
+    <p class="save-copy-note"><strong>Save a copy now.</strong> This record is stored only in this browser, and browsers sometimes clear saved data. Copy your completion log and paste it into a note or an email to yourself — if this device ever loses it, the saved text is still good to hand in.</p>
+    <div class="act">
+      <button class="btn-ghost" type="button" data-save="copy">COPY COMPLETION LOG</button>
+    </div>
+    <p class="status-msg" aria-live="polite"></p>`;
+  const act = box.querySelector('.act');
+  const msg = box.querySelector('.status-msg');
+  const copyBtn = box.querySelector('[data-save="copy"]');
+
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(text());
+      copyBtn.textContent = 'COPIED ✓';
+      msg.classList.remove('err');
+      msg.textContent = 'Copied. Paste it somewhere you’ll find it later.';
+    } catch {
+      msg.classList.add('err');
+      msg.textContent = 'Could not reach the clipboard — copy it from SYSTEMS instead.';
+    }
+  });
+
+  // Phones: the share sheet goes straight to Notes / Mail / Messages, which
+  // is fewer steps than copy → switch apps → paste.
+  if (typeof navigator.share === 'function') {
+    const shareBtn = document.createElement('button');
+    shareBtn.type = 'button';
+    shareBtn.className = 'btn-ghost';
+    shareBtn.dataset.save = 'share';
+    shareBtn.textContent = 'SEND TO NOTES / EMAIL…';
+    shareBtn.addEventListener('click', async () => {
+      try {
+        await navigator.share({ title: 'PAL 9000 completion log', text: text() });
+      } catch { /* dismissed the sheet — nothing to report */ }
+    });
+    act.append(shareBtn);
+  }
+
+  const back = [...panel.children].find((c) => c.querySelector?.('a.btn-next'));
+  panel.insertBefore(box, back ?? null);
 }
 
 function start(name) {
@@ -74,6 +132,7 @@ function start(name) {
       } else if (note && !rec.code) {
         note.textContent = 'This completion could not be signed (no secure connection), so it is recorded without a code. Sign it with your name on SYSTEMS, or retake it on a normal connection.';
       }
+      offerSaveCopy();
     },
   });
 }

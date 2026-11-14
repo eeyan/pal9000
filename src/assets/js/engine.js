@@ -38,11 +38,13 @@ export function completionStamp(week, at) {
 // toward. localStorage survives both tab eviction and app termination, so a
 // half-done set resumes silently instead of restarting at Q1. Because
 // localStorage also outlives full browser restarts, sessions carry a
-// saved-at timestamp and expire after 24h — a set abandoned days ago starts
-// fresh rather than silently resuming mid-set. Keyed per page; cleared on
-// finish. All access is try/catch'd (private mode), same posture as storage.js.
+// saved-at timestamp and expire after 7 days — long enough that a set started
+// on one commute and picked up later in the week resumes (24h made students
+// redo their answers), short enough that a set abandoned weeks ago starts
+// fresh. Keyed per page; cleared on finish. All access is try/catch'd
+// (private mode), same posture as storage.js.
 const SESSION_PREFIX = 'pal9000.session:';
-const SESSION_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+const SESSION_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 
 function sessionKey() {
   return SESSION_PREFIX + location.pathname;
