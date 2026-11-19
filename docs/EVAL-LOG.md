@@ -101,6 +101,7 @@ several slide figures are images, invisible to text extraction; they were transc
 | 2026-11-01 | gen-v4 | claude-opus-5-5 | 7 | 31 | 26 | 5 | 84% | trivia ×4, ambiguous ×1 |
 | 2026-11-06 | gen-v4 | claude-opus-5-5 | 8 | 28 | 25 | 3 | 89% | trivia ×3 |
 | 2026-11-13 | gen-v4 | claude-fable-5-2 | 9 | 31 | 26 | 5 | 84% | unspecified ×3, trivia ×2 |
+| 2026-11-18 | gen-v4 | claude-fable-5-2 | 10 | 36 | 30 | 6 | 83% | unspecified ×5, trivia ×1 |
 
 Week 4 notes (gen-v4, in-session on Opus 5.5): 26 of 30 kept by the curator, 15 promoted, split across
 *The Adventures of an IT Leader* chapters 4–5 and the Zara case ("Rapid-Fire Fulfillment", HBR 2004), with
@@ -188,3 +189,18 @@ used to drop a reasonless reject from the export; fixed this week). The fresh-co
 nothing and edited 8: three feedback lines that went past the slides, a wrong-week reference in a
 self-explain prompt, a five-year cost compared against an up-front price, one trivia framing, and two
 stem-to-key cues; the four that touched promoted items were applied. Keep-vs-reject agreement 26 of 31.
+
+Week 10 notes (gen-v4, in-session on Fable 5.2): five sources — the Chapter 13 deck (class slides, the
+Target discussion slides, and the reference slides), the Target Cyber Attack case (Columbia, 2021), *The
+Adventures of an IT Leader* ch. 14–17, Drolet's "What does stolen data cost [per second]" (2018), and the
+2026-11-17 class transcript. The opening news discussion was not used: no news files were supplied, the
+claims were unchecked, and one item centred on a student's employer. The transcript carries one speaker
+label for the whole room, so class items credit the instructor only where the passage is plainly the
+instructor's. 30 of 36 kept, 15 promoted: five deck, four Target (two cross-source with the deck: zero trust
+and the NIST Detect function), one Drolet, four IT Leader (one per chapter), one class discussion (the
+ransom tabletop). Curator rejects were trivia ×1 and five with no reason given. The fresh-context reviewer
+rejected nothing and edited 14, and this week its fixes were applied before the curator's pass rather than
+after: seven feedback lines that went past the source or dropped a hedge, three stem-to-key cues, two
+distractors that were not real claims from the chapter, an event invented for a named case, and one
+distractor too close to the text. Keep-vs-reject agreement 30 of 36. The bank lint caught a positional
+reference ("the first option", meaning the chapter's first proposal) in one promoted feedback line.

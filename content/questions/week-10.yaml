@@ -1,0 +1,650 @@
+week: 10
+# Provenance: promptVersion gen-v4 · model claude-fable-5-2 · promoted 2026-11-18 (15 of 30 accepted candidates)
+published: false
+title: "Cybersecurity, Risk Trade-offs, and the Target Breach"
+questions:
+  - id: w10-q01
+    week: 10
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      The chief executive of a mid-size insurer tells the chief information officer (CIO): 'Security
+      is a technical matter. Settle it in your department and send me the budget to sign.' According
+      to the Chapter 13 slides (Piccoli & Pigni), which decision is the chief executive wrongly
+      handing away?
+    options:
+      - key: A
+        text: Which defenses the IT group should build
+      - key: B
+        text: How much risk the business should accept
+      - key: C
+        text: Which alerts the security team should chase
+      - key: D
+        text: How an intruder's entry should be traced
+    answer: B
+    feedback:
+      correct: >-
+        The slides say IT can build defenses, but how much protection the business needs is a
+        question for general and functional managers. Budgets, acceptable risk and the public
+        apology all sit with them, which is why the slides call handing security off a grave
+        mistake.
+      A: >-
+        Building defenses is the part the slides do assign to IT. The mistake is passing along the
+        judgment about how much protection is enough.
+      C: >-
+        Working alerts is operational security work. The slides place the management decision one
+        level up, at budgets and acceptable risk.
+      D: >-
+        Finding out how an attack happened is part of the response after an incident. It is
+        investigative work, not the trade-off the slides reserve for managers.
+    selfExplainPrompt: >-
+      Compare this with 'Six IT Decisions Your IT People Should Not Make' (Ross and Weill, Week 7).
+      Which of their six decisions is the closest match, and why?
+    source:
+      doc: CIS 9000 Chapter 13.pdf
+      loc: slide 7 (Security cannot be left to IT alone); slide 44 (Learning objective 1)
+  - id: w10-q02
+    week: 10
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      After a competitor's breach, a director at a hotel group says the firm should keep adding
+      safeguards until a breach is impossible. The Chapter 13 slides (Piccoli & Pigni) chart how
+      costs change as the degree of security rises. Where on that chart do the slides say a firm
+      should aim?
+    options:
+      - key: A
+        text: Where anticipation cost is at its lowest
+      - key: B
+        text: Where failure cost has fallen to zero
+      - key: C
+        text: Where the two cost curves cross over
+      - key: D
+        text: Where total cost is at its lowest
+    answer: D
+    feedback:
+      correct: >-
+        Anticipation cost climbs as protection increases and failure cost drops as defenses improve.
+        The slides add the two together and aim for the lowest point of the total, which always
+        leaves some risk in place.
+      A: >-
+        Anticipation cost is lowest when the firm spends nothing on safeguards. That is risk
+        acceptance, and it leaves the full failure cost with the firm.
+      B: >-
+        This is the director's position. On the chart, pushing failure cost toward zero drives
+        anticipation cost up, so the total rises again past the low point.
+      C: >-
+        The slides do not use the crossing point as the target. They add the two curves and look for
+        the lowest total, which need not sit where the curves meet.
+    selfExplainPrompt: >-
+      In Chapter 17 of The Adventures of an IT Leader, Barton says 100 percent protection is a pipe
+      dream. How does his reasoning line up with the shape of the total cost curve?
+    source:
+      doc: CIS 9000 Chapter 13.pdf
+      loc: slide 11 (The right amount of security is a trade-off)
+  - id: w10-q03
+    week: 10
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A financial analyst wants a quick summary of a client contract. Her firm has not approved any
+      artificial intelligence (AI) tool, so she signs in to a chatbot with her personal account on
+      her work laptop and pastes the contract in. In the Chapter 13 slides' (Piccoli & Pigni)
+      classification of threats, which kind is this?
+    options:
+      - key: A
+        text: Intentional malicious behavior
+      - key: B
+        text: Careless behavior
+      - key: C
+        text: Social engineering
+      - key: D
+        text: Spyware
+    answer: B
+    feedback:
+      correct: >-
+        The slides class this as an internal threat of the careless kind, a new version of an old
+        habit such as saving work data on personal devices. They report that 67% of people who use
+        AI tools on a work device sign in with a personal account, and files pasted there leave the
+        company's control.
+      A: >-
+        This is the other internal threat: an authorized user who also has a motive to leak or
+        tamper with data, such as a disgruntled employee. The analyst means no harm. She is working
+        around a gap in policy.
+      C: >-
+        Social engineering is an outsider persuading a legitimate user to hand over access or
+        private information. Nobody persuaded the analyst of anything.
+      D: >-
+        Spyware is malicious code that watches what a user does and quietly sends it elsewhere. The
+        analyst sent the contract herself, through a tool she chose to use.
+    selfExplainPrompt: >-
+      The slides' table of safeguards lists policies, training, monitoring and limits on access for
+      internal threats. Which of those would have changed this analyst's behavior, and which would
+      only have detected it?
+    source:
+      doc: CIS 9000 Chapter 13.pdf
+      loc: >-
+        slide 14 (The internal threat: ill will and carelessness); slide 21 (AI is now on both sides
+        of security); slide 49 (shadow AI)
+  - id: w10-q04
+    week: 10
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In the 2026 Canvas breach described in the Chapter 13 slides (Piccoli & Pigni), an extortion
+      group took data tied to about 275 million users and put a ransom note on school login pages.
+      The attackers did not lock any systems. Why would complete, tested backups not have ended the
+      threat?
+    options:
+      - key: A
+        text: The attackers could still publish their copy
+      - key: B
+        text: The attackers could encrypt the backups too
+      - key: C
+        text: The backups would restore the same malware
+      - key: D
+        text: The backups would take several weeks to bring back
+    answer: A
+    feedback:
+      correct: >-
+        The slides call this a newer twist: some attackers skip the locking, copy the data and
+        threaten to publish it. Backups restore what was locked or destroyed. They do nothing about
+        a copy that is already in someone else's hands.
+      B: >-
+        Encrypting files is how classic ransomware works. The slides' point about Canvas is that
+        nothing was locked, so there was nothing for a backup to restore.
+      C: >-
+        Reinfection is a real concern after an intrusion, but it is not the leverage the Canvas
+        attackers held. Their threat was publication of data they had already taken.
+      D: >-
+        Slow recovery matters when systems are down. In the Canvas case the systems were running;
+        the pressure came from the stolen data.
+    selfExplainPrompt: >-
+      The slides say privacy subsumes security. How does data-theft extortion illustrate that
+      statement?
+    source:
+      doc: CIS 9000 Chapter 13.pdf
+      loc: >-
+        slide 5 (Three attacks worth knowing: Canvas); slide 18 (a newer twist); slide 49
+        (data-theft extortion)
+  - id: w10-q05
+    week: 10
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A health-billing firm protects remote logins with a password plus a code sent by text message.
+      Attackers have begun phoning staff, posing as the help desk, and asking them to read the code
+      back. According to the Chapter 13 slides (Piccoli & Pigni), which change addresses this
+      weakness?
+    options:
+      - key: A
+        text: Requiring longer passwords for each login
+      - key: B
+        text: Moving logins to passkeys or security keys
+      - key: C
+        text: Sending the code by push approval instead of text
+      - key: D
+        text: Adding a firewall around the login server
+    answer: B
+    feedback:
+      correct: >-
+        The slides say passwords alone are the weak point and that text codes and push approvals can
+        be tricked. Their recommended safeguard is a second login factor that resists phishing, such
+        as passkeys or security keys, which cannot be handed over to a caller or a fake website.
+      A: >-
+        The slides treat the password itself as the weak point. A longer password does nothing when
+        the attacker's method is to talk staff out of the second factor.
+      C: >-
+        The slides name push approvals alongside text codes as factors that can be tricked. The swap
+        keeps the same weakness.
+      D: >-
+        Firewalls are on the slides' list of intrusion safeguards, but a firewall screens network
+        traffic. It does not stop an employee from reading a valid code to a caller.
+    selfExplainPrompt: >-
+      Which term from the slides names what the callers are doing, and why do the slides say
+      training has to sit alongside the technical fix?
+    source:
+      doc: CIS 9000 Chapter 13.pdf
+      loc: >-
+        slide 23 (Match each threat with a safeguard; Change Healthcare); slide 49 (multi-factor
+        authentication, passkey)
+  - id: w10-q06
+    week: 10
+    type: definitional
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      Drolet's 'What does stolen data cost [per second]' reports that firms took about 191 days on
+      average to identify a breach and another 66 days to contain it. Which of the four reasons the
+      Chapter 13 slides (Piccoli & Pigni) give for why intrusions do so much damage does the first
+      figure illustrate?
+    options:
+      - key: A
+        text: It stays hidden
+      - key: B
+        text: Data walks out
+      - key: C
+        text: Cleanup is costly
+      - key: D
+        text: It goes public
+    answer: A
+    feedback:
+      correct: >-
+        The slides' first reason is that intruders can work undetected for months. An average of
+        roughly half a year before a firm even knows it has been breached is that reason in numbers.
+        Drolet's point is that the faster a breach is uncovered and contained, the less it costs.
+      B: >-
+        This reason is about private records being copied while nobody is watching. It follows from
+        a long stay inside, but the 191-day figure measures how long the intrusion goes unnoticed.
+      C: >-
+        This reason is about the investigation: learning how the intruders entered and whether a way
+        back in remains. The 66 days to contain a breach is closer to this one.
+      D: >-
+        This reason is about disclosure laws and reputational harm once the breach is announced. The
+        191 days come before anyone has anything to announce.
+    selfExplainPrompt: >-
+      The slides compare Drolet's 2017 figures with 2026: average cost is up and the time to
+      identify and contain is nearly unchanged. What does that pairing suggest about where firms
+      have and have not improved?
+    source:
+      doc: Drolet - What Does Stolen Data Cost Per Second (2018, CSO Online).md
+      loc: >-
+        section 'How you react has a big impact' (191 and 66 days); CIS 9000 Chapter 13 slide 17
+        (Why intrusions do so much damage) and slide 10
+  - id: w10-q07
+    week: 10
+    type: definitional
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      The Target Cyber Attack case (Columbia University case study) says that, on the whole, Target
+      did not have particularly poor information technology or payment practices. Which weakness
+      does the case say the attackers took advantage of to spread from one less secure device to the
+      store registers?
+    options:
+      - key: A
+        text: A network lacking segmentation
+      - key: B
+        text: A database holding card numbers
+      - key: C
+        text: A lapse in card-industry rules
+      - key: D
+        text: A lack of malware detection
+    answer: A
+    feedback:
+      correct: >-
+        The case says the attackers took advantage of Target's lack of network segmentation: company
+        devices were highly connected, so the attackers could find a weak link and spread from there
+        to the point-of-sale machines. The benefit of segmentation is one of the case's key
+        takeaways.
+      B: >-
+        When the attackers reached the database they found no card numbers, because Target disposed
+        of them after purchases as the card-industry standards require. They turned to the memory of
+        the registers instead.
+      C: >-
+        The case says Target complied with the Payment Card Industry standards. Its takeaway is that
+        firms holding large amounts of sensitive data must go beyond industry standards.
+      D: >-
+        Target had invested in a virus detection service, and it flagged the malware on November 30.
+        The failure there was that the alert was not fully investigated.
+    selfExplainPrompt: >-
+      The case calls the breach a wakeup call that your network is only as secure as your least
+      secure business associate. Which statistic on the Chapter 13 slides shows how common that
+      route is today?
+    source:
+      doc: Target Cyber Attack Final.pdf
+      loc: p. 2 (A Chink in the Armor); p. 3 (PCI compliance); p. 5 (Summary and key takeaways)
+  - id: w10-q08
+    week: 10
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      According to the Target Cyber Attack case (Columbia University case study), Target met
+      card-industry security standards, had invested in a malware detection service, and ran
+      firewalls on its registers. Even so, one stolen contractor login was enough for the attackers
+      to work their way from an invoicing portal to registers in stores. Which idea from the Chapter
+      13 slides (Piccoli & Pigni) was most clearly missing?
+    options:
+      - key: A
+        text: Defense in depth
+      - key: B
+        text: Zero trust
+      - key: C
+        text: No security through obscurity
+      - key: D
+        text: Risk transference
+    answer: B
+    feedback:
+      correct: >-
+        Zero trust means never trust, always verify: being inside the network earns nothing, and
+        each login gets the least access it needs. Target's portal accepted an executable file from
+        a logged-in vendor, and its highly connected network let that foothold reach the registers.
+        In class the instructor made the same point about the portal treating whatever was uploaded
+        as trusted.
+      A: >-
+        Defense in depth stacks independent safeguards, and Target had several: card-rule
+        compliance, a detection service, firewalls on registers. The layers existed. The gap was
+        that getting inside was treated as proof of trustworthiness.
+      C: >-
+        This principle warns against relying on attackers not knowing how a system works. The case
+        does not describe Target as counting on secrecy.
+      D: >-
+        Transference is one of the three ways to handle a risk, not one of the three design
+        principles. Target did hold insurance, and the case says it covered only a small fraction of
+        the loss.
+    selfExplainPrompt: >-
+      The case says routine checks for new Domain Administrator accounts and tighter controls on who
+      could reach which parts of the network would have gone a long way. Which part of the zero
+      trust definition does each control express?
+    source:
+      doc: Target Cyber Attack Final.pdf
+      loc: >-
+        pp. 2–4 (A Chink in the Armor; missed controls); CIS 9000 Chapter 13 slide 24 (Three design
+        principles) and slide 38 (The attack chain); class discussion 2026-11-17 (Target and zero
+        trust)
+  - id: w10-q09
+    week: 10
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      According to the Target Cyber Attack case (Columbia University case study), a service Target
+      paid for flagged the attackers' malware on November 30, the security operations team did not
+      fully investigate, and Target learned of the breach only when card companies saw a surge in
+      fraudulent transactions. On the Chapter 13 slides' (Piccoli & Pigni) map of the National
+      Institute of Standards and Technology (NIST) Cybersecurity Framework, which function failed
+      here?
+    options:
+      - key: A
+        text: Identify
+      - key: B
+        text: Protect
+      - key: C
+        text: Detect
+      - key: D
+        text: Recover
+    answer: C
+    feedback:
+      correct: >-
+        Detect means spotting attacks quickly. The slides place the uninvestigated November 30 alert
+        under this function and note that card companies saw the fraud first. The slides' wider
+        point is that tools only help when someone acts on the alerts.
+      A: >-
+        Identify is knowing your assets and risks before an attack. The slides put a different
+        Target failure here: vendor access and a highly connected network were not treated as risks.
+      B: >-
+        Protect is the safeguards themselves. The slides list no segmentation and a vendor portal
+        that accepted executable files under this function. The alert that went unexamined came
+        after those protections had already been passed.
+      D: >-
+        Recover is restoring operations and improving afterward. For Target the slides list
+        discounts, a year of free credit monitoring and the expenses reported by 2015.
+    selfExplainPrompt: >-
+      Drolet's 'What does stolen data cost [per second]' reports an average of about 191 days to
+      identify a breach. Target confirmed its breach on December 15, under three weeks after card
+      theft began on November 27, and only after card companies noticed the fraud. What does that
+      suggest about how firms tend to find out they have been breached?
+    source:
+      doc: Target Cyber Attack Final.pdf
+      loc: >-
+        p. 4 (A Harsh Dose of Reality: the November 30 alert); CIS 9000 Chapter 13 slide 40 (Target
+        on the NIST map)
+  - id: w10-q10
+    week: 10
+    type: definitional
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      Target told customers about the breach four days after identifying it, and the Target Cyber
+      Attack case (Columbia University case study) notes that this was much quicker than other major
+      companies have been. According to the case, what else made Target appear to lack transparency?
+    options:
+      - key: A
+        text: Card companies spotted the fraud before Target
+      - key: B
+        text: A malware alert had gone uninvestigated
+      - key: C
+        text: The chief executive defended the delay on air
+      - key: D
+        text: A journalist reported the breach before Target
+    answer: D
+    feedback:
+      correct: >-
+        The case says Target appeared to lack transparency not only because of its relatively slow
+        response but because news of the breach broke before Target revealed it. Journalist Brian
+        Krebs published on December 18, and Target's e-mail to customers went out the next day.
+      A: >-
+        This is true, and it is a failure of detection. The case ties the appearance of secrecy to
+        what the public learned and when, not to how Target found out.
+      B: >-
+        The November 30 alert is in the case as a monitoring failure inside Target. It is not what
+        the case points to when it explains why the company looked less than open.
+      C: >-
+        The chief executive did justify the four days in his first interview after the breach. The
+        case uses that interview to explain Target's reasoning, and names the news breaking first as
+        the transparency problem.
+    selfExplainPrompt: >-
+      In Chapters 10 and 11 of The Adventures of an IT Leader (Week 8), IVK chose not to disclose a
+      possible intrusion. What does Target's experience add to the argument Jim Barton made then?
+    source:
+      doc: Target Cyber Attack Final.pdf
+      loc: p. 4 (A Harsh Dose of Reality); p. 10 (Annex A-3)
+  - id: w10-q11
+    week: 10
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 14 of The Adventures of an IT Leader, the head of human resources points out that
+      IVK is heading toward more outsourcing and asks Jim Barton why it needs to hire a very strong
+      technical specialist. Which lesson from IVK's relationship with NetiFects does Barton apply in
+      his answer?
+    options:
+      - key: A
+        text: Penalty clauses need real teeth to align a vendor
+      - key: B
+        text: A market leader is the easiest choice to defend
+      - key: C
+        text: In-house experts are needed to supervise vendors
+      - key: D
+        text: A vendor's staff should not be hired by a client
+    answer: C
+    feedback:
+      correct: >-
+        Barton says his managers believe IVK needs expertise in-house even when it outsources, so
+        that it can manage effectively. He adds that this is what went wrong with NetiFects: IVK had
+        nobody who could supervise the vendor's work, and the vendor took advantage.
+      A: >-
+        This is the position of the 'hard-liners' in the chapter's debate over contract structure
+        for the new vendor. Barton does not offer it as the lesson of NetiFects.
+      B: >-
+        This is an argument made for ServoLith in the vendor selection debate. It concerns which
+        vendor to pick, not what skills IVK must keep.
+      D: >-
+        NetiFects is the kind of vendor that restricts clients from hiring its people. The head of
+        human resources thinks the restriction is probably not enforceable, and the two decide to go
+        ahead.
+    selfExplainPrompt: >-
+      The Target Cyber Attack case says security programs must now cover vendors' access to the
+      network. What would it take, in staff terms, for a firm to check a vendor's security the way
+      Barton wants to check a vendor's work?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch14 Vendor Partnering.md
+      loc: ch. 14, Monday, October 1 (conversation with Maria Navarro)
+  - id: w10-q12
+    week: 10
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      An IT director proposes installing activity-tracking software and ranking developers by the
+      hours they spend coding each week. In Chapter 15 of The Adventures of an IT Leader, what does
+      Bernie Ruben call the ultimate problem with managing technical staff this way?
+    options:
+      - key: A
+        text: The firm wants what is harder to measure than time
+      - key: B
+        text: The best developers can outwit any tracking tool
+      - key: C
+        text: The tracked developers may stop explaining their work
+      - key: D
+        text: The tool reveals who is browsing sports sites
+    answer: A
+    feedback:
+      correct: >-
+        Ruben says what IVK wants to buy from people is not their time but their smarts,
+        resourcefulness, judgment and ideas. Those are hard to measure, and time is easy to measure.
+        That gap is why he says managers must interpret what they see carefully; Barton's whiteboard
+        version is 'Buy SMARTS, not hours'.
+      B: >-
+        Ruben does say people like Ivan Korsky could get more sophisticated than the monitoring. He
+        raises it in passing, and names the mismatch between what the firm wants and what it can
+        measure as the ultimate problem.
+      C: >-
+        Ruben warns that checking up on developers can backfire and disrupt the communication
+        managers depend on. It is a real cost in the chapter, but it is not the one he calls
+        ultimate.
+      D: >-
+        Ruben mentions this as something such software can do. It describes the tool's reach, not
+        what is wrong with using hours as the measure.
+    selfExplainPrompt: >-
+      Ruben imagines a top developer logging twenty-five coding hours a week next to weaker
+      colleagues logging forty or fifty. What would a ranking by hours do to each group, and how
+      does that relate to the key person risk raised in class?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch15 Managing Talent.md
+      loc: ch. 15, Thursday, November 8, 12:32 p.m. (lunch with Bernie Ruben); whiteboard note
+  - id: w10-q13
+    week: 10
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      A business-unit head at IVK argues that dictated infrastructure standards would make the
+      company inflexible. Which counterargument does Chapter 16 of The Adventures of an IT Leader
+      make?
+    options:
+      - key: A
+        text: Real-time operations require tight coupling
+      - key: B
+        text: Voluntary compliance would educate business managers
+      - key: C
+        text: Standards let IT set the business's direction
+      - key: D
+        text: Unchecked variety makes systems harder to change
+    answer: D
+    feedback:
+      correct: >-
+        The chapter argues that the complexity that comes from a lack of standardization makes
+        changes to company systems ever harder, like an ocean liner that is hard to turn. Its
+        example is the phone companies whose tangled billing systems kept them from matching a
+        rival's 'Friends and Family' plan for many months.
+      A: >-
+        The chapter does say this, and it explains why coupling has to stay. It does not answer the
+        charge of inflexibility. Complexity is the part the chapter says IVK can do something about.
+      B: >-
+        The chapter lists this as an advantage of the first proposal, voluntary compliance. It is a
+        point in favor of leaving the choice with business units, not a reply to the claim that
+        standards make the company rigid.
+      C: >-
+        This is how opponents of strict enforcement describe it: 'the tail wagging the dog'. It is
+        the objection, not the reply.
+    selfExplainPrompt: >-
+      The chapter projects that maintenance will take more than 80 percent of IVK's IT budget within
+      four years. How does infrastructure variety feed that ratio, and what does the ratio do to
+      innovation?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch16 Standardization and Innovation.md
+      loc: ch. 16, Tuesday, December 11 (complexity, flexibility and the 'Friends and Family' example)
+  - id: w10-q14
+    week: 10
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A firm made well-reasoned security investments and suffered a breach anyway. A director wants
+      the security chief fired, arguing that the result proves the decisions were poor. Which point
+      from CEO Carl Williams's poker story in Chapter 17 of The Adventures of an IT Leader answers
+      the director?
+    options:
+      - key: A
+        text: A cautious player seldom wins or loses big
+      - key: B
+        text: A big bet belongs only behind a sure hand
+      - key: C
+        text: A sound decision can still turn out badly
+      - key: D
+        text: A shaky decision sometimes pays off anyway
+    answer: C
+    feedback:
+      correct: >-
+        Williams twice bet big on the best possible hand in a game of In-Between, with about an 88
+        percent chance of winning, and lost both times. His conclusion is that the decision was
+        entirely sound and the outcome was not: sometimes you make the sound choice and still lose,
+        because luck always has something to do with it.
+      A: >-
+        Williams says this about a conservative strategy that suits an incumbent, and adds that IVK
+        cannot play that way. It is about how much risk to take on, not about judging a decision by
+        its result.
+      B: >-
+        Williams had the strongest hand the game allows and still lost. His story is a warning that
+        no hand is sure.
+      D: >-
+        This is the flip side Williams raises about his own choice not to disclose the June attack.
+        It describes a bad decision with a good outcome, the reverse of the director's case.
+    selfExplainPrompt: >-
+      After the 2013 breach, Target's chief executive and chief information officer resigned. Using
+      the Target Cyber Attack case, argue whether that was a sound decision with a bad outcome or
+      something else.
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader ch17 Managing Risk.md
+      loc: ch. 17, Wednesday, February 20 (Williams's In-Between poker story)
+  - id: w10-q15
+    week: 10
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In the November 17 class tabletop exercise, a medical-billing firm faces a $22 million ransom
+      demand on day three while pharmacies still cannot process prescriptions. Most of the room
+      voted to refuse. Which argument for paying did the instructor single out as probably the most
+      salient?
+    options:
+      - key: A
+        text: Paying buys time for the IT team to work
+      - key: B
+        text: Paying funds a group that keeps its word
+      - key: C
+        text: Refusing may cost more in legal claims
+      - key: D
+        text: Refusing breaks the disclosure rules
+    answer: C
+    feedback:
+      correct: >-
+        The point raised in discussion was that millions of patients unable to get prescriptions
+        could mean far more than $22 million in lawsuits. The instructor called that probably the
+        most salient argument: the alternative to paying is likely paying more in settlements,
+        because the firm did not do everything it could.
+      A: >-
+        This argument was made in the discussion and acknowledged. It was not the one singled out as
+        the strongest.
+      B: >-
+        The discussion did cover why professional ransomware groups tend to do what they promise,
+        and the slide for this stage lists funding the attackers as the cost of paying. Neither was
+        offered as the main reason firms pay.
+      D: >-
+        The disclosure rules discussed in class concern reporting a material incident, and the
+        slides note the four-business-day rule for U.S. public companies. They do not require anyone
+        to pay a ransom.
+    selfExplainPrompt: >-
+      In the slides' terms, is the ransom an anticipation cost or a failure cost? What does your
+      answer imply about when the pay-or-refuse decision should be made?
+    source:
+      doc: Class transcript (2026-11-17).vtt
+      loc: 'class discussion 2026-11-17 (tabletop, stage 2: the demand); CIS 9000 Chapter 13 slide 31'
