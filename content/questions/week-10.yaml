@@ -1,6 +1,6 @@
 week: 10
 # Provenance: promptVersion gen-v4 · model claude-fable-5-2 · promoted 2026-11-18 (15 of 30 accepted candidates)
-published: false
+published: true
 title: "Cybersecurity, Risk Trade-offs, and the Target Breach"
 questions:
   - id: w10-q01
