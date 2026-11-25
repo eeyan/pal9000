@@ -1,6 +1,6 @@
 week: 11
 # Provenance: promptVersion gen-v4 · model claude-fable-5-2 · promoted 2026-11-25 (15 of 34 accepted candidates)
-published: false
+published: true
 title: "AI Disclosure, Watermarking, and Trust"
 questions:
   - id: w11-q01
