@@ -204,3 +204,20 @@ after: seven feedback lines that went past the source or dropped a hedge, three 
 distractors that were not real claims from the chapter, an event invented for a named case, and one
 distractor too close to the text. Keep-vs-reject agreement 30 of 36. The bank lint caught a positional
 reference ("the first option", meaning the chapter's first proposal) in one promoted feedback line.
+| 2026-11-25 | gen-v4 | claude-fable-5-2 | 11 | 38 | 34 | 4 | 89% | unspecified ×3, trivia ×1 |
+
+Week 11 notes (gen-v4, in-session on Fable 5.2): the AI-disclosure debate week, with no textbook deck. Sources
+were four required readings (Schilke and Reimann, Walther, Leibowicz, Anthropic), the Meridian memo and
+debate slides, Chapter 18 and the Epilogue of the IT Leader book, and the class transcript. Four optional
+readings were in the folder, marked "Optional" in filename and header; no candidate was grounded in them.
+34 of 38 kept, 15 promoted: four Schilke and Reimann, two each Walther, Leibowicz and Anthropic, one slide
+takeaway, two class discussion (one cross-source with Walther), one Epilogue (cross-source with Chapter 18),
+one news of the week (Nvidia board and succession; the two news items were added after the reviewer's pass
+and had no independent review). Curator rejects were trivia ×1 and three with no reason given. The
+fresh-context reviewer rejected nothing and edited 6 of 36, applied before the curator's pass: two stems
+that gave the key away, two feedback lines that went past the source or merged two moments of the class,
+one dropped hedge, and one self-explain prompt that retold a student's story. Keep-vs-reject agreement 32
+of 38. The bank lint caught the case's policy names ("Option A", "Option B") in two promoted feedback lines,
+where they read as answer letters once options shuffle; the promoted file uses the policy names (Proactive
+Disclosure, Professional Discretion) instead. Rule for next time: never refer to a case's lettered options
+by letter in feedback or self-explain prompts.

@@ -1,0 +1,636 @@
+week: 11
+# Provenance: promptVersion gen-v4 · model claude-fable-5-2 · promoted 2026-11-25 (15 of 34 accepted candidates)
+published: false
+title: "AI Disclosure, Watermarking, and Trust"
+questions:
+  - id: w11-q01
+    week: 11
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A tax advisor used generative artificial intelligence (AI) to estimate clients' refunds and
+      told no one. He reasons that silence is the safe course, but a colleague points out that the
+      practice might come out anyway. Which finding from Schilke and Reimann's "The Transparency
+      Dilemma" speaks directly to the colleague's worry?
+    options:
+      - key: A
+        text: Mandatory disclosure cost as much trust as voluntary disclosure
+      - key: B
+        text: Disclosure cost trust even when AI use was already known
+      - key: C
+        text: A disclosing human was trusted less than an autonomous AI agent
+      - key: D
+        text: Third-party exposure cost more trust than self-disclosure
+    answer: D
+    feedback:
+      correct: >-
+        Study 13 used this tax-advice setting. Clients trusted the advisor least when someone else
+        exposed his AI use, more when he disclosed it himself, and most when nothing was disclosed.
+        Silence is the best case only for as long as it holds.
+      A: >-
+        Study 12 did find the penalty under both regimes. That is about who requires the disclosure,
+        not about what happens when hidden use is revealed by someone else.
+      B: >-
+        Study 11 found this. It concerns evaluators who knew beforehand, not an advisor whose
+        undisclosed use is uncovered.
+      C: >-
+        That is Study 10, which separates the effect from algorithm aversion. It does not compare
+        being found out with telling clients yourself.
+    selfExplainPrompt: >-
+      In class on November 24, 2026 the Target breach was recalled as worse for the company because
+      a journalist broke the news. How does that case line up with Study 13?
+    source:
+      doc: Schilke Reimann - The Transparency Dilemma - How AI Disclosure Erodes Trust (2025, OBHDP).md
+      loc: 2.3 AI disclosure vs. exposure (Hypothesis 5); 3.14 Study 13
+  - id: w11-q02
+    week: 11
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A consultant plans to tell a client that generative artificial intelligence (AI) drafted a
+      market report. To soften the news she will add that she reviewed and revised every page
+      herself. Based on Study 9 in Schilke and Reimann's "The Transparency Dilemma", what should she
+      expect from the softened disclosure?
+    options:
+      - key: A
+        text: A trust penalty compared with saying nothing at all
+      - key: B
+        text: A penalty only among clients who distrust technology
+      - key: C
+        text: A penalty only if the disclosure was voluntary
+      - key: D
+        text: No penalty, since a human checked the final work
+    answer: A
+    feedback:
+      correct: >-
+        Study 9 tested six ways of framing an AI disclosure, including a note that a human reviewed
+        and revised the work. Every version left the discloser trusted less than someone who made no
+        disclosure. The authors' reading is that acknowledging AI involvement at all is what
+        triggers the loss.
+      B: >-
+        The meta-analysis found the penalty weaker among people with favorable technology attitudes,
+        but it did not disappear for them. Favorable attitudes soften the effect; they do not remove
+        it.
+      C: >-
+        Study 12 compared voluntary and mandatory disclosure and found the trust loss in both. Who
+        required the disclosure did not decide whether it cost trust.
+      D: >-
+        This is the intuition Study 9 tested directly. The human-reviewed framing still produced
+        lower trust than no disclosure.
+    selfExplainPrompt: >-
+      Walther's "Why AI Disclosure Matters at Every Level" asks leaders to make disclosure "the new
+      normal." Which finding in Schilke and Reimann's paper suggests a route to that besides
+      rewording the disclosure?
+    source:
+      doc: Schilke Reimann - The Transparency Dilemma - How AI Disclosure Erodes Trust (2025, OBHDP).md
+      loc: 2.3 Framing of AI disclosure (Hypothesis 3); 3.10 Study 9; Table 1
+  - id: w11-q03
+    week: 11
+    type: definitional
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In "The Transparency Dilemma", Schilke and Reimann draw on micro-institutional theory to
+      explain why disclosing the use of artificial intelligence (AI) lowers trust in the person
+      disclosing. Which perception do they identify as the link between the disclosure and the lost
+      trust?
+    options:
+      - key: A
+        text: Algorithm aversion
+      - key: B
+        text: Swift trust
+      - key: C
+        text: Legitimacy
+      - key: D
+        text: Reactance
+    answer: C
+    feedback:
+      correct: >-
+        The authors argue that disclosed AI use is read as departing from the expectation that work
+        reflects human expertise and judgment, which lowers the sense that the practice is proper or
+        appropriate. That reduced legitimacy in turn erodes trust, and Studies 6 to 8 test this path
+        three different ways.
+      A: >-
+        Algorithm aversion is general skepticism toward algorithms because they may err. The authors
+        argue the disclosure effect goes beyond it, and Study 10 found a disclosing human trusted
+        less than an autonomous AI agent.
+      B: >-
+        Swift trust is the paper's term for trust in a previously unknown party, which is what most
+        of its studies measure. It describes the kind of trust studied, not the mechanism that
+        erodes it.
+      D: >-
+        The paper mentions reactance as a response when a disclosure tries to dispel doubts in
+        advance. It is a supporting observation, not the mediator the hypotheses and Studies 6 to 8
+        test.
+    source:
+      doc: Schilke Reimann - The Transparency Dilemma - How AI Disclosure Erodes Trust (2025, OBHDP).md
+      loc: 2.2 Legitimacy as a theoretical mechanism linking AI disclosure and trust (Hypothesis 2)
+  - id: w11-q04
+    week: 11
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A firm's managing director has read Schilke and Reimann's "The Transparency Dilemma" and wants
+      to know which clients will hold a disclosure of artificial intelligence (AI) use against the
+      firm least. According to the paper's within-paper meta-analysis, which clients are those?
+    options:
+      - key: A
+        text: Clients who use AI heavily in their own daily work
+      - key: B
+        text: Clients who are highly familiar with how AI works
+      - key: C
+        text: Clients who favor technology and see AI as accurate
+      - key: D
+        text: Clients who hold more power than the firm disclosing
+    answer: C
+    feedback:
+      correct: >-
+        The meta-analysis found the trust penalty smaller among evaluators with favorable attitudes
+        toward technology and those who perceive AI as accurate. The authors stress that the penalty
+        was attenuated for these groups, not eliminated.
+      A: >-
+        The authors report no evidence that the penalty shrinks among people who use AI themselves.
+        They describe people condemning others for something they also do.
+      B: >-
+        Familiarity with AI did not show an attenuated penalty in the meta-analysis. The authors
+        note this raises the possibility that the effect persists as AI spreads.
+      D: >-
+        Study 2 put evaluators in the more powerful seat, as hiring managers, and the penalty still
+        appeared. Power over the discloser did not protect the discloser.
+    selfExplainPrompt: >-
+      In the class debate on November 24, 2026 one side argued the penalty will fade as AI use
+      becomes normal. Which meta-analysis result supports caution about that argument, and which
+      limitation in the paper's future-directions section leaves it open?
+    source:
+      doc: Schilke Reimann - The Transparency Dilemma - How AI Disclosure Erodes Trust (2025, OBHDP).md
+      loc: 3.15 Within-paper meta-analysis; 1 Introduction; 5 Conclusion
+  - id: w11-q05
+    week: 11
+    type: definitional
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      Walther's "Why AI Disclosure Matters at Every Level" describes people rating the same content
+      lower once they learn artificial intelligence (AI) produced it. What does the article say this
+      pattern creates for someone deciding whether to reveal AI use?
+    options:
+      - key: A
+        text: A cognitive dissonance about using AI at all
+      - key: B
+        text: A patchwork of rules across jurisdictions
+      - key: C
+        text: A verification gap that tools cannot close
+      - key: D
+        text: A perverse incentive to keep AI use hidden
+    answer: D
+    feedback:
+      correct: >-
+        Walther calls the pattern an AI disclosure penalty. If work is judged better when AI
+        involvement is hidden and worse when it is revealed, the self-interested choice is silence.
+        She adds that this short-term calculation ignores the damage to trust when undisclosed use
+        is later discovered.
+      A: >-
+        Walther uses cognitive dissonance for the gap between wanting others to disclose and not
+        disclosing oneself. That is a related observation, not what she says the rating penalty
+        creates.
+      B: >-
+        The patchwork is her description of the national level, where the European Union, the United
+        States and China regulate differently. It is not a consequence of how people rate labeled
+        content.
+      C: >-
+        Walther does say watermarking and detection are imperfect. That is the problem of confirming
+        AI use, separate from the incentive the penalty creates.
+    source:
+      doc: Walther - Why AI Disclosure Matters at Every Level (2026, Knowledge at Wharton).md
+      loc: 'The Individual Level: Where Ethics Meets Identity'
+  - id: w11-q06
+    week: 11
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      At a mid-size advisory firm, some partners put a note about artificial intelligence (AI) on
+      deliverables, others mention AI only in engagement letters, and others say nothing. According
+      to the organizational-level section of Walther's "Why AI Disclosure Matters at Every Level",
+      what is the main problem with this arrangement?
+    options:
+      - key: A
+        text: Excess disclosure stifles innovation at the firm
+      - key: B
+        text: Inconsistency leaves clients confused and wary
+      - key: C
+        text: Detection tools are imperfect and easy to evade
+      - key: D
+        text: Clients judge labeled work as less authentic
+    answer: B
+    feedback:
+      correct: >-
+        Walther notes that best practices are emerging, such as AI-assistance disclaimers on
+        deliverables or disclosure terms in contracts and engagement letters. What matters is
+        consistency, because improvised, case-by-case practice produces confusion and suspicion.
+      A: >-
+        Walther raises stifled innovation as a risk of excessive disclosure requirements at the
+        global level. The firm here has too little coordination, not too many requirements.
+      C: >-
+        That is Walther's verification challenge. It explains why disclosure is hard to confirm, not
+        what is wrong with partners each doing something different.
+      D: >-
+        This is the disclosure penalty from the individual-level section. It would apply to the
+        partners who label, and it is not the fault Walther finds in mixed practice.
+    selfExplainPrompt: >-
+      The Meridian memo says the chief executive is "no longer willing to leave this to individual
+      judgment on individual engagements." How does Walther's organizational-level argument support
+      that sentence?
+    source:
+      doc: Walther - Why AI Disclosure Matters at Every Level (2026, Knowledge at Wharton).md
+      loc: 'The Organizational Level: Erecting or Eroding Trust'
+  - id: w11-q07
+    week: 11
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A news site begins labeling every image touched by artificial intelligence (AI). Months later,
+      readers start dismissing its unlabeled, authentic photographs as probably fake too. Which risk
+      named in Leibowicz's "Why Watermarking AI-Generated Content Won't Guarantee Trust Online" has
+      appeared?
+    options:
+      - key: A
+        text: Technical gatekeeping
+      - key: B
+        text: A chilling effect
+      - key: C
+        text: The liar's dividend
+      - key: D
+        text: Label misreading
+    answer: C
+    feedback:
+      correct: >-
+        Leibowicz describes the liar's dividend as a dynamic in which skepticism that anything might
+        be AI-generated grows strong enough to undermine trust in real content. She raises it as a
+        worry about a premature push to label all generated content.
+      A: >-
+        Technical gatekeeping is her concern about detection of invisible watermarks being
+        controlled by large AI companies. It is about who can check, not about readers doubting real
+        photographs.
+      B: >-
+        She uses chilling effects for creators, such as activists, who fear a watermark could reveal
+        their identity. The readers here are doubting content, not withholding speech.
+      D: >-
+        She does report a study participant misreading a "manipulated media" label. That is
+        confusion about what one label means, not broad distrust of unlabeled content.
+    selfExplainPrompt: >-
+      One of the class slides paraphrased this point as an argument for Meridian's Professional Discretion policy. How
+      would labeling some deliverables as AI-assisted affect how a client reads the unlabeled ones?
+    source:
+      doc: >-
+        Leibowicz - Why Watermarking AI-Generated Content Won't Guarantee Trust Online (2023, MIT
+        Technology Review).md
+      loc: Could visibly watermarking AI-generated content diminish trust in "real" content?
+  - id: w11-q08
+    week: 11
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A platform adds "Made with AI" labels and tells users the labels will help them spot false
+      claims. Which caution from Leibowicz's "Why Watermarking AI-Generated Content Won't Guarantee
+      Trust Online" applies to that promise?
+    options:
+      - key: A
+        text: A label about method does not show whether a claim is true
+      - key: B
+        text: A hidden signal is easier to alter in text than in audio or images
+      - key: C
+        text: A tracing signal can expose the identity of whoever made it
+      - key: D
+        text: A provenance record relies on cryptographic signatures
+    answer: A
+    feedback:
+      correct: >-
+        Leibowicz says visible disclosures that only describe how content was created are being used
+        as a proxy for what people actually care about, which is whether the content's claim is true
+        or false. She also notes such labels can be seen as paternalistic, biased or punitive even
+        though they say nothing about truthfulness.
+      B: >-
+        This is her point about durability across content types. It concerns invisible signals, not
+        what a visible label tells a reader.
+      C: >-
+        That is her privacy question. It is a risk to creators, not a limit on what a label says
+        about accuracy.
+      D: >-
+        This correctly describes provenance as a method. It does not address whether a label helps
+        anyone judge truth.
+    selfExplainPrompt: >-
+      The class slides listed, as evidence for Meridian's Professional Discretion policy, that "AI was used" says nothing
+      about whether the work is accurate. What would a client need from Meridian, beyond a label, to
+      judge accuracy?
+    source:
+      doc: >-
+        Leibowicz - Why Watermarking AI-Generated Content Won't Guarantee Trust Online (2023, MIT
+        Technology Review).md
+      loc: >-
+        Do visible disclosures help audiences understand the role of generative AI?; Could visibly
+        watermarking AI-generated content diminish trust in "real" content?
+  - id: w11-q09
+    week: 11
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      A client with access to the detector gets a high-likelihood watermark result on a 30-page
+      strategy report from its consultants. According to Anthropic's "How Claude's Text Watermarking
+      Works", what can the client conclude?
+    options:
+      - key: A
+        text: Claude wrote the report rather than edited it
+      - key: B
+        text: No other AI tool was used on the report
+      - key: C
+        text: Claude was likely involved at some point
+      - key: D
+        text: The consultants' account produced the text
+    answer: C
+    feedback:
+      correct: >-
+        Anthropic says a watermark can only determine that Claude was likely involved with the
+        content at some point. The check answers how likely it is that the text was partly written
+        by Claude, and confidence rises with the length of the passage.
+      A: >-
+        The article says the watermark cannot distinguish text Claude wrote from text Claude heavily
+        edited.
+      B: >-
+        The article says the check cannot tell whether a different AI was involved, since another
+        provider would use a different key or method.
+      D: >-
+        The article says the watermark carries no identifying information and cannot be traced to a
+        person, organization or chat.
+    selfExplainPrompt: >-
+      Meridian's memo said any client can easily determine that portions of a deliverable were
+      AI-generated. Using this article, what are two ways that sentence overstates what a client can
+      learn?
+    source:
+      doc: Anthropic - How Claude's Text Watermarking Works (2026, Anthropic).md
+      loc: >-
+        Which specific method of watermarking do you use? (limitations); What does a watermark
+        actually prove?
+  - id: w11-q10
+    week: 11
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      An analyst writes a memo herself, then asks Claude to fix only grammar and punctuation. She
+      worries the memo will now be flagged as written by artificial intelligence (AI). What does
+      Anthropic's "How Claude's Text Watermarking Works" say about this case?
+    options:
+      - key: A
+        text: The whole memo now carries the mark, as a translation would
+      - key: B
+        text: A complete rewrite is needed before the mark disappears
+      - key: C
+        text: The mark is left off because memos are factual writing
+      - key: D
+        text: Her few corrections may be too little for it to register
+    answer: D
+    feedback:
+      correct: >-
+        The watermark applies only to words Claude chooses. When Claude lightly edits a person's
+        text, nearly all the words are still the person's, so there is little or nothing for the
+        watermark to attach to, and the changes may not be enough to make Claude's involvement
+        detectable.
+      A: >-
+        A translation carries the watermark because Claude chooses every word. In proofreading the
+        analyst chose nearly all of them.
+      B: >-
+        The article says a complete rewrite removes a watermark from text Claude generated. Here
+        there was little Claude-chosen text to begin with.
+      C: >-
+        The article says watermarking is sparser where an exact word is required. That depends on
+        whether a word choice exists, not on the kind of document.
+    selfExplainPrompt: >-
+      Schilke and Reimann's Study 9 found that disclosing AI use "only for proofreading" still
+      lowered trust. Put that next to this article: what does a proofreading-only user risk by
+      disclosing, and by staying silent?
+    source:
+      doc: Anthropic - How Claude's Text Watermarking Works (2026, Anthropic).md
+      loc: >-
+        What about cases where Claude has proofread or edited human text?; Which specific method of
+        watermarking do you use?
+  - id: w11-q11
+    week: 11
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In the class discussion on November 24, 2026, a question came up about whether Meridian, which
+      uses Claude to draft reports, must itself do anything to comply with the European Union (EU)
+      rule on marking content generated by artificial intelligence (AI). What answer was given in
+      class?
+    options:
+      - key: A
+        text: The marking duty sits with any firm selling AI-drafted work
+      - key: B
+        text: The marking duty applies only to images and video
+      - key: C
+        text: The marking duty requires a label readers can see
+      - key: D
+        text: The marking duty sits with the provider of the model
+    answer: D
+    feedback:
+      correct: >-
+        The class answer was that the invisible-watermark requirement applies to whoever creates the
+        AI model, which here is Anthropic, and that a firm using the model does not have to add
+        anything. The caveat given was that a client could still check for the mark. Later in the
+        session the instructor added that Meridian's own contracts might carry requirements a lawyer
+        would need to check.
+      A: >-
+        This was the worry raised by the question. The answer was that the rule reaches the model's
+        maker, not a firm that uses its output.
+      B: >-
+        Images and video came up for a different rule: a New York requirement for visible labels on
+        visual content posted to social media.
+      C: >-
+        The class point was that the rule is about content being machine identifiable. The watermark
+        does not have to be visible to a person.
+    selfExplainPrompt: >-
+      Walther's "Why AI Disclosure Matters at Every Level" says legal compliance and ethical
+      practice are not always aligned. How does Meridian's position under this rule illustrate that?
+    source:
+      doc: Class transcript (2026-11-24).vtt
+      loc: class discussion 2026-11-24 (who the EU marking rule applies to)
+  - id: w11-q12
+    week: 11
+    type: scenario-mcq
+    status: edited
+    promptVersion: gen-v4
+    stem: >-
+      In the class session on November 24, 2026, Meridian's largest client asked in writing where
+      and how generative artificial intelligence (AI) is used in work delivered to it. Meridian had
+      no policy in place. What does the first step of the 4A framework in Walther's "Why AI
+      Disclosure Matters at Every Level" ask a firm to do that would have let Meridian answer?
+    options:
+      - key: A
+        text: A two-sentence disclosure line for proposals
+      - key: B
+        text: A legal review of its client confidentiality clauses
+      - key: C
+        text: An enterprise AI plan that keeps client data private
+      - key: D
+        text: An audit of where AI is already used in its work
+    answer: D
+    feedback:
+      correct: >-
+        In class the difficulty was that Meridian was not tracking AI use and would have to ask
+        everyone who worked on the account. Walther's Awareness step asks leaders to audit where AI
+        is currently used in the organization, disclosed or not. A firm that has done so can answer
+        a client's question whichever policy it chooses.
+      A: >-
+        A disclosure statement was what the Proactive Disclosure teams were asked to draft. Without knowing
+        where AI is used, the firm cannot say whether such a statement is accurate.
+      B: >-
+        Confidentiality clauses were raised in the debate as a separate exposure. A legal review
+        would not tell the firm which deliverables involved AI.
+      C: >-
+        An enterprise plan was offered in the debate as an answer to data-sharing worries. It
+        governs where data goes, not which work used AI.
+    selfExplainPrompt: >-
+      The Epilogue of The Adventures of an IT Leader lists "knowing what your people can and cannot
+      do" under people management. What is the equivalent thing a firm needs to know about its tools
+      before it can answer a client honestly?
+    source:
+      doc: Class transcript (2026-11-24).vtt
+      loc: >-
+        class discussion 2026-11-24 (CEO update: largest client's written question); Walther, A 4A
+        Framework for Navigating AI Disclosure (Awareness)
+  - id: w11-q13
+    week: 11
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      After the debate, a Meridian partner says the firm can stop arguing: the European Union (EU)
+      marking rules and Claude's watermark have already decided what clients will learn. Which
+      takeaway from the Meridian AI Disclosure Debate slides answers the partner?
+    options:
+      - key: A
+        text: Disclosure is a strategy choice that needs an owner
+      - key: B
+        text: Getting caught hiding AI use costs the most trust
+      - key: C
+        text: Softer wording of a disclosure does not restore trust
+      - key: D
+        text: Fewer than one in three firms has a clear policy
+    answer: A
+    feedback:
+      correct: >-
+        The closing slide states that disclosure is a strategy choice about trust and needs an
+        owner, and that neither the technology nor the law settled the question for Meridian.
+        Someone at the firm still has to hold the decision.
+      B: >-
+        The research slide does report this. It is evidence for one side of the debate, not an
+        answer to the claim that outside forces have already decided.
+      C: >-
+        This appears on the evidence slide for Professional Discretion. It concerns how to phrase a disclosure, not
+        who decides.
+      D: >-
+        The slides cite this survey figure as a reason Meridian could lead. It describes other firms
+        and does not respond to the partner.
+    selfExplainPrompt: >-
+      The Epilogue of The Adventures of an IT Leader lists "how to achieve joint accountability for
+      issues that cannot be decided by IT alone" under its communication system. Is Meridian's
+      disclosure policy that kind of issue? Who should own it?
+    source:
+      doc: Meridian AI Disclosure Debate - class slides (2026-11-24).md
+      loc: Slide 22 (The takeaway)
+  - id: w11-q14
+    week: 11
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In Chapter 18 of The Adventures of an IT Leader, the June security incident has produced no
+      further consequences and IVK's stock has recovered, so it looks as though chief executive Carl
+      Williams was right to disclose nothing. A manager concludes that the result proves the
+      decision was sound. Which idea from the book's Epilogue cautions against that conclusion?
+    options:
+      - key: A
+        text: Knowledge cannot be fully told, so it must come from experience
+      - key: B
+        text: We cannot rerun events, so judge the soundness of the process
+      - key: C
+        text: Technical and managerial issues are hard to tease apart
+      - key: D
+        text: Mundane IT decisions eventually have spectacular consequences
+    answer: B
+    feedback:
+      correct: >-
+        The Epilogue says that, as in real life, we never get to rerun the experiment to see what a
+        different choice or a different roll of the dice would have produced. There are no right
+        answers, but there are sound processes, well-considered decisions and better outcomes on
+        average. One good result does not show which kind of decision it was, and Barton himself
+        still feels sick thinking about it.
+      A: >-
+        This is the Epilogue's reason for teaching through a story. It is about how managers learn,
+        not how to judge a decision by its outcome.
+      C: >-
+        The Epilogue names this as the main difficulty of IT management. It does not bear on whether
+        a good outcome proves a good decision.
+      D: >-
+        The Epilogue warns of this in its closing section. It concerns neglected routine decisions,
+        not the logic of judging by results.
+    selfExplainPrompt: >-
+      Schilke and Reimann's Study 13 found that exposure by a third party costs more trust than
+      disclosure. How would that finding have changed the odds Williams was playing in June?
+    source:
+      doc: Austin Nolan O'Donnell - Adventures of an IT Leader epilogue.md
+      loc: >-
+        Epilogue, Overview (no right answers; cannot rerun the experiment); ch. 18, Monday, March
+        24, 11:16 a.m.
+  - id: w11-q15
+    week: 11
+    type: scenario-mcq
+    status: accepted
+    promptVersion: gen-v4
+    stem: >-
+      In the news-of-the-week discussion on November 24, 2026 about Jensen Huang's return as chief
+      executive of Nvidia, the question came up of whether it is dangerous for a public company to
+      be so identified with one leader. The instructor noted that Huang holds only a small minority
+      stake and no special voting rights. Where did he place responsibility for the company's
+      dependence on one person?
+    options:
+      - key: A
+        text: With the founder, whose voting control blocked challenge
+      - key: B
+        text: With the board, which never planned for a successor
+      - key: C
+        text: With regulators, who stepped into a board decision
+      - key: D
+        text: With investors, who rewarded the rising share price
+    answer: B
+    feedback:
+      correct: >-
+        The instructor's view was that nothing in Nvidia's structure forces the dependence, since
+        the chief executive has a small stake and no outsized voting rights. He put the
+        responsibility on the board of directors: there is supposed to be tension between a board
+        and a chief executive, nobody pushed back, and there was no succession planning. He allowed
+        that the leader can be singular and the board negligent at the same time.
+      A: >-
+        The class point was the opposite of this premise: the chief executive has no outsized voting
+        rights, so the board could have acted.
+      C: >-
+        Government intervention in technology companies was discussed as a worrying trend. It was
+        not given as the reason the company depends on one person.
+      D: >-
+        The instructor did say that a leader who makes everyone a lot of money can get away with a
+        lot. He called finding that balance the board's job.
+    selfExplainPrompt: >-
+      Chapter 18 of The Adventures of an IT Leader ends by asking how senior managers and the board
+      of directors should work together to manage a firm's assets and capabilities. What would
+      Nvidia's board have needed to do differently?
+    source:
+      doc: Class transcript (2026-11-24).vtt
+      loc: 'class discussion 2026-11-24 (news of the week: Nvidia, board and succession)'
